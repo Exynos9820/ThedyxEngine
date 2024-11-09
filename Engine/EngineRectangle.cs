@@ -184,7 +184,8 @@ namespace ThedyxEngine.Engine {
          * \param canvasManager The canvas manager.
          * \returns The polygons(visible) representing the object's shape.
          */
-        /*public override List<Polygon> GetPolygons(CanvasManager canvasManager) {
+        
+        public override List<Polygon> GetPolygons(CanvasManager canvasManager) {
             List<Polygon> polygons = new List<Polygon>();
             foreach (GrainSquare sq in _grainSquares) {
                 //awful code, but it was made for inheritance and each grain square has only one polygon
@@ -193,7 +194,7 @@ namespace ThedyxEngine.Engine {
             }
 
             return polygons;
-        }*/
+        }
 
         public override List<GrainSquare> GetSquares() {
             return _grainSquares;
@@ -208,7 +209,7 @@ namespace ThedyxEngine.Engine {
          * \param canvasManager The canvas manager.
          * \returns True if the object is visible on the given canvas, false otherwise.
          */
-        /*public override bool IsVisible(CanvasManager canvasManager) {
+        public override bool IsVisible(CanvasManager canvasManager) {
             // we need to check coordinates of the canvas manager and check if there is any square in the visible area
             Vector2 topLeft, bottomRight;
             GetObjectVisibleArea(out topLeft, out bottomRight);
@@ -218,7 +219,7 @@ namespace ThedyxEngine.Engine {
                 return false;
             }
             return true;
-        }*/
+        }
 
         /**
          * Sets the initial temperature of the grain to the simulation temperature.

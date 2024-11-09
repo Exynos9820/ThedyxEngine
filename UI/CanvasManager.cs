@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 
 namespace ThedyxEngine.UI
 {
@@ -29,29 +28,16 @@ namespace ThedyxEngine.UI
             CurrentBottomYIndex = -100;
         }
 
-        public void Move(Microsoft.Maui.Input.Key key)
+        public void MoveHorizontal(int step)
         {
-            int step = getStep();
+            CurrentLeftXIndex += step;
+            CurrentRightXIndex += step;
+        }
 
-            switch (key)
-            {
-                case Microsoft.Maui.Input.Key.Left:
-                    CurrentLeftXIndex -= step;
-                    CurrentRightXIndex -= step;
-                    break;
-                case Microsoft.Maui.Input.Key.Right:
-                    CurrentLeftXIndex += step;
-                    CurrentRightXIndex += step;
-                    break;
-                case Microsoft.Maui.Input.Key.Up:
-                    CurrentTopYIndex += step;
-                    CurrentBottomYIndex += step;
-                    break;
-                case Microsoft.Maui.Input.Key.Down:
-                    CurrentTopYIndex -= step;
-                    CurrentBottomYIndex -= step;
-                    break;
-            }
+        public void MoveVertical(int step)
+        {
+            CurrentTopYIndex += step;
+            CurrentBottomYIndex += step;
         }
 
         private int getStep()

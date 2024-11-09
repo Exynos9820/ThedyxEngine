@@ -186,13 +186,13 @@ namespace ThedyxEngine.Engine
         }
 
         /// Returns polygons representing the object's shape. Must be implemented by subclasses.
-        //abstract public List<Polygon> GetPolygons(CanvasManager canvasManager);
+        abstract public List<Polygon> GetPolygons(CanvasManager canvasManager);
 
         /// Returns the object's squares. Must be implemented by subclasses.
         abstract public List<GrainSquare> GetSquares();
 
         /// Determines if the object is visible on the given canvas. Must be implemented by subclasses.
-        //abstract public bool IsVisible(CanvasManager canvasManager);
+        abstract public bool IsVisible(CanvasManager canvasManager);
 
         /// Gets the visible area of the object. Must be implemented by subclasses.
         abstract public void GetObjectVisibleArea(out Vector2 topLeft, out Vector2 bottomRight);

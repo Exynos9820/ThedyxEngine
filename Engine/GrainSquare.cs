@@ -11,7 +11,7 @@ using System.Windows;
 using Microsoft.Maui.Controls.Shapes;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
-
+using ThedyxEngine.UI;
 namespace ThedyxEngine.Engine
 {
     /**
@@ -58,7 +58,7 @@ namespace ThedyxEngine.Engine
          * This method overrides the abstract method defined in \ref EngineObject.
          * \return List of polygons constituting the square's visual representation.
          */
-        /*public override List<Polygon> GetPolygons(CanvasManager canvasManager)
+        public override List<Polygon> GetPolygons(CanvasManager canvasManager)
         {
             List<Polygon> polygons = [];
             Polygon polygon = new();
@@ -80,7 +80,7 @@ namespace ThedyxEngine.Engine
 
             polygons.Add(polygon);
             return polygons;
-        }*/
+        }
 
         /**
          * \brief Sets caeched point of the GrainSquare
@@ -112,11 +112,11 @@ namespace ThedyxEngine.Engine
          * Determines whether any of the square's vertices are visible in the current view.
          * \param canvasManager The canvas manager providing the current view context.
          * \return True if any vertex is visible, otherwise false.
-         
+         */
         public override bool IsVisible(CanvasManager canvasManager)
         {
             return CanvasManager.isPointVisible(Position, canvasManager);
-        }*/
+        }
 
         /**
          * Calculates the bounding box that encompasses the square.

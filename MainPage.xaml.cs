@@ -1,5 +1,6 @@
 ﻿using System.Timers;
 using ThedyxEngine.Engine;
+using ThedyxEngine.UI;
 using Timer = System.Timers.Timer;
 
 namespace ThedyxEngine;
@@ -10,6 +11,8 @@ public partial class MainPage : ContentPage
     private readonly Timer updateTimer;
     private bool _objectsChanged = false;
     private readonly int _windowRefreshRate = 60;
+    private CanvasManager _canvasManager;
+    private GridDrawer _gridDrawer;
     public MainPage()
     {
         InitializeComponent();
@@ -33,6 +36,40 @@ public partial class MainPage : ContentPage
         _engineObjectsList.OnDeleteObject = UpdateAllAfterChangeProperties;
         _engineObjectsList.OnZoomToObject = ZoomToObject;
         //_controlPanel.EngineModeChanged = EngineModeChanged;*/
+        
+        _canvasManager = new CanvasManager();
+        _gridDrawer = new GridDrawer();
+
+        _graphicsView = engineGraphicsView;
+        _graphicsView.Drawable = new CustomDrawable(_canvasManager, _gridDrawer);
+
+        // Set up pinch gesture for zooming
+        var pinchGesture = new PinchGestureRecognizer();
+        pinchGesture.PinchUpdated += (s, e) =>
+        {
+            if (e.Status == GestureStatus.Running)
+            {
+                int zoomFactor = e.Scale > 1 ? 10 : -10;
+                _canvasManager.MoveHorizontal(zoomFactor);
+                _canvasManager.MoveVertical(zoomFactor);
+                _graphicsView.Invalidate(); // Redraw
+            }
+        };
+        _graphicsView.GestureRecognizers.Add(pinchGesture);
+
+        // Set up pan gesture for panning
+        var panGesture = new PanGestureRecognizer();
+        panGesture.PanUpdated += (s, e) =>
+        {
+            if (e.StatusType == GestureStatus.Running)
+            {
+                int step = 10; // Adjust this value for smoother or faster panning
+                if (e.TotalX != 0) _canvasManager.MoveHorizontal((int)e.TotalX > 0 ? step : -step);
+                if (e.TotalY != 0) _canvasManager.MoveVertical((int)e.TotalY > 0 ? -step : step);
+                _graphicsView.Invalidate(); // Redraw
+            }
+        };
+        _graphicsView.GestureRecognizers.Add(panGesture);
     }
     
     private void UpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
