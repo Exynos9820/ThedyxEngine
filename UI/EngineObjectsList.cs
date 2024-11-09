@@ -1,115 +1,108 @@
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using System.Collections.Generic;
 using ThedyxEngine.Engine;
 
-namespace ThedyxEngine.UI;
-
-/**
- * \class EngineObjectsList
- * \brief EngineObjectsList class
- * List of all objects of the simulation
- */
-public class EngineObjectsList : ListView
+namespace ThedyxEngine.UI
 {
-    private EngineObject? _currentSelectedEngineObject;  // Current selected object
-    public Action<EngineObject>? OnSelectedObjectChanged; // Event for selected object changed
-    public Action<EngineObject>? OnZoomToObject;          // Event for zoom to object
-    public Action? OnDeleteObject;                        // Event for delete object
-    private bool _isEnabled = true;                       // Is enabled
-
     /**
-     * Constructor
+     * \class EngineObjectsList
+     * \brief EngineObjectsList class
+     * List of all objects of the simulation
      */
-    public EngineObjectsList()
+    public class EngineObjectsList : CollectionView
     {
-        // Add gesture recognizer for double-tap
-        var tapGesture = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
-        tapGesture.Tapped += (s, e) => ZoomToObject();
-        this.GestureRecognizers.Add(tapGesture);
+        private EngineObject? _currentSelectedEngineObject;  // Current selected object
+        public Action<EngineObject>? OnSelectedObjectChanged; // Event for selected object changed
+        public Action<EngineObject>? OnZoomToObject;          // Event for zoom to object
+        public Action? OnDeleteObject;                        // Event for delete object
+        private bool _isEnabled = true;                       // Is enabled
 
-        // Selection change handling
-        this.ItemSelected += OnSelectionChanged;
-    }
-
-    /**
-     * Update the list of objects
-     * \param objects List of objects
-     */
-    public void Update(List<EngineObject> objects)
-    {
-        this.ItemsSource = objects;
-    }
-
-    public void Enable(bool isEnabled)
-    {
-        _isEnabled = isEnabled;
-    }
-
-    /**
-     * Zoom to object
-     */
-    private void ZoomToObject()
-    {
-        var item = this.SelectedItem as EngineObject;
-        if (item != null)
+        /**
+         * Constructor
+         */
+        public EngineObjectsList()
         {
-            _currentSelectedEngineObject?.Deselect();
-            _currentSelectedEngineObject = item;
-            _currentSelectedEngineObject.Select();
-            OnZoomToObject?.Invoke(_currentSelectedEngineObject);
-        }
-    }
+            BackgroundColor = Colors.White;
 
-    /**
-     * Handle delete or navigation keys
-     */
-    public void HandleKeyDown(string key)
-    {
-        if (key == "Delete" && _isEnabled)
-        {
-            var item = SelectedItem as EngineObject;
-            if (item != null)
+            // Define item template with black text color
+            ItemTemplate = new DataTemplate(() =>
             {
-                Engine.Engine.EngineObjectsManager.RemoveObject(item);
-                OnDeleteObject?.Invoke();
+                var label = new Label
+                {
+                    TextColor = Colors.Black,
+                    FontSize = 16,
+                    Padding = new Thickness(5, 3, 0, 0)
+                };
+                label.SetBinding(Label.TextProperty, "Name"); // Bind to Name property
+
+                var layout = new StackLayout
+                {
+                    Padding = new Thickness(10, 0, 0, 0), // Small left padding
+                    Children = { label }
+                };
+
+                // Add tap gesture recognizer for zooming
+                var tapGesture = new TapGestureRecognizer();
+                tapGesture.Tapped += (s, e) => ZoomToObject();
+
+                layout.GestureRecognizers.Add(tapGesture);
+                return layout;
+            });
+
+            SelectionMode = SelectionMode.Single;
+            SelectionChanged += OnSelectionChanged;
+        }
+
+        /**
+         * Update the list of objects
+         * \param objects List of objects
+         */
+        public void Update(List<EngineObject> objects)
+        {
+            this.ItemsSource = objects;
+        }
+
+        public void Enable(bool isEnabled)
+        {
+            _isEnabled = isEnabled;
+        }
+
+        /**
+         * Zoom to object
+         */
+        private void ZoomToObject()
+        {
+            if (_currentSelectedEngineObject != null)
+            {
+                OnZoomToObject?.Invoke(_currentSelectedEngineObject);
             }
         }
-        else if (key == "Down")
+
+        /**
+         * Handle item selection
+         */
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectedIndex < Items.Count - 1)
+            if (e.CurrentSelection.Count > 0)
             {
-                SelectedIndex++;
-                _currentSelectedEngineObject = Engine.Engine.EngineObjectsManager.GetObjectByIndex(SelectedIndex);
+                var selectedObject = e.CurrentSelection[0] as EngineObject;
+                if (selectedObject != null)
+                {
+                    _currentSelectedEngineObject?.Deselect();
+                    _currentSelectedEngineObject = selectedObject;
+                    _currentSelectedEngineObject.Select();
+                    OnSelectedObjectChanged?.Invoke(_currentSelectedEngineObject);
+                }
             }
         }
-        else if (key == "Up")
-        {
-            if (SelectedIndex > 0)
-            {
-                SelectedIndex--;
-                _currentSelectedEngineObject = Engine.Engine.EngineObjectsManager.GetObjectByIndex(SelectedIndex);
-            }
-        }
-    }
 
-    /**
-     * OnSelectionChanged method
-     */
-    private void OnSelectionChanged(object sender, SelectedItemChangedEventArgs e)
-    {
-        var selectedObject = e.SelectedItem as EngineObject;
-        if (selectedObject != null && (_currentSelectedEngineObject == null || selectedObject.Name != _currentSelectedEngineObject.Name))
+        /**
+         * Clear the list
+         */
+        public void Clear()
         {
-            _currentSelectedEngineObject?.Deselect();
-            _currentSelectedEngineObject = selectedObject;
-            _currentSelectedEngineObject.Select();
-            OnSelectedObjectChanged?.Invoke(_currentSelectedEngineObject);
+            this.ItemsSource = null;
         }
-    }
-
-    /**
-     * Clear the list
-     */
-    public void Clear()
-    {
-        this.ItemsSource = null;
     }
 }
