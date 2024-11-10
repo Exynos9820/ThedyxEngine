@@ -52,7 +52,7 @@ namespace ThedyxEngine.UI
             tbYPosition.Text = _selectedObject.Position.Y.ToString();
             tbHeight.Text = _selectedObject.Size.Y.ToString();
             tbWidth.Text = _selectedObject.Size.X.ToString();
-
+            
             cbMaterial.ItemsSource = MaterialManager.GetMaterials();
             cbMaterial.SelectedItem = _selectedObject.Material;
         }
@@ -61,6 +61,7 @@ namespace ThedyxEngine.UI
         {
             ClearFields();
             _selectedObject = obj;
+            Update();
         }
 
         private void SetFieldsEnabled(bool enabled)
@@ -146,6 +147,20 @@ namespace ThedyxEngine.UI
             if (double.TryParse(tbHeight.Text, out double height))
             {
                 _selectedObject.Size = new Microsoft.Maui.Graphics.Point(_selectedObject.Size.X, height);
+            }
+        }
+        
+        private void OnWidthCompleted(object sender, EventArgs e)
+        {
+            if (_selectedObject == null) return;
+            if (_selectedObject.GetObjectType() == ObjectType.GrainSquare)
+            {
+                tbHeight.Text = "1";
+            }
+
+            if (double.TryParse(tbWidth.Text, out double width))
+            {
+                _selectedObject.Size = new Microsoft.Maui.Graphics.Point(width, _selectedObject.Size.Y);
             }
         }
 

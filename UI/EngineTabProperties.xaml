@@ -4,7 +4,7 @@
              x:Class="ThedyxEngine.UI.EngineTabProperties" BackgroundColor="Azure">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
@@ -19,7 +19,9 @@
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Text="Name" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
-            <Entry Grid.Column="1" HeightRequest="18" Margin="0"  VerticalOptions="Center" WidthRequest="110" x:Name="tbName" HorizontalOptions="End" TextColor="Black"/>
+            <Frame Grid.Column="1" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30" WidthRequest="110">
+                <Entry x:Name="tbName" TextColor="Black" BackgroundColor="Transparent" Completed="OnNameCompleted"/>
+            </Frame>
         </Grid>
 
         <Grid Grid.Row="1" Padding="5,0,0,0">
@@ -37,10 +39,14 @@
                 <ColumnDefinition Width="65"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" VerticalOptions="Center" Text="X:" x:Name="xPositionLabel" HorizontalOptions="Start" TextColor="Black"/>
-            <Entry Grid.Column="1" VerticalOptions="Center" HeightRequest="18" x:Name="tbXPosition" TextColor="Black"/>
-
-            <Label Grid.Column="2" VerticalOptions="Center"  Text="Y:" x:Name="yPositionLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black"/>
-            <Entry Grid.Column="3" VerticalOptions="Center" HeightRequest="18" x:Name="tbYPosition" TextColor="Black"/>
+            <Frame Grid.Column="1" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                <Entry x:Name="tbXPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnXPositionCompleted"/>
+            </Frame>
+            
+            <Label Grid.Column="2" VerticalOptions="Center" Text="Y:" x:Name="yPositionLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black"/>
+            <Frame Grid.Column="3" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                <Entry x:Name="tbYPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnYPositionCompleted"/>
+            </Frame>
         </Grid>
 
         <Grid Grid.Row="3" Padding="5,0,0,0">
@@ -58,10 +64,14 @@
                 <ColumnDefinition Width="65"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" VerticalOptions="Center" Text="W:" x:Name="widthLabel" HorizontalOptions="Start" TextColor="Black"/>
-            <Entry Grid.Column="1" VerticalOptions="Center" HeightRequest="18" x:Name="tbWidth" TextColor="Black"/>
-
+            <Frame Grid.Column="1" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                <Entry x:Name="tbWidth" TextColor="Black" BackgroundColor="Transparent" Completed="OnWidthCompleted"/>
+            </Frame>
+            
             <Label Grid.Column="2" VerticalOptions="Center" Text="H:" x:Name="heightLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black"/>
-            <Entry Grid.Column="3" VerticalOptions="Center" HeightRequest="18" x:Name="tbHeight" TextColor="Black"/>
+            <Frame Grid.Column="3" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                <Entry x:Name="tbHeight" TextColor="Black" BackgroundColor="Transparent" Completed="OnHeightCompleted"/>
+            </Frame>
         </Grid>
 
         <Grid Grid.Row="5" Padding="5,0,0,0">
@@ -70,7 +80,9 @@
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" VerticalOptions="Center" Text="T, K°" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
-            <Entry Grid.Column="1" VerticalOptions="Center" HeightRequest="18" WidthRequest="110" x:Name="tbTemperature" HorizontalOptions="End" TextColor="Black"/>
+            <Frame Grid.Column="1" VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                <Entry x:Name="tbTemperature" TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
+            </Frame>
         </Grid>
 
         <Grid Grid.Row="6" Padding="5,0,0,0">
@@ -79,7 +91,7 @@
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" VerticalOptions="Center" Text="Material" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
-            <Picker Grid.Column="1"  HeightRequest="23" WidthRequest="110" x:Name="cbMaterial" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black"/>
+            <Picker Grid.Column="1" HeightRequest="23" WidthRequest="110" x:Name="cbMaterial" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnMaterialChanged"/>
         </Grid>
     </Grid>
 </ContentView>

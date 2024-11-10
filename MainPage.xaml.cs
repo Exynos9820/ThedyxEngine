@@ -99,7 +99,6 @@ public partial class MainPage : ContentPage
             // Implement the logic to handle the selection change
             //_engineCanva.Update();
             _engineTabProperties.SetObject(obj);
-            _engineTabProperties.Update();
 
             if(obj == null) {  _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects()); return; }
 
