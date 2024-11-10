@@ -69,8 +69,8 @@ public class EngineCanvasDrawable : IDrawable
         canvas.StrokeColor = Colors.Black;
         canvas.StrokeSize = 2;
         canvas.FillColor = Colors.LightBlue;
-        canvas.FillPolygon(polygon.Points.ToArray());
-        canvas.DrawPolygon(polygon.Points.ToArray());
+        //canvas.FillPolygon(polygon.Points.ToArray());
+        //canvas.DrawPolygon(polygon.Points.ToArray());
     }
 
     public PointF ConvertToScreenCoordinates(PointF point)

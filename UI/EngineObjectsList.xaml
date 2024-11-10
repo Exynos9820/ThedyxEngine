@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ThedyxEngine.UI.EngineObjectsList"
+             BackgroundColor="White">
+
+    <CollectionView x:Name="EngineCollectionView"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Padding="10, 0, 0, 0">
+                    <Label Text="{Binding Name}"
+                           TextColor="Black"
+                           FontSize="16"
+                           Padding="5, 3, 0, 0" />
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>

@@ -40,8 +40,8 @@ public partial class MainPage : ContentPage
         _canvasManager = new CanvasManager();
         _gridDrawer = new GridDrawer();
 
-        _graphicsView = engineGraphicsView;
-        _graphicsView.Drawable = new CustomDrawable(_canvasManager, _gridDrawer);
+        //_graphicsView = engineGraphicsView;
+        //_graphicsView.Drawable = new CustomDrawable(_canvasManager, _gridDrawer);
 
         // Set up pinch gesture for zooming
         var pinchGesture = new PinchGestureRecognizer();
@@ -52,10 +52,10 @@ public partial class MainPage : ContentPage
                 int zoomFactor = e.Scale > 1 ? 10 : -10;
                 _canvasManager.MoveHorizontal(zoomFactor);
                 _canvasManager.MoveVertical(zoomFactor);
-                _graphicsView.Invalidate(); // Redraw
+                //_graphicsView.Invalidate(); // Redraw
             }
         };
-        _graphicsView.GestureRecognizers.Add(pinchGesture);
+        //_graphicsView.GestureRecognizers.Add(pinchGesture);
 
         // Set up pan gesture for panning
         var panGesture = new PanGestureRecognizer();
@@ -66,10 +66,10 @@ public partial class MainPage : ContentPage
                 int step = 10; // Adjust this value for smoother or faster panning
                 if (e.TotalX != 0) _canvasManager.MoveHorizontal((int)e.TotalX > 0 ? step : -step);
                 if (e.TotalY != 0) _canvasManager.MoveVertical((int)e.TotalY > 0 ? -step : step);
-                _graphicsView.Invalidate(); // Redraw
+                //_graphicsView.Invalidate(); // Redraw
             }
         };
-        _graphicsView.GestureRecognizers.Add(panGesture);
+        //_graphicsView.GestureRecognizers.Add(panGesture);
     }
     
     private void UpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -88,37 +88,37 @@ public partial class MainPage : ContentPage
         private void EngineModeChanged() {
             if(Engine.Engine.Mode != Engine.Engine.EngineMode.Stopped) {
                 _engineObjectsList.Enable(false);
-                //_engineTabProperties.Enable(false);
+                _engineTabProperties.Enable(false);
             } else {
                 _engineObjectsList.Enable(true);
-                //_engineTabProperties.Enable(true);
+                _engineTabProperties.Enable(true);
             }
         }
 
         private void SelectedObjectChanged(EngineObject obj) {
             // Implement the logic to handle the selection change
-            /*_engineCanva.Update();
+            //_engineCanva.Update();
             _engineTabProperties.SetObject(obj);
-            _engineTabProperties.Update();*/
+            _engineTabProperties.Update();
 
             if(obj == null) {  _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects()); return; }
 
             obj.PropertyChanged += (sender, args) => {
                 _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
-                //_engineTabProperties.Update();
+                _engineTabProperties.Update();
                 //_engineCanva.Update();
             };
         }
 
         private void UpdateAllAfterChangeProperties() {
-            //_engineTabProperties.SetObject(null);
+            _engineTabProperties.SetObject(null);
             UpdateAll();
         }
 
         public void UpdateAll() {
-            /*_engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+            _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
             _engineTabProperties.Update();
-            _engineCanva.Update();*/
+            //_engineCanva.Update();
         }
         
 
@@ -133,8 +133,8 @@ public partial class MainPage : ContentPage
             if(Engine.Engine.Mode != Engine.Engine.EngineMode.Running) 
                 _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
             /*_controlPanel.Update();
-            _engineCanva.Update();
-            _engineTabProperties.Update();*/
+            _engineCanva.Update();*/
+            _engineTabProperties.Update();
 
         }
 }

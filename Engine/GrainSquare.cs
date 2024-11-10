@@ -115,7 +115,8 @@ namespace ThedyxEngine.Engine
          */
         public override bool IsVisible(CanvasManager canvasManager)
         {
-            return CanvasManager.isPointVisible(Position, canvasManager);
+            //return CanvasManager.isPointVisible(Position, canvasManager);
+            return true;
         }
 
         /**

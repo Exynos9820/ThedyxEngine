@@ -24,7 +24,8 @@
             <ui:EngineObjectsList x:Name="_engineObjectsList" Grid.Column="0" WidthRequest="200">
                 <!-- Binding logic will go here -->
             </ui:EngineObjectsList>
-
+            
+            <ui:EngineTabProperties x:Name="_engineTabProperties" Grid.Column="3" WidthRequest="200" ></ui:EngineTabProperties>
            
         </Grid>
     </Grid>

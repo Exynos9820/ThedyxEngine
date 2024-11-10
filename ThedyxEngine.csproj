@@ -66,6 +66,9 @@
 
     <ItemGroup>
       <MauiXaml Remove="Platforms\Android\**" />
+      <MauiXaml Update="UI\EngineTabProperties.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
     </ItemGroup>
 
     <ItemGroup>
@@ -74,6 +77,10 @@
 
     <ItemGroup>
       <Compile Remove="Platforms\Android\**" />
+      <Compile Update="UI\EngineTabProperties.xaml.cs">
+        <DependentUpon>EngineTabProperties.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

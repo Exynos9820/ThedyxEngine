@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ThedyxEngine.UI.EngineTabProperties" BackgroundColor="Azure">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Name" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold" FontSize="16" TextColor="Black"/>
+            <Entry Grid.Column="1" HeightRequest="18" Margin="0"  VerticalOptions="Center" WidthRequest="110" x:Name="tbName" HorizontalOptions="End" TextColor="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="positionLabel" Text="Position:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition Width="34"/>
+                <ColumnDefinition Width="65"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" VerticalOptions="Center" Text="X:" x:Name="xPositionLabel" HorizontalOptions="Start" TextColor="Black"/>
+            <Entry Grid.Column="1" VerticalOptions="Center" HeightRequest="18" x:Name="tbXPosition" TextColor="Black"/>
+
+            <Label Grid.Column="2" VerticalOptions="Center"  Text="Y:" x:Name="yPositionLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black"/>
+            <Entry Grid.Column="3" VerticalOptions="Center" HeightRequest="18" x:Name="tbYPosition" TextColor="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Size:" VerticalOptions="Center" x:Name="sizeLabel" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="4" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="65"/>
+                <ColumnDefinition Width="34"/>
+                <ColumnDefinition Width="65"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" VerticalOptions="Center" Text="W:" x:Name="widthLabel" HorizontalOptions="Start" TextColor="Black"/>
+            <Entry Grid.Column="1" VerticalOptions="Center" HeightRequest="18" x:Name="tbWidth" TextColor="Black"/>
+
+            <Label Grid.Column="2" VerticalOptions="Center" Text="H:" x:Name="heightLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black"/>
+            <Entry Grid.Column="3" VerticalOptions="Center" HeightRequest="18" x:Name="tbHeight" TextColor="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="5" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" VerticalOptions="Center" Text="T, K°" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+            <Entry Grid.Column="1" VerticalOptions="Center" HeightRequest="18" WidthRequest="110" x:Name="tbTemperature" HorizontalOptions="End" TextColor="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="6" Padding="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" VerticalOptions="Center" Text="Material" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
+            <Picker Grid.Column="1"  HeightRequest="23" WidthRequest="110" x:Name="cbMaterial" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black"/>
+        </Grid>
+    </Grid>
+</ContentView>
