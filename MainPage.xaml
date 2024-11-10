@@ -2,30 +2,28 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:ThedyxEngine.UI"
-             x:Class="ThedyxEngine.MainPage"
-             Title="ThedyxEngine">
+             x:Class="ThedyxEngine.MainPage" Title="" Shell.NavBarIsVisible="False" Shell.FlyoutBehavior="Disabled">
 
     <!-- Main Grid with two rows and three columns that fill the entire screen -->
-    <Grid RowDefinitions="30,*"
+    <Grid RowDefinitions="50,*"
           ColumnDefinitions="Auto,*"
           HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand"
           MinimumWidthRequest="600"
           MinimumHeightRequest="400">
-
-        <!-- Placeholder for Top Panel -->
-        <BoxView Grid.Row="0" Grid.ColumnSpan="3" BackgroundColor="LightGray"
-                 HorizontalOptions="FillAndExpand" VerticalOptions="Fill" />
+        
+        <ui:EngineUIBar Grid.Row="0" x:Name="ControlPanel" Grid.ColumnSpan="3" BackgroundColor="LightGray"
+                        HorizontalOptions="FillAndExpand" VerticalOptions="Fill"></ui:EngineUIBar>
 
         <!-- Main content area with three columns: list, canvas, properties -->
         <Grid Grid.Row="1" ColumnDefinitions="200,*,200"
               HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-            <ui:EngineObjectsList x:Name="_engineObjectsList" Grid.Column="0" WidthRequest="200">
+            <ui:EngineObjectsList x:Name="ObjectsList" Grid.Column="0" WidthRequest="200">
                 <!-- Binding logic will go here -->
             </ui:EngineObjectsList>
             
-            <ui:EngineTabProperties x:Name="_engineTabProperties" Grid.Column="3" WidthRequest="200" ></ui:EngineTabProperties>
+            <ui:EngineTabProperties x:Name="TabProperties" Grid.Column="3" WidthRequest="200" ></ui:EngineTabProperties>
            
         </Grid>
     </Grid>

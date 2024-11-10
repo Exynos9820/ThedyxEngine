@@ -30,12 +30,12 @@ public partial class MainPage : ContentPage
         updateTimer.Start();
         ObjectsChanged();
 
-        _engineObjectsList.OnSelectedObjectChanged = SelectedObjectChanged;
-        //_controlPanel.DeleteSelected = SelectedObjectChanged;
-        //_controlPanel.UpdateUI = UpdateAll;
-        _engineObjectsList.OnDeleteObject = UpdateAllAfterChangeProperties;
-        _engineObjectsList.OnZoomToObject = ZoomToObject;
-        //_controlPanel.EngineModeChanged = EngineModeChanged;*/
+        ObjectsList.OnSelectedObjectChanged = SelectedObjectChanged;
+        ControlPanel.DeleteSelected = SelectedObjectChanged;
+        ControlPanel.UpdateUI = UpdateAll;
+        ObjectsList.OnDeleteObject = UpdateAllAfterChangeProperties;
+        ObjectsList.OnZoomToObject = ZoomToObject;
+        ControlPanel.EngineModeChanged = EngineModeChanged;
         
         _canvasManager = new CanvasManager();
         _gridDrawer = new GridDrawer();
@@ -87,36 +87,36 @@ public partial class MainPage : ContentPage
 
         private void EngineModeChanged() {
             if(Engine.Engine.Mode != Engine.Engine.EngineMode.Stopped) {
-                _engineObjectsList.Enable(false);
-                _engineTabProperties.Enable(false);
+                ObjectsList.Enable(false);
+                TabProperties.Enable(false);
             } else {
-                _engineObjectsList.Enable(true);
-                _engineTabProperties.Enable(true);
+                ObjectsList.Enable(true);
+                TabProperties.Enable(true);
             }
         }
 
         private void SelectedObjectChanged(EngineObject obj) {
             // Implement the logic to handle the selection change
             //_engineCanva.Update();
-            _engineTabProperties.SetObject(obj);
+            TabProperties.SetObject(obj);
 
-            if(obj == null) {  _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects()); return; }
+            if(obj == null) {  ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects()); return; }
 
             obj.PropertyChanged += (sender, args) => {
-                _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
-                _engineTabProperties.Update();
+                ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+                TabProperties.Update();
                 //_engineCanva.Update();
             };
         }
 
         private void UpdateAllAfterChangeProperties() {
-            _engineTabProperties.SetObject(null);
+            TabProperties.SetObject(null);
             UpdateAll();
         }
 
         public void UpdateAll() {
-            _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
-            _engineTabProperties.Update();
+            ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+            TabProperties.Update();
             //_engineCanva.Update();
         }
         
@@ -130,10 +130,10 @@ public partial class MainPage : ContentPage
             if(_objectsChanged) _objectsChanged = false;
 
             if(Engine.Engine.Mode != Engine.Engine.EngineMode.Running) 
-                _engineObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
-            /*_controlPanel.Update();
-            _engineCanva.Update();*/
-            _engineTabProperties.Update();
+                ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+            ControlPanel.Update();
+            //_engineCanva.Update();
+            TabProperties.Update();
 
         }
 }

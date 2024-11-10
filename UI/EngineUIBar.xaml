@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ThedyxEngine.UI.EngineUIBar">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Add Button with Options -->
+        <ImageButton Grid.Column="0" Margin="2" Source="add_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnAddButtonClicked" x:Name="AddButton"/>
+        
+        <!-- Save Button -->
+        <ImageButton Grid.Column="1" Margin="2" Source="save_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnSaveButtonClicked" x:Name="SaveButton"/>
+
+        <!-- Open Button -->
+        <ImageButton Grid.Column="2" Margin="0" Source="open_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnOpenButtonClicked" x:Name="OpenButton"/>
+
+        <!-- Clear Button -->
+        <ImageButton Grid.Column="3" Margin="0" Source="clear_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnClearButtonClicked" x:Name="ClearButton"/>
+
+        <!-- Start Button -->
+        <ImageButton Grid.Column="5" Padding="5" Source="start_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnStartButtonClicked" x:Name="StartButton"/>
+
+        <!-- Pause Button -->
+        <ImageButton Grid.Column="6" Padding="0,3,0, 3" Margin="0" Source="pause_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnPauseButtonClicked" x:Name="PauseButton"/>
+
+        <!-- Stop Button -->
+        <ImageButton Grid.Column="7" Padding="0" Source="stop_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnStopButtonClicked" x:Name="StopButton"/>
+
+        <!-- Reset Button -->
+        <ImageButton Grid.Column="8" Padding="0,1,0, 1" Source="reset_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnResetButtonClicked" x:Name="ResetButton"/>
+
+        <!-- Timer Label -->
+        <Label Grid.Column="9" Margin="5" Text="00:00:00" HorizontalOptions="Center" 
+               VerticalOptions="Center" FontAttributes="Bold" FontSize="20" x:Name="TimeLabel" />
+    </Grid>
+</ContentView>
