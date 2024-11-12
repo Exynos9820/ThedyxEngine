@@ -57,9 +57,9 @@ namespace ThedyxEngine.Engine.Managers {
             // Interpolate between the current and next color
             Color startColor = colors[index];
             Color endColor = colors[index + 1];
-            byte red = (byte)(startColor.Red + (endColor.Red - startColor.Red) * factor);
-            byte green = (byte)(startColor.Green + (endColor.Green - startColor.Green) * factor);
-            byte blue = (byte)(startColor.Blue + (endColor.Blue - startColor.Blue) * factor);
+            byte red = (byte)((startColor.Red + (endColor.Red - startColor.Red) * factor) * 256);  
+            byte green = (byte)((startColor.Green + (endColor.Green - startColor.Green) * factor) * 256);
+            byte blue = (byte)((startColor.Blue + (endColor.Blue - startColor.Blue) * factor) * 256);
 
             // Return the brush with the interpolated color
             return new SolidColorBrush(Color.FromRgb(red, green, blue));

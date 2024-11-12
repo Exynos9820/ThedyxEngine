@@ -2,29 +2,47 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:ThedyxEngine.UI"
-             x:Class="ThedyxEngine.MainPage" Title="" Shell.NavBarIsVisible="False" Shell.FlyoutBehavior="Disabled">
+             x:Class="ThedyxEngine.MainPage"
+             Title=""
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled">
 
     <!-- Main Grid with two rows and three columns that fill the entire screen -->
     <Grid RowDefinitions="50,*"
-          ColumnDefinitions="Auto,*"
+          ColumnDefinitions="200,*,200"
           HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand"
           MinimumWidthRequest="600"
           MinimumHeightRequest="400">
-        
-        <ui:EngineUIBar Grid.Row="0" x:Name="ControlPanel" Grid.ColumnSpan="3" BackgroundColor="LightGray"
-                        HorizontalOptions="FillAndExpand" VerticalOptions="Fill"></ui:EngineUIBar>
 
-        <!-- Main content area with three columns: list, canvas, properties -->
-        <Grid Grid.Row="1" ColumnDefinitions="200,*,200"
-              HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <!-- Top Control Panel that spans the full width -->
+        <ui:EngineUIBar Grid.Row="0" x:Name="ControlPanel" Grid.ColumnSpan="3"
+                        BackgroundColor="LightGray"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" />
 
-            <ui:EngineObjectsList x:Name="ObjectsList" Grid.Column="0" WidthRequest="200">
-                <!-- Binding logic will go here -->
-            </ui:EngineObjectsList>
-            
-            <ui:EngineTabProperties x:Name="TabProperties" Grid.Column="3" WidthRequest="200" ></ui:EngineTabProperties>
-           
+        <!-- Main content area -->
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="3"
+              ColumnDefinitions="200,*,200"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand">
+
+            <!-- Left Sidebar: Objects List -->
+            <ui:EngineObjectsList x:Name="ObjectsList" Grid.Column="0"
+                                  HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="FillAndExpand"
+                                  WidthRequest="200" />
+
+            <!-- Center Canvas Area -->
+            <GraphicsView x:Name="EngineGraphicsView" Grid.Column="1"/>
+
+            <!-- Right Sidebar: Properties Panel -->
+            <ui:EngineTabProperties x:Name="TabProperties" Grid.Column="2"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand"
+                                    WidthRequest="200" />
+
         </Grid>
     </Grid>
 </ContentPage>
