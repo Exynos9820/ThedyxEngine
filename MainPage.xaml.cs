@@ -1,6 +1,8 @@
 ﻿using System.Timers;
+using LukeMauiFilePicker;
 using ThedyxEngine.Engine;
 using ThedyxEngine.UI;
+using ThedyxEngine.Util;
 using Timer = System.Timers.Timer;
 
 namespace ThedyxEngine;
@@ -11,8 +13,11 @@ public partial class MainPage : ContentPage {
     private bool _objectsChanged = false;
     private readonly int _windowRefreshRate = 60;
     private EngineCanvas _engineCanvas;
-    public MainPage() {
+    public readonly IFilePickerService picker;
+
+    public MainPage(IFilePickerService picker) {
         InitializeComponent();
+        FileManager.Init(picker);
         log4net.Config.XmlConfigurator.Configure();
 
         // init engine(proccessor of the app with entity of main window)

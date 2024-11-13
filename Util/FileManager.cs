@@ -3,74 +3,73 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
+using LukeMauiFilePicker;
 
-namespace ThedyxEngine.Util {
-    /** 
+namespace ThedyxEngine.Util
+{
+    /**
      * \class FileManager
-     * \brief Manages the file operations.
-     * 
-     * The FileManager class provides methods for managing the file operations.
+     * \brief Manages file operations for saving and loading engine objects.
      */
-    public static class FileManager {
+    public static class FileManager
+    {
+        public static IFilePickerService Picker;
+        public static void Init(IFilePickerService picker) {
+            Picker = picker;
+        }
+        
         private static readonly ILog log = LogManager.GetLogger(typeof(FileManager));   // Logger
-
+        static readonly Dictionary<DevicePlatform, IEnumerable<string>> FileType = new()
+        {
+            {  DevicePlatform.Android, new[] { "text/*" } } ,
+            { DevicePlatform.iOS, new[] { "public.json", "public.plain-text" } },
+            { DevicePlatform.MacCatalyst, new[] { "public.json", "public.plain-text" } },
+            { DevicePlatform.WinUI, new[] { ".txt", ".json" } }
+        };
         /**
-         * Save to file
-         * \param path Path to save the file
-         */
-        public static void SaveToFile(string path) {
-            List<EngineObject> engineObjects = Engine.Engine.EngineObjectsManager.GetObjects();
-            List<string> jsonObjects = new List<string>();
+                 * Save to file with user-specified file path using LukeMauiFilePicker.
+                 */
+        public static async void Save()
+        {
+            var bytes = Encoding.UTF8.GetBytes("Hello World");
+            using var memory = new MemoryStream(bytes);
 
-            log.Info("Info: Starting saving.");
-
-            try {
-                foreach (var obj in engineObjects) {
-                    string json = obj.GetJsonRepresentation();
-                    jsonObjects.Add(json);
-                }
-            }catch(Exception e) {
-                log.Error("Error: " + e.Message);
-            }
-
-            string jsonOutput = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
-            File.WriteAllText(path, jsonOutput);
+            await Picker.SaveFileAsync(new("text.txt", memory)
+            {
+                AndroidMimeType = "text/plain",
+                WindowsFileTypes = ("Text files", new() { ".txt", })
+            });
         }
 
         /**
-         * Load from file
-         * \param path Path to load the file
+         * Load from file with user-specified file path using LukeMauiFilePicker.
          */
-        public static void LoadFromFile(string path) {
-            Engine.Engine.ClearSimulation();
-            log.Info("Info: Starting reading.");
+        static async Task OnFilesPickedAsync(IEnumerable<IPickFile> files)
+        {
+            var str = new StringBuilder();
 
-            string jsonInput = File.ReadAllText(path);
-            List<string> jsonObjects = JsonConvert.DeserializeObject<List<string>>(jsonInput);
+            foreach (var f in files)
+            {
+                using var s = await f.OpenReadAsync();
+                using var reader = new StreamReader(s);
 
-            List<EngineObject> engineObjects = new List<EngineObject>();
-            try {
-                foreach (var json in jsonObjects) {
-                    var jObject = JsonConvert.DeserializeObject<dynamic>(json);
-                    EngineObject engineObject = null;
-
-                    string type = jObject["Type"].Value;
-                    if (type == "GrainSquare") {
-                        engineObject = GrainSquare.FromJson(json);
-                    }
-
-                    if (engineObject != null) {
-                        engineObjects.Add(engineObject);
-                        Engine.Engine.EngineObjectsManager.AddObject(engineObject);
-                    }
-                }
-            }catch(Exception e) {
-                log.Error("Error: " + e.Message);
+                str.AppendLine(await reader.ReadToEndAsync());
             }
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+            });
+        }
+
+        public static async void PickOne()
+        {
+            var file = await Picker.PickFileAsync("Select a file", FileType);
+            if (file is null) { return; }
+
+            await OnFilesPickedAsync(new[] { file });
         }
     }
 }
