@@ -226,6 +226,7 @@ namespace ThedyxEngine.Engine {
          */
         public override void SetStartTemperature() {
             _currentTemperature = _simulationTemperature;
+            SetTemperatureForAllSquares();
             OnPropertyChanged(nameof(CurrentTemperature));
         }
     }
