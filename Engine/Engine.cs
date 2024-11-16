@@ -24,11 +24,10 @@ namespace ThedyxEngine.Engine{
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(Engine)); // log4net logger
         private static object?          _engineLock; // lock for the engine
-        public static ObjectsManager EngineObjectsManager = new(_engineLock); // manager for the engine objects
+        public static ObjectsManager? EngineObjectsManager; // manager for the engine objects
         private static MainPage?      _mainWindow; // main window
         private static TempoThread?     _engineThread; // engine thread
-        private static long             _lastUpdateTime = 0; // last update time
-        static int _frames = 0;     // frames counter
+        private static int _frames = 0;     // frames counter
         private static int _simulationRefreshRate = 60; // updates per second 
         private static long _simulationTime = 0; // time of the simulation in microseconds
         private static bool _optimize = true; // // should we optimize the engine by setting adjacent squares to be touching
