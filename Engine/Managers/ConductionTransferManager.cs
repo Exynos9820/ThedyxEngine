@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine.Managers {
 
@@ -48,7 +49,7 @@ namespace ThedyxEngine.Engine.Managers {
         private static void TranferHeatBetweenTwoSquares(GrainSquare sq1, GrainSquare sq2) {
             double temperatureDifference = sq1.CurrentTemperature - sq2.CurrentTemperature;
             double coeficient = MaterialManager.GetCoeficientFromMaterial(sq1, sq2);
-            double timeTransfer = Engine.EngineIntervalUpdate;
+            double timeTransfer = Const.EngineIntervalUpdate / 1000;
             double heatTransfer = coeficient  * temperatureDifference * timeTransfer;
             sq1.AddEnergyDelta(-heatTransfer);
             sq2.AddEnergyDelta(heatTransfer);

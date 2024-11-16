@@ -12,6 +12,8 @@ using Microsoft.Maui.Controls.Shapes;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
+using ThedyxEngine.Util;
+
 namespace ThedyxEngine.Engine
 {
     /**
@@ -29,7 +31,8 @@ namespace ThedyxEngine.Engine
     {
         private double _energyDelta = 0; // current energy delta
         public event PropertyChangedEventHandler? PositionChanged; // event triggered when position changes
-        public List<GrainSquare> AdjacentSquares = []; // list of adjacent squares
+        private List<GrainSquare> _adjacentSquares = []; // list of adjacent squares
+        private HashSet<GrainSquare> _radiationExchangeSquares = [];
 
         private static readonly ILog log = LogManager.GetLogger(typeof(GrainSquare));
 
@@ -144,7 +147,7 @@ namespace ThedyxEngine.Engine
          */
         public void ApplyEnergyDelta()
         {
-            CurrentTemperature = _currentTemperature + _energyDelta / Engine.GridStep / Engine.GridStep /
+            CurrentTemperature = _currentTemperature + _energyDelta / Const.GridStep / Const.GridStep /
                 _material.SpecificHeatCapacity / _material.Density;
             CurrentTemperature = Math.Max(0, CurrentTemperature);
             _energyDelta = 0;
@@ -287,25 +290,31 @@ namespace ThedyxEngine.Engine
          * \brief Adds an adjacent square to the grain square.
          * \param square The adjacent square to add.
          */
-        public void AddAdjacentSquare(GrainSquare square)
-        {
-            AdjacentSquares.Add(square);
+        public void AddAdjacentSquare(GrainSquare square) {
+            _adjacentSquares.Add(square);
         }
 
         /**
-         * \brief Clears the list of adjacent squares.
+         * \brief Adds a square to the squares to exchange with radiation heat.
+         * \param square The square to add.
          */
-        public void ClearAdjacentSquares()
-        {
-            AdjacentSquares.Clear();
+        public void AddRadiationExchangeSquare(GrainSquare square) {
+            _radiationExchangeSquares.Add(square);
+        }
+
+        /**
+         * \brief Clears the list of squares to optimize performance
+         */
+        public void ClearOptimizationSquares() {
+            _adjacentSquares.Clear();
+            _radiationExchangeSquares.Clear();
         }
 
         /**
          * \brief Gets the external squares of the grain square.
          * \returns A list of external squares.
          */
-        public override List<GrainSquare> GetExternalSquares()
-        {
+        public override List<GrainSquare> GetExternalSquares() {
             return new List<GrainSquare> { this };
         }
 
@@ -313,9 +322,17 @@ namespace ThedyxEngine.Engine
          * \brief Gets the adjacent squares of the grain square.
          * \returns A list of adjacent squares.
          */
-        public List<GrainSquare> GetAdjacentSquares()
-        {
-            return AdjacentSquares;
+        public List<GrainSquare> GetAdjacentSquares() {
+            return _adjacentSquares;
         }
+        
+        /**
+         * \brief Gets the adjacent squares of the grain square.
+         * \returns A list of adjacent squares.
+         */
+        public HashSet<GrainSquare> GetRadiationSquares() {
+            return _radiationExchangeSquares;
+        }
+        
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ThedyxEngine.Engine.Managers {
+﻿namespace ThedyxEngine.Engine.Managers {
     /**
      * \class OptimizationManager
      * \brief Manages the optimization of the engine
@@ -20,10 +14,13 @@ namespace ThedyxEngine.Engine.Managers {
         public static void Optimize(List<EngineObject> objects) {
             ClearOptimization(objects);
             OptimizeTouching(objects);
+            // Radiation optimization can be called ONLY after founding touching squares, not before
+            // It add to the list touching squares too
+            RadiationOptimization.Optimize(objects);
         }
 
         /**
-         * Fill adjuscent squares for two lists of squares
+         * Fill adjacent squares for two lists of squares
          * \param squares1 first list of squares
          * \param squares2 second list of squares
          */
@@ -32,14 +29,16 @@ namespace ThedyxEngine.Engine.Managers {
                 foreach(var square2 in squares2) {
                     if (square1.AreTouching(square2)) {
                         square1.AddAdjacentSquare(square2);
+                        square1.AddRadiationExchangeSquare(square2);
                         square2.AddAdjacentSquare(square1);
+                        square2.AddRadiationExchangeSquare(square1);
                     }
                 }
             }
         }
 
         /**
-         * Optimize touching objects, by setting adjuscent squares for every square of an object
+         * Optimize touching objects, by setting adjacent squares for every square of an object
          * \param objects list of objects
          */
         private static void OptimizeTouching(List<EngineObject> objects) {
@@ -57,12 +56,12 @@ namespace ThedyxEngine.Engine.Managers {
          * Clear optimization
          * \param objects list of objects
          */
-        public static void ClearOptimization(List<EngineObject> objects) {
+        private static void ClearOptimization(List<EngineObject> objects) {
             foreach(var obj in objects) {
                 List<GrainSquare> squares = obj.GetSquares();
-                // clear adjuscent squares
+                // clear adjacent squares
                 foreach(var square in squares) {
-                    square.ClearAdjacentSquares();
+                    square.ClearOptimizationSquares();
                 }
             }
         }

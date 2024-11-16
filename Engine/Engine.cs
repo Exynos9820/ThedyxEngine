@@ -22,20 +22,18 @@ namespace ThedyxEngine.Engine{
             Paused
         }
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(Engine)); // log4net logger
-        public static readonly double GridStep = 0.001; // grid step in meters 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Engine)); // log4net logger
         private static object?          _engineLock; // lock for the engine
         public static ObjectsManager EngineObjectsManager = new(_engineLock); // manager for the engine objects
         private static MainPage?      _mainWindow; // main window
         private static TempoThread?     _engineThread; // engine thread
         private static long             _lastUpdateTime = 0; // last update time
-        public static double            EngineIntervalUpdate = 0; // Interval between engine updates
-        static int frames = 0;     // frames counter
+        static int _frames = 0;     // frames counter
         private static int _simulationRefreshRate = 60; // updates per second 
         private static long _simulationTime = 0; // time of the simulation in microseconds
-        public static bool Optimize = true; // // should we optimize the engine by setting adjacent squares to be touching
+        private static bool _optimize = true; // // should we optimize the engine by setting adjacent squares to be touching
         public static EngineMode Mode { get; private set; } = EngineMode.Stopped; // engine mode
-        public static readonly double AirTemperature = 293; // air temperature in Kelvin
+        public const double AirTemperature = 293; // air temperature in Kelvin
 
         /**
          * \brief Initialize the engine
@@ -48,7 +46,7 @@ namespace ThedyxEngine.Engine{
             //SimpleExamples.RectangleWithTempDifference(15, 15);
             SimpleExamples.TwoEngineRectangles();
             _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
-            log.Info("Engine initialized");
+            Log.Info("Engine initialized");
         }
 
         /*
@@ -58,11 +56,10 @@ namespace ThedyxEngine.Engine{
         public static void Start() {
             if(_engineLock == null)         throw new InvalidOperationException("Engine lock is not initialized");
             lock (_engineLock) {
-                log.Info("Engine started");
-                prepareObjects();
+                Log.Info("Engine started");
+                PrepareObjects();
                 Mode = EngineMode.Running;
-                frames = 0;
-                EngineIntervalUpdate = 1/(double)Util.SystemInfo.GetRefreshRate();
+                _frames = 0;
                 _engineThread = new TempoThread("EngineThread", Run);
                 _engineThread.SetPriority(ThreadPriority.Highest);
                 _engineThread.Start();
@@ -73,12 +70,12 @@ namespace ThedyxEngine.Engine{
         /**
          * \brief Prepare objects for the simulation before starting it
          */
-        private static void prepareObjects() {
+        private static void PrepareObjects() {
             if(_engineLock == null)         throw new InvalidOperationException("Engine lock is not initialized");
 
             lock (_engineLock) {
                 EngineObjectsManager.ResetObjectsTemperature();
-                if (Optimize) {
+                if (_optimize) {
                     ObjectsOptimizationManager.Optimize(EngineObjectsManager.GetObjects());
                 }
             }
@@ -108,20 +105,18 @@ namespace ThedyxEngine.Engine{
                 EngineObjectsManager.AppplyEnergyDeltaObjects();
                 
 
-                double elapsedTimeMs = stopwatch.ElapsedTicks/10000;
+                double elapsedTimeMs = stopwatch.ElapsedMilliseconds;
                 if (msPerFrame - elapsedTimeMs < 0) {
-                    log.Info($"Simulation is too slow, time is {elapsedTimeMs - msPerFrame} ms");
+                    Log.Info($"Simulation is too slow, time is {elapsedTimeMs - msPerFrame} ms");
                 }
+                
 
-                while (msPerFrame - elapsedTimeMs > 0) {
-                    elapsedTimeMs = stopwatch.ElapsedTicks/10000;
-                }
+                while (stopwatch.ElapsedMilliseconds < Const.EngineIntervalUpdate) { }
                 stopwatch.Stop();
 
-
                 lock (_engineLock) {
-                    frames++;
-                    _simulationTime = (int)(frames * msPerFrame);
+                    _frames++;
+                    _simulationTime = (int)(_frames * Const.EngineIntervalUpdate);
                 }
             }
         }
@@ -152,7 +147,7 @@ namespace ThedyxEngine.Engine{
         public static void Stop() {
             if (_engineLock == null)        throw new InvalidOperationException("Engine lock is not initialized");
             lock (_engineLock) {
-                log.Info("Engine stopped");
+                Log.Info("Engine stopped");
                 _simulationTime = 0;
                 Mode = EngineMode.Stopped;
             }
@@ -164,7 +159,7 @@ namespace ThedyxEngine.Engine{
         public static void Pause() {
             if (_engineLock == null)        throw new InvalidOperationException("Engine lock is not initialized");
             lock (_engineLock) {
-                log.Info("Engine paused");
+                Log.Info("Engine paused");
                 Mode = EngineMode.Paused;
             }
         }
@@ -188,7 +183,7 @@ namespace ThedyxEngine.Engine{
             if (Mode == EngineMode.Running) throw new InvalidOperationException("Cannot reset simulation while running");
 
             EngineObjectsManager.ResetObjectsTemperature();
-            log.Info("Simulation reset");
+            Log.Info("Simulation reset");
             _mainWindow.UpdateAll();
         }
 
@@ -201,7 +196,7 @@ namespace ThedyxEngine.Engine{
             lock (_engineLock) {
                 EngineObjectsManager.ClearObjects();
             }
-            log.Info("All objects cleared");
+            Log.Info("All objects cleared");
             _mainWindow.UpdateAll();
         }
 
