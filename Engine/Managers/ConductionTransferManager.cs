@@ -52,7 +52,8 @@ namespace ThedyxEngine.Engine.Managers {
             double timeTransfer = Const.EngineIntervalUpdate / 1000;
             double heatTransfer = coeficient  * temperatureDifference * timeTransfer;
             sq1.AddEnergyDelta(-heatTransfer);
-            sq2.AddEnergyDelta(heatTransfer);
+            // removed apply heat to the second square, because this will be called for the second square
+            //sq2.AddEnergyDelta(heatTransfer);
         }
 
 

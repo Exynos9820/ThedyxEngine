@@ -14,8 +14,6 @@
         public static void Optimize(List<EngineObject> objects) {
             ClearOptimization(objects);
             OptimizeTouching(objects);
-            // Radiation optimization can be called ONLY after founding touching squares, not before
-            // It add to the list touching squares too
             RadiationOptimization.Optimize(objects);
         }
 

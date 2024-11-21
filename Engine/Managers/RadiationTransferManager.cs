@@ -45,7 +45,8 @@ namespace ThedyxEngine.Engine.Managers{
 
             // Apply the energy changes to both squares
             square1.AddEnergyDelta(-energyRadiationLoss / 2);
-            square2.AddEnergyDelta(energyRadiationLoss / 2);
+            // removed apply heat to the second square, because this will be called for the second square
+            //square2.AddEnergyDelta(energyRadiationLoss / 2);
         }
 
         /**

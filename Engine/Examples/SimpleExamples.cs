@@ -20,12 +20,12 @@ namespace ThedyxEngine.Engine.Examples {
         }
 
         public static void TwoEngineRectangles() {
-            EngineRectangle e1 = new EngineRectangle("Rectangle1", 100, 100);
+            EngineRectangle e1 = new EngineRectangle("Rectangle1", 200, 200);
             e1.Position = new Point(0, 0);
             Engine.EngineObjectsManager.AddObject(e1);
-            EngineRectangle e2 = new EngineRectangle("Rectangle2", 55, 55);
+            EngineRectangle e2 = new EngineRectangle("Rectangle2", 85, 85);
             e2.SimulationTemperature = 1000;
-            e2.Position = new Point(100, 0);
+            e2.Position = new Point(200, 0);
             Engine.EngineObjectsManager.AddObject(e2);
         }
 

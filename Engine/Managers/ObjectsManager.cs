@@ -108,9 +108,22 @@ namespace ThedyxEngine.Engine.Managers{
         }
 
         /**
+         * Apply the energy delta for the selected objects
+         * \param objects List of objects
+         */
+        public void ApplyEnergyDelta(List<EngineObject> objects) {
+            foreach (var obj in objects) {
+                List<GrainSquare> objsquares = obj.GetSquares();
+                foreach (var square in objsquares) {
+                    square.ApplyEnergyDelta();
+                }
+            }
+        }
+
+        /**
          * Applies energy delta after the frame
          */
-        public void AppplyEnergyDeltaObjects() {
+        public void ApplyEnergyDeltaObjects() {
             for (int i = 0; i < _objects.Count; i++) {
                 List<GrainSquare> list = _objects[i].GetSquares();
                 for (int j = 0; j < list.Count; j++) {

@@ -33,6 +33,8 @@ namespace ThedyxEngine.Engine
         public event PropertyChangedEventHandler? PositionChanged; // event triggered when position changes
         private List<GrainSquare> _adjacentSquares = []; // list of adjacent squares
         private HashSet<GrainSquare> _radiationExchangeSquares = [];
+        // lock for applying energy delta
+        private readonly object _energyLock = new();
 
         private static readonly ILog log = LogManager.GetLogger(typeof(GrainSquare));
 
@@ -139,7 +141,8 @@ namespace ThedyxEngine.Engine
          */
         public void AddEnergyDelta(double energyDelta)
         {
-            _energyDelta += energyDelta;
+            lock (_energyLock)
+                _energyDelta += energyDelta;
         }
 
         /**
@@ -147,10 +150,13 @@ namespace ThedyxEngine.Engine
          */
         public void ApplyEnergyDelta()
         {
-            CurrentTemperature = _currentTemperature + _energyDelta / Const.GridStep / Const.GridStep /
-                _material.SpecificHeatCapacity / _material.Density;
-            CurrentTemperature = Math.Max(0, CurrentTemperature);
-            _energyDelta = 0;
+            // lock to be accessed by one thread at a time
+            lock (_energyLock) {
+                CurrentTemperature = _currentTemperature + _energyDelta / Const.GridStep / Const.GridStep /
+                    _material.SpecificHeatCapacity / _material.Density;
+                CurrentTemperature = Math.Max(0, CurrentTemperature);
+                _energyDelta = 0;
+            }
         }
 
         /**
