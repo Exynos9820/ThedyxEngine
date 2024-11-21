@@ -187,12 +187,63 @@ namespace ThedyxEngine.Engine {
         
         public override List<Polygon> GetPolygons(CanvasManager canvasManager) {
             List<Polygon> polygons = new List<Polygon>();
-            foreach (GrainSquare sq in _grainSquares) {
+            /*foreach (GrainSquare sq in _grainSquares) {
                 //awful code, but it was made for inheritance and each grain square has only one polygon
                 if(sq.IsVisible(canvasManager))
                    polygons.Add(sq.GetPolygons(canvasManager)[0]);
+            }*/
+            
+            //  understand how far are we from canvas
+            // we will check it by width
+            var canvasWidth = canvasManager.CurrentRightXIndex - canvasManager.CurrentLeftXIndex;
+            var groupBy = canvasWidth switch {
+                >= 50 and < 200 => 2,
+                >= 200 and < 500 => 5,
+                >= 1000 and < 2000 => 20,
+                >= 2000 => 50,
+                _ => 1
+            };
+            
+            for(var i = 0; i < Size.X; i+= groupBy) {
+                for(var j = 0; j < Size.Y; j+= groupBy) {
+                    // iterate through all squares in this group, take average temperature and create polygon
+                    var points = new PointCollection();
+                    var temperature = 0.0;
+                    // then we take the position of the first square and create a polygon
+                    for(var x = i; x < i + groupBy && x < Size.X; x++) {
+                        for(var y = j; y < j + groupBy && y < Size.Y; y++) {
+                            var square = _grainSquares[x * (int)Size.Y + y];
+                            temperature += square.CurrentTemperature;
+                        }
+                    }
+                    // check if the last group was smaller than groupBy
+                    var groupByX = Math.Min(groupBy, Size.X - i);
+                    var groupByY = Math.Min(groupBy, Size.Y - j);
+                    temperature /= groupByX * groupByY;
+                    // get the position of the first square
+                    var firstSquare = _grainSquares[i * (int)Size.Y + j];
+                    points.Add(new Point(firstSquare.Position.X, firstSquare.Position.Y));
+                    // get the size of the group and create a bigger square
+                    points.Add(new Point(firstSquare.Position.X + groupByX, firstSquare.Position.Y));
+                    points.Add(new Point(firstSquare.Position.X + groupByX, firstSquare.Position.Y + groupByY));
+                    points.Add(new Point(firstSquare.Position.X, firstSquare.Position.Y + groupByY));
+                    // add the polygon to the list
+                    var polygon = new Polygon(points);
+                    if (!IsSelected)
+                        polygon.Fill = ColorManager.GetColorFromTemperature(temperature);
+                    else
+                    {
+                        polygon.Stroke = SolidColorBrush.Black;
+                        polygon.StrokeThickness = 3;
+                        polygon.Fill = ColorManager.GetColorFromTemperature(temperature);
+                        if (Engine.Mode != Engine.EngineMode.Running)
+                            polygon.Opacity = 0.5;
+                    }
+                    polygons.Add(polygon);
+                }
             }
-
+            
+            
             return polygons;
         }
 
@@ -226,7 +277,6 @@ namespace ThedyxEngine.Engine {
          */
         public override void SetStartTemperature() {
             _currentTemperature = _simulationTemperature;
-            SetTemperatureForAllSquares();
             OnPropertyChanged(nameof(CurrentTemperature));
         }
     }
