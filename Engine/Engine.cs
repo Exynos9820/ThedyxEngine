@@ -92,7 +92,7 @@ namespace ThedyxEngine.Engine{
             // now we need to divide all the work between the cores
             // by dividing all the objects between the cores
             List<List<EngineObject>> objectsToProcess = new List<List<EngineObject>>();
-            int objectsPerCore = EngineObjectsManager.GetObjects().Count / coresToUse;
+            int objectsPerCore = Math.Max(EngineObjectsManager.GetObjects().Count / coresToUse, 1);
             for (int i = 0; i < coresToUse; i++) {
                 objectsToProcess.Add(new List<EngineObject>());
                 // add objects to the list
