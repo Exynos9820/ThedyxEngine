@@ -227,6 +227,7 @@ namespace ThedyxEngine.Engine{
             if (Mode == EngineMode.Running) throw new InvalidOperationException("Cannot reset simulation while running");
 
             EngineObjectsManager.ResetObjectsTemperature();
+            _simulationTime = 0;
             Log.Info("Simulation reset");
             _mainWindow.UpdateAll();
         }

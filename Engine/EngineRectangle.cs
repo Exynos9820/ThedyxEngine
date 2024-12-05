@@ -140,9 +140,7 @@ namespace ThedyxEngine.Engine {
             }
 
             if(propertyName == "Size")      SetSquaresForShape();
-
-            if(propertyName == "SimulationTemperature")   SetTemperatureForAllSquares();
-
+            
             if (propertyName == "Position") SetSquaresForShape();
 
             // call base method
@@ -278,6 +276,7 @@ namespace ThedyxEngine.Engine {
         public override void SetStartTemperature() {
             _currentTemperature = _simulationTemperature;
             OnPropertyChanged(nameof(CurrentTemperature));
+            SetTemperatureForAllSquares();
         }
     }
 
