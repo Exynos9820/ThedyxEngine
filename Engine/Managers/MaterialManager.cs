@@ -25,14 +25,43 @@ namespace ThedyxEngine.Engine.Managers {
         /**
          * Populate the materials with base materials
          */
+        // https://www.thermoworks.com/emissivity-table/?srsltid=AfmBOopr9aZ1nes5l5xnvluHzu6TTiJtLAQOXSMWJnuCAe5oc_aQNfxm
+        // https://en.wikipedia.org/wiki/Density
         private static void populateWithBaseMaterials() {
-            Material m1 = new Material();
-            m1.Name = "Aluminium";
-            m1.isBaseMaterial = true;
-            m1.SpecificHeatCapacity = 900;
-            m1.Density = 2700;
-            m1.Emmisivity = 0.03;
+            var m1 = new Material {
+                Name = "Aluminium",
+                isBaseMaterial = true,
+                SpecificHeatCapacity = 887,
+                Density = 2700,
+                Emmisivity = 0.05
+            };
             Materials.Add(m1);
+            var m2 = new Material {
+                Name = "Solid White Plastic",
+                isBaseMaterial = true,
+                SpecificHeatCapacity = 1300,
+                Density = 1000,
+                Emmisivity = 0.84
+            };
+            Materials.Add(m2);
+            
+            var m3 = new Material {
+                Name = "Glass",
+                isBaseMaterial = true,
+                SpecificHeatCapacity = 792,
+                Density = 2500,
+                Emmisivity = 0.92
+            };
+            Materials.Add(m3);
+            
+            var m4 = new Material {
+                Name = "Copper: oxidized",
+                isBaseMaterial = true,
+                SpecificHeatCapacity = 385,
+                Density = 8940,
+                Emmisivity = 0.65
+            };
+            Materials.Add(m4);
         }
 
 
