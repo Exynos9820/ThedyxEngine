@@ -101,8 +101,15 @@ namespace ThedyxEngine.Engine
         public Material Material
         {
             get => _material;
-            set { _material = value; }
+            set 
+            {
+                _material = value;  
+                SetMaterialProperties();
+            }
         }
+        
+        /// Sets the material properties of the object.
+        protected abstract void SetMaterialProperties();
 
         /// Gets or sets the current temperature.
         public double CurrentTemperature

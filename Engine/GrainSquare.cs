@@ -96,7 +96,12 @@ namespace ThedyxEngine.Engine
             _cachedPointC = new(Position.X, Position.Y - 1);
             _cachedPointD = new(Position.X + 1, Position.Y - 1);
         }
-
+        
+        /**
+         * Sets the material of the grain square. Does nothing for grain squares.
+         */
+        protected override void SetMaterialProperties() { }
+        
         /**
          * Gets or sets the position of the grain square.
          */

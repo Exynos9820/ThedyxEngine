@@ -50,6 +50,7 @@ namespace ThedyxEngine.Engine {
                     square.Position = new Point(_position.X + i, _position.Y + j);
                     square.CurrentTemperature = _simulationTemperature;
                     square.SimulationTemperature = _simulationTemperature;
+                    square.Material = _material;
                     _grainSquares.Add(square);
                     if (i == 0 || j == 0 || i == Size.X - 1 || j == Size.Y - 1) {
                         _externalSquares.Add(square);
@@ -133,18 +134,22 @@ namespace ThedyxEngine.Engine {
          */
         protected override void OnPropertyChanged(string propertyName) {
 
-            if (propertyName == "Material") {
-                foreach (var square in _grainSquares) {
-                    square.Material = _material;
-                }
-            }
-
             if(propertyName == "Size")      SetSquaresForShape();
             
             if (propertyName == "Position") SetSquaresForShape();
 
             // call base method
             base.OnPropertyChanged(propertyName);
+        }
+        
+        /**
+         * \brief Sets the material properties of the object.
+         */
+        protected override void SetMaterialProperties() {
+            if (_grainSquares == null) return;
+            foreach (var square in _grainSquares) {
+                square.Material = _material;
+            }
         }
 
         /**

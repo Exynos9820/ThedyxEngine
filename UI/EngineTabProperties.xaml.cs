@@ -167,7 +167,8 @@ namespace ThedyxEngine.UI
         private void OnMaterialChanged(object sender, EventArgs e)
         {
             if (_selectedObject == null) return;
-            _selectedObject.Material = (Material)cbMaterial.SelectedItem;
+            if (cbMaterial.SelectedItem != null)
+                _selectedObject.Material = (Material)cbMaterial.SelectedItem;
         }
     }
 }
