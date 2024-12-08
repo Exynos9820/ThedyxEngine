@@ -35,6 +35,7 @@ public partial class MainPage : ContentPage {
         ObjectsList.OnSelectedObjectChanged = SelectedObjectChanged;
         ControlPanel.DeleteSelected = SelectedObjectChanged;
         ControlPanel.UpdateUI = UpdateAll;
+        ControlPanel.MainPage = this;
         ObjectsList.OnDeleteObject = UpdateAllAfterChangeProperties;
         ObjectsList.OnZoomToObject = ZoomToObject;
         ControlPanel.EngineModeChanged = EngineModeChanged;

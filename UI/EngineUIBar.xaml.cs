@@ -3,6 +3,8 @@ using System;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Util;
+using CommunityToolkit.Maui.Views;
+using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI
 {
@@ -12,6 +14,7 @@ namespace ThedyxEngine.UI
         public Action? UpdateUI;
         public Action<EngineObject>? DeleteSelected;
         public Action? EngineModeChanged;
+        public MainPage? MainPage;
 
         public EngineUIBar() {
             InitializeComponent();
@@ -97,19 +100,17 @@ namespace ThedyxEngine.UI
             string action = await Application.Current.MainPage.DisplayActionSheet("Add Item", "Cancel", null, "Grainsquare", "Rectangle", "Circle");
             switch (action) {
                 case "Grainsquare":
-                    AddSquare();
+                    AddObject(ObjectType.GrainSquare);
                     break;
                 case "Rectangle":
-                    // Handle Rectangle selection if enabled
-                    break;
-                case "Circle":
-                    // Handle Circle selection if enabled
+                    AddObject(ObjectType.Rectangle);
                     break;
             }
         }
 
-        private void AddSquare() {
-            ///TODO: Logic to add a GrainSquare
+        private void AddObject(ObjectType objectType) {
+            var createPopup = new CreateObjectPopup(objectType);
+            this.MainPage?.ShowPopup(createPopup);
             UpdateUI?.Invoke();
         }
 
