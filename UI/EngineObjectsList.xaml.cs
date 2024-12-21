@@ -20,7 +20,11 @@ namespace ThedyxEngine.UI
         // Method to update the list of objects
         public void Update(List<EngineObject> objects)
         {
+            EngineCollectionView.ItemsSource = null;
             EngineCollectionView.ItemsSource = objects;
+            if (!objects.Contains(_currentSelectedEngineObject)) {
+                _currentSelectedEngineObject = null;
+            }
         }
 
         // Method to enable or disable the control

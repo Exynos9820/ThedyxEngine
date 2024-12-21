@@ -6,25 +6,24 @@ using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI
 {
-    public partial class EngineTabProperties : ContentView
-    {
+    public partial class EngineTabProperties : ContentView {
         private EngineObject? _selectedObject;
         private bool isEnabled = true;
-
-        public EngineTabProperties()
-        {
+        public Action OnObjectChange;
+        
+        public EngineTabProperties() {
             InitializeComponent();
             // On Loaded event, we need to update the properties tab
             this.Loaded += (sender, args) => Update();
         }
 
-        public void Update()
-        {
-            if (_selectedObject == null)
-            {
+        public void Update() {
+            if (_selectedObject == null) {
                 SetFieldsEnabled(false);
+                DeleteButton.IsEnabled = false;
                 return;
             }
+            DeleteButton.IsEnabled = true;
 
             ClearFields();
             if (isEnabled)
@@ -33,17 +32,14 @@ namespace ThedyxEngine.UI
             SetObjectParameters();
         }
 
-        public void Enable(bool IsEnabled)
-        {
+        public void Enable(bool IsEnabled) {
             isEnabled = IsEnabled;
-            if (!isEnabled)
-            {
+            if (!isEnabled) {
                 SetFieldsEnabled(false);
             }
         }
 
-        private void SetObjectParameters()
-        {
+        private void SetObjectParameters() {
             if (_selectedObject == null) return;
 
             tbName.Text = _selectedObject.Name;
@@ -57,15 +53,13 @@ namespace ThedyxEngine.UI
             cbMaterial.SelectedItem = _selectedObject.Material;
         }
 
-        public void SetObject(EngineObject obj)
-        {
+        public void SetObject(EngineObject obj) {
             ClearFields();
             _selectedObject = obj;
             Update();
         }
 
-        private void SetFieldsEnabled(bool enabled)
-        {
+        private void SetFieldsEnabled(bool enabled) {
             tbName.IsEnabled = enabled;
             tbTemperature.IsEnabled = enabled;
             tbXPosition.IsEnabled = enabled;
@@ -75,8 +69,7 @@ namespace ThedyxEngine.UI
             cbMaterial.IsEnabled = enabled;
         }
 
-        private void ClearFields()
-        {
+        private void ClearFields() {
             tbName.Text = "";
             tbTemperature.Text = "";
             tbXPosition.Text = "";
@@ -86,16 +79,13 @@ namespace ThedyxEngine.UI
             cbMaterial.SelectedIndex = -1;
         }
 
-        private async void ShowErrorMessageBox(string text)
-        {
+        private async void ShowErrorMessageBox(string text) {
             await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
         }
 
-        private void OnNameCompleted(object sender, EventArgs e)
-        {
+        private void OnNameCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (_selectedObject.Name != tbName.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(tbName.Text))
-            {
+            if (_selectedObject.Name != tbName.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(tbName.Text)) {
                 ShowErrorMessageBox("Name is not available");
                 tbName.BackgroundColor = Colors.Red;
                 return;
@@ -104,71 +94,70 @@ namespace ThedyxEngine.UI
             tbName.BackgroundColor = Colors.White;
         }
 
-        private void OnTemperatureCompleted(object sender, EventArgs e)
-        {
+        private void OnTemperatureCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (double.TryParse(tbTemperature.Text, out double temperature))
-            {
+            if (double.TryParse(tbTemperature.Text, out double temperature)) {
                 _selectedObject.SimulationTemperature = temperature;
                 tbTemperature.BackgroundColor = Colors.White;
             }
-            else
-            {
+            else {
                 tbTemperature.BackgroundColor = Colors.Red;
             }
+            OnObjectChange?.Invoke();
         }
 
-        private void OnXPositionCompleted(object sender, EventArgs e)
-        {
+        private void OnXPositionCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (double.TryParse(tbXPosition.Text, out double x))
-            {
+            if (double.TryParse(tbXPosition.Text, out double x)) {
                 _selectedObject.Position = new Microsoft.Maui.Graphics.Point(x, _selectedObject.Position.Y);
             }
+            OnObjectChange?.Invoke();
         }
 
-        private void OnYPositionCompleted(object sender, EventArgs e)
-        {
+        private void OnYPositionCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (double.TryParse(tbYPosition.Text, out double y))
-            {
+            if (double.TryParse(tbYPosition.Text, out double y)) {
                 _selectedObject.Position = new Microsoft.Maui.Graphics.Point(_selectedObject.Position.X, y);
             }
+            OnObjectChange?.Invoke();
         }
 
-        private void OnHeightCompleted(object sender, EventArgs e)
-        {
+        private void OnHeightCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (_selectedObject.GetObjectType() == ObjectType.GrainSquare)
-            {
+            if (_selectedObject.GetObjectType() == ObjectType.GrainSquare) {
                 tbHeight.Text = "1";
             }
 
-            if (double.TryParse(tbHeight.Text, out double height))
-            {
+            if (double.TryParse(tbHeight.Text, out double height)) {
                 _selectedObject.Size = new Microsoft.Maui.Graphics.Point(_selectedObject.Size.X, height);
             }
+            OnObjectChange?.Invoke();
         }
         
-        private void OnWidthCompleted(object sender, EventArgs e)
-        {
+        private void OnWidthCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (_selectedObject.GetObjectType() == ObjectType.GrainSquare)
-            {
+            if (_selectedObject.GetObjectType() == ObjectType.GrainSquare) {
                 tbHeight.Text = "1";
             }
 
-            if (double.TryParse(tbWidth.Text, out double width))
-            {
+            if (double.TryParse(tbWidth.Text, out double width)) {
                 _selectedObject.Size = new Microsoft.Maui.Graphics.Point(width, _selectedObject.Size.Y);
             }
+            OnObjectChange?.Invoke();
         }
 
-        private void OnMaterialChanged(object sender, EventArgs e)
-        {
+        private void OnMaterialChanged(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (cbMaterial.SelectedItem != null)
                 _selectedObject.Material = (Material)cbMaterial.SelectedItem;
+        }
+
+        private void OnDeleteButtonClicked(object sender, EventArgs e) {
+            if(Engine.Engine.IsRunning()) return;
+            ClearFields();
+            Engine.Engine.EngineObjectsManager.RemoveObject(_selectedObject);
+            _selectedObject = null;
+            OnObjectChange?.Invoke();
         }
     }
 }

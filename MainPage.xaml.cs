@@ -39,11 +39,10 @@ public partial class MainPage : ContentPage {
         ObjectsList.OnDeleteObject = UpdateAllAfterChangeProperties;
         ObjectsList.OnZoomToObject = ZoomToObject;
         ControlPanel.EngineModeChanged = EngineModeChanged;
-
         _engineCanvas = new EngineCanvas(this);
         EngineGraphicsView.Drawable = _engineCanvas;
         EngineGraphicsView.BackgroundColor = Colors.White;
-
+        TabProperties.OnObjectChange = UpdateAll;
         
 #if MACCATALYST
         // Set up pinch gesture for zooming

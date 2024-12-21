@@ -11,6 +11,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Padding="5,0,0,0">
@@ -92,6 +93,10 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" VerticalOptions="Center" Text="Material" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
             <Picker Grid.Column="1" HeightRequest="23" WidthRequest="110" x:Name="cbMaterial" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnMaterialChanged"/>
+        </Grid>
+        
+        <Grid Grid.Row="7" Padding="10,10,0,0">
+            <Button Text="Delete" x:Name="DeleteButton" Clicked="OnDeleteButtonClicked" Width="50" HorizontalOptions="End"> </Button>
         </Grid>
     </Grid>
 </ContentView>
