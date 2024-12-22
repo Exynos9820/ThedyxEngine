@@ -22,7 +22,7 @@ namespace ThedyxEngine.Engine {
 
         public double Emmisivity { get; set; } /// Gets or sets the emissivity.
 
-
+        public Color MaterialColor { get; set; } /// Gets or sets the material color.
         /**
          * \brief Returns the name of the material.
          * \return The name of the material.

@@ -131,7 +131,41 @@ namespace ThedyxEngine.UI
             EngineModeChanged?.Invoke();
             SetPausedMode();
         }
-
+    
+        private void OnTemperatureModeButtonClicked(object sender, EventArgs e) {
+            Engine.Engine.ShowTemperature = !Engine.Engine.ShowTemperature;
+            // change color of button
+            if (Engine.Engine.ShowTemperature) {
+                ModeButton.BackgroundColor = Colors.Olive;
+            } else {
+                ModeButton.BackgroundColor = Colors.DarkGray;
+            }
+            UpdateUI?.Invoke();
+        }
+        
+        private void OnGridButtonClicked(object sender, EventArgs e) {
+            Engine.Engine.ShowGrid = !Engine.Engine.ShowGrid;
+            // change color of button
+            if (Engine.Engine.ShowGrid) {
+                GridButton.BackgroundColor = Colors.Peru;
+            } else {
+                GridButton.BackgroundColor = Colors.DarkGray;
+            }
+            UpdateUI?.Invoke();
+        }
+        
+        private void OnColorModeButtonClicked(object sender, EventArgs e) {
+            Engine.Engine.ShowColor = !Engine.Engine.ShowColor;
+            if (Engine.Engine.ShowColor) {
+                ColorModeButton.BackgroundColor = Colors.Salmon;
+                ColorModeButton.Text = "Color";
+            }else {
+                ColorModeButton.BackgroundColor = Colors.DarkGray;
+                ColorModeButton.Text = "Temp";
+            }
+            UpdateUI?.Invoke();
+        }
+        
         private async void OnResetButtonClicked(object sender, EventArgs e) {
             bool result = await Application.Current.MainPage.DisplayAlert("Confirm Reset", "Are you sure you want to reset simulation data?", "Yes", "No");
             if (result) {

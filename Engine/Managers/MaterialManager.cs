@@ -33,7 +33,8 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SpecificHeatCapacity = 887,
                 Density = 2700,
-                Emmisivity = 0.05
+                Emmisivity = 0.05,
+                MaterialColor = Colors.Gray
             };
             Materials.Add(m1);
             var m2 = new Material {
@@ -41,7 +42,8 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SpecificHeatCapacity = 1300,
                 Density = 1000,
-                Emmisivity = 0.84
+                Emmisivity = 0.84,
+                MaterialColor = Colors.LightGray
             };
             Materials.Add(m2);
             
@@ -50,7 +52,8 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SpecificHeatCapacity = 792,
                 Density = 2500,
-                Emmisivity = 0.92
+                Emmisivity = 0.92,
+                MaterialColor = Colors.LightBlue
             };
             Materials.Add(m3);
             
@@ -59,7 +62,8 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SpecificHeatCapacity = 385,
                 Density = 8940,
-                Emmisivity = 0.65
+                Emmisivity = 0.65,
+                MaterialColor = Colors.Coral
             };
             Materials.Add(m4);
         }

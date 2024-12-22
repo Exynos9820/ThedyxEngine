@@ -63,9 +63,10 @@ namespace ThedyxEngine.Engine
          * This method overrides the abstract method defined in \ref EngineObject.
          * \return List of polygons constituting the square's visual representation.
          */
-        public override List<Polygon> GetPolygons(CanvasManager canvasManager)
+        public override void GetPolygons(CanvasManager canvasManager, out List<Polygon> polygons, out List<double> temperatures)
         {
-            List<Polygon> polygons = [];
+            polygons = [];
+            temperatures = [];
             Polygon polygon = new();
             polygon.Points.Add(_position);
             polygon.Points.Add(_cachedPointB);
@@ -84,7 +85,7 @@ namespace ThedyxEngine.Engine
             }
 
             polygons.Add(polygon);
-            return polygons;
+            temperatures.Add(_currentTemperature);
         }
 
         /**

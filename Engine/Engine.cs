@@ -22,6 +22,10 @@ namespace ThedyxEngine.Engine{
             Paused
         }
 
+        public static bool ShowTemperature = false;
+        public static bool ShowGrid = true;
+        public static bool ShowColor = false;
+
         private static readonly ILog Log = LogManager.GetLogger(typeof(Engine)); // log4net logger
         private static object?          _engineLock; // lock for the engine
         public static ObjectsManager? EngineObjectsManager; // manager for the engine objects

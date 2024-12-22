@@ -3,6 +3,7 @@ using Microsoft.Maui.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
+using System.Text;
 using log4net;
 using Microsoft.Maui.Controls.Shapes;
 using TempoEngine.UI;
@@ -46,20 +47,29 @@ namespace ThedyxEngine.UI {
             log.Info("Time to get visible objects: " + stopwatch.ElapsedMilliseconds + " ms");
             stopwatch.Restart();
 
-            
-            _gridDrawer.DrawGrid(canvas, _canvasManager, dirtyRect);
-            stopwatch.Stop();
-            log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
-            stopwatch.Restart();
+
+            if (Engine.Engine.ShowGrid) {
+                _gridDrawer.DrawGrid(canvas, _canvasManager, dirtyRect);
+                stopwatch.Stop();
+                log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
+                stopwatch.Restart();
+            }
 
             // get polygons
             foreach (var obj in objects) {
-                List<Polygon> polygons = obj.GetPolygons(_canvasManager);
+                obj.GetPolygons(_canvasManager, out var polygons, out var temperatures);
                 // convert polygon points to screen coordinates
-                foreach (Polygon polygon in polygons) {
-                    if (polygon.Fill is SolidColorBrush solidColorBrush) {
+                for (int j = 0; j < polygons.Count; j++) {
+                    Polygon polygon = polygons[j];
+                    double temp = temperatures[j];
+                    if (polygon.Fill is SolidColorBrush solidColorBrush && !Engine.Engine.ShowColor) {
                         canvas.FillColor = solidColorBrush.Color;
                         canvas.StrokeColor = solidColorBrush.Color;
+                        canvas.StrokeSize = 2;
+                    }
+                    else {
+                        canvas.FillColor = obj.Material.MaterialColor;
+                        canvas.StrokeColor = obj.Material.MaterialColor;
                         canvas.StrokeSize = 2;
                     }
                     
@@ -77,6 +87,26 @@ namespace ThedyxEngine.UI {
 
                     canvas.FillPath(path);
                     canvas.FillPath(path);
+                    
+                    // if we need to show temperature, draw a label in the center of the polygon
+                    if (Engine.Engine.ShowTemperature) {
+                        // get the center of the polygon
+                        double x = 0;
+                        double y = 0;
+                        foreach (var point in polygon.Points) {
+                            x += point.X;
+                            y += point.Y;
+                        }
+                        x /= polygon.Points.Count;
+                        y /= polygon.Points.Count;
+                        // get the temperature
+                        // draw the label
+                        canvas.FillColor = Colors.Black;
+                        canvas.FontSize = 8;
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append((int)temp).Append("°K");
+                        canvas.DrawString(sb.ToString(), (float)x-10, (float)y-10, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+                    }
                 }
             }
             stopwatch.Stop();

@@ -188,14 +188,9 @@ namespace ThedyxEngine.Engine {
          * \returns The polygons(visible) representing the object's shape.
          */
         
-        public override List<Polygon> GetPolygons(CanvasManager canvasManager) {
-            List<Polygon> polygons = new List<Polygon>();
-            /*foreach (GrainSquare sq in _grainSquares) {
-                //awful code, but it was made for inheritance and each grain square has only one polygon
-                if(sq.IsVisible(canvasManager))
-                   polygons.Add(sq.GetPolygons(canvasManager)[0]);
-            }*/
-            
+        public override void GetPolygons(CanvasManager canvasManager, out List<Polygon> polygons, out List<double> temperatures){
+            polygons = [];
+            temperatures = [];
             //  understand how far are we from canvas
             // we will check it by width
             var canvasWidth = canvasManager.CurrentRightXIndex - canvasManager.CurrentLeftXIndex;
@@ -243,11 +238,9 @@ namespace ThedyxEngine.Engine {
                             polygon.Opacity = 0.5;
                     }
                     polygons.Add(polygon);
+                    temperatures.Add(temperature);
                 }
             }
-            
-            
-            return polygons;
         }
 
         public override List<GrainSquare> GetSquares() {

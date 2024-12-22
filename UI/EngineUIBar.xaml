@@ -16,6 +16,11 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
         <!-- Add Button with Options -->
@@ -53,5 +58,14 @@
         <!-- Timer Label -->
         <Label Grid.Column="9" Margin="5" Text="00:00:00" HorizontalOptions="Center" 
                VerticalOptions="Center" FontAttributes="Bold" FontSize="20" x:Name="TimeLabel" />
+        
+        <Button Grid.Column="11" Margin="0,4,0, 4" Text="Mode" Width="70" BackgroundColor="DarkGray" 
+                     Clicked="OnTemperatureModeButtonClicked" x:Name="ModeButton"/>
+        
+        <Button Grid.Column="13" Margin="0,4,0, 4" Text="Grid" Width="70" BackgroundColor="Peru" 
+                Clicked="OnGridButtonClicked" x:Name="GridButton"/>
+        
+        <Button Grid.Column="15" Margin="0,4,0, 4" Text="Temp" Width="70" BackgroundColor="DarkGray" 
+                Clicked="OnColorModeButtonClicked" x:Name="ColorModeButton"/>
     </Grid>
 </ContentView>

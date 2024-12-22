@@ -193,7 +193,7 @@ namespace ThedyxEngine.Engine
         }
 
         /// Returns polygons representing the object's shape. Must be implemented by subclasses.
-        abstract public List<Polygon> GetPolygons(CanvasManager canvasManager);
+        abstract public void GetPolygons(CanvasManager canvasManager, out List<Polygon> polygons, out List<double> temperatures);
 
         /// Returns the object's squares. Must be implemented by subclasses.
         abstract public List<GrainSquare> GetSquares();
