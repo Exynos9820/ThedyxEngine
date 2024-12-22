@@ -111,6 +111,10 @@ namespace ThedyxEngine.UI
         private void AddObject(ObjectType objectType) {
             var createPopup = new CreateObjectPopup(objectType);
             this.MainPage?.ShowPopup(createPopup);
+            if (UpdateUI != null) createPopup.OnObjectCreated += UpdateAll;
+        }
+        
+        private void UpdateAll() {
             UpdateUI?.Invoke();
         }
 

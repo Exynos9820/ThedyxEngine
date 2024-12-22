@@ -13,6 +13,7 @@ namespace ThedyxEngine.UI;
 public partial class CreateObjectPopup : Popup {
     private ObjectType _objectType;
     private EngineObject _object;
+    public Action OnObjectCreated;
     public CreateObjectPopup(ObjectType objectType) {
         InitializeComponent();
         _objectType = objectType;
@@ -31,9 +32,31 @@ public partial class CreateObjectPopup : Popup {
                 throw new Exception("Invalid object type");
                 break;
         }
+
+        _object.Material = MaterialManager.GetBaseMaterial();
+        Material.ItemsSource = MaterialManager.GetMaterials();
+        Material.SelectedItem = _object.Material;
+        _object.Position = new Microsoft.Maui.Graphics.Point(0, 0);
+        XPosition.Text = "0";
+        YPosition.Text = "0";
+        _object.Size = new Microsoft.Maui.Graphics.Point(1, 1);
+        Width.Text = "1";
+        Height.Text = "1";
+        _object.SimulationTemperature = 200;
+        Temperature.Text = "200";
     }
     private async void ShowErrorMessageBox(string text) {
         await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
+    }
+
+    private void UpdateAll() {
+        OnNameCompleted(null, null);
+        OnTemperatureCompleted(null, null);
+        OnXPositionCompleted(null, null);
+        OnYPositionCompleted(null, null);
+        OnHeightCompleted(null, null);
+        OnWidthCompleted(null, null);
+        OnMaterialChanged(null, null);
     }
 
     
@@ -105,8 +128,9 @@ public partial class CreateObjectPopup : Popup {
             NameEntry.BackgroundColor = Colors.Red;
             return;
         }
-        
+        UpdateAll();
         Engine.Engine.EngineObjectsManager.AddObject(_object);
+        OnObjectCreated?.Invoke();
         Close();
     }
 

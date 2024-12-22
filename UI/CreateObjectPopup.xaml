@@ -5,16 +5,18 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="ThedyxEngine.UI.CreateObjectPopup">
     <toolkit:Popup.Content>
-        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="White"
+        <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
                              WidthRequest="-1" HeightRequest="-1"
                              HorizontalOptions="Center" VerticalOptions="Center">
             <Label x:Name="TitleLabel" Text="This is a custom popup" FontSize="18" TextColor="Black" HorizontalOptions="Center" />
-            <HorizontalStackLayout>
-                <Label Text="Name" TextColor="Black" HorizontalOptions="Start"/>
-                <Entry x:Name="NameEntry" Placeholder="Enter a name" HorizontalOptions="Start"/>
+            <HorizontalStackLayout Padding="0,0,0,0">
+                <Label VerticalOptions="Center" Text="Name:" x:Name="Nameabel" HorizontalOptions="Start" TextColor="Black" />
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <Entry x:Name="NameEntry"  Completed="OnNameCompleted" Placeholder="Enter a name" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start"/>
+                </Frame>
             </HorizontalStackLayout>
             <Label Text="Position" TextColor="Black" HorizontalOptions="Start"/>
-            <HorizontalStackLayout Padding="5,0,0,0">
+            <HorizontalStackLayout Padding="10,-5,0,0">
                 <Label VerticalOptions="Center" Text="X:" x:Name="XPositionLabel" HorizontalOptions="Start" TextColor="Black" />
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
                     <Entry x:Name="XPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnXPositionCompleted" />
@@ -27,7 +29,7 @@
             </HorizontalStackLayout>
             
             <Label Text="Size" TextColor="Black" HorizontalOptions="Start"/>
-            <HorizontalStackLayout Padding="5,0,0,0">
+            <HorizontalStackLayout Padding="10,-5,0,0">
                 <Label VerticalOptions="Center" Text="W:" x:Name="WidthLabel" HorizontalOptions="Start" TextColor="Black" />
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
                     <Entry x:Name="Width" TextColor="Black" BackgroundColor="Transparent" Completed="OnWidthCompleted" />
@@ -39,14 +41,14 @@
                 </Frame>
             </HorizontalStackLayout>
             
-            <HorizontalStackLayout Padding="5,0,0,0">
+            <HorizontalStackLayout>
                 <Label VerticalOptions="Center" Text="T, K°" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
                     <Entry x:Name="Temperature" TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
                 </Frame>
             </HorizontalStackLayout>
             
-            <HorizontalStackLayout Padding="5,0,0,0">
+            <HorizontalStackLayout >
                 <Label VerticalOptions="Center" Text="Material" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
                 <Picker HeightRequest="23" WidthRequest="110" x:Name="Material" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnMaterialChanged"/>
             </HorizontalStackLayout>
