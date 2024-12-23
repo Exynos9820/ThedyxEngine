@@ -31,19 +31,19 @@ namespace ThedyxEngine.Engine.Managers {
             var m1 = new Material {
                 Name = "Aluminium",
                 isBaseMaterial = true,
-                SpecificHeatCapacity = 887,
-                Density = 2700,
-                Emmisivity = 0.05,
+                SolidSpecificHeatCapacity = 887,
+                SolidDensity = 2700,
+                SolidEmmisivity = 0.05,
                 MaterialColor = Colors.Gray,
-                ThermalConductivity = 205
+                SolidThermalConductivity = 205
             };
             Materials.Add(m1);
             var m2 = new Material {
                 Name = "Solid White Plastic",
                 isBaseMaterial = true,
-                SpecificHeatCapacity = 1300,
-                Density = 1000,
-                Emmisivity = 0.84,
+                SolidSpecificHeatCapacity = 1300,
+                SolidDensity = 1000,
+                SolidEmmisivity = 0.84,
                 MaterialColor = Colors.LightGray
             };
             Materials.Add(m2);
@@ -51,9 +51,9 @@ namespace ThedyxEngine.Engine.Managers {
             var m3 = new Material {
                 Name = "Glass",
                 isBaseMaterial = true,
-                SpecificHeatCapacity = 792,
-                Density = 2500,
-                Emmisivity = 0.92,
+                SolidSpecificHeatCapacity = 792,
+                SolidDensity = 2500,
+                SolidEmmisivity = 0.92,
                 MaterialColor = Colors.LightBlue
             };
             Materials.Add(m3);
@@ -61,12 +61,26 @@ namespace ThedyxEngine.Engine.Managers {
             var m4 = new Material {
                 Name = "Copper: oxidized",
                 isBaseMaterial = true,
-                SpecificHeatCapacity = 385,
-                Density = 8940,
-                Emmisivity = 0.65,
+                SolidSpecificHeatCapacity = 385,
+                SolidDensity = 8940,
+                SolidEmmisivity = 0.65,
                 MaterialColor = Colors.Coral
             };
             Materials.Add(m4);
+
+            var m5 = new Material {
+                Name = "Water",
+                isBaseMaterial = true,
+                SolidSpecificHeatCapacity = 4186,
+                SolidDensity = 900,
+                LiquidDensity = 1000,
+                GasDensity = 0.6,
+                SolidEmmisivity = 0.95,
+                MeltingTemperature = 273.15,
+                BoilingTemperature = 373.15,
+                MeltingEnergy = 334000,
+                MaterialColor = Colors.Blue
+            };
         }
 
 
@@ -101,7 +115,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Get the coefficient between two objects
          */
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
-            return 2 * obj1.Material.ThermalConductivity * obj2.Material.ThermalConductivity / (obj1.Material.ThermalConductivity + obj2.Material.ThermalConductivity);
+            return 2 * obj1.Material.SolidThermalConductivity * obj2.Material.SolidThermalConductivity / (obj1.Material.SolidThermalConductivity + obj2.Material.SolidThermalConductivity);
         }
 
 

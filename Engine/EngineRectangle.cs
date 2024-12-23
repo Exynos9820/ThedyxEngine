@@ -41,7 +41,7 @@ namespace ThedyxEngine.Engine {
         /**
          * \brief Create squares for the shape
          */
-        private void SetSquaresForShape() {
+        protected void SetSquaresForShape() {
             _externalSquares = [];
             _grainSquares = [];
             for (int i = 0; i < Size.X; i++) {

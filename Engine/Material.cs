@@ -16,14 +16,24 @@ namespace ThedyxEngine.Engine {
 
         public bool isBaseMaterial { get; set; } /// Gets or sets the base material.
 
-        public double SpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
+        public double SolidSpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
+        public double LiquidSpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
+        public double GasSpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
 
-        public double Density { get; set; } /// Gets or sets the density.
+        public double SolidDensity { get; set; } /// Gets or sets the density.
+        public double LiquidDensity { get; set; } /// Gets or sets the density.
+        public double GasDensity { get; set; } /// Gets or sets the density.
 
-        public double Emmisivity { get; set; } /// Gets or sets the emissivity.
+        public double SolidEmmisivity { get; set; } /// Gets or sets the emissivity.
         
-        public double ThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
-
+        public double SolidThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
+        
+        public double MeltingTemperature { get; set; } /// Gets or sets the solidification temperature.
+        
+        public double BoilingTemperature { get; set; } /// Gets or sets the boiling temperature.
+        
+        public double MeltingEnergy { get; set; } /// Gets or sets the solidification energy.
+        public double BoilingEnergy { get; set; } /// Gets or sets the boiling energy.
         public Color MaterialColor { get; set; } /// Gets or sets the material color.
         /**
          * \brief Returns the name of the material.

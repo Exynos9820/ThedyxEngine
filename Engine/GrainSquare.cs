@@ -29,12 +29,12 @@ namespace ThedyxEngine.Engine
      */
     public class GrainSquare : EngineObject
     {
-        private double _energyDelta = 0; // current energy delta
+        protected double EnergyDelta = 0; // current energy delta
         public event PropertyChangedEventHandler? PositionChanged; // event triggered when position changes
         private List<GrainSquare> _adjacentSquares = []; // list of adjacent squares
         private HashSet<GrainSquare> _radiationExchangeSquares = [];
         // lock for applying energy delta
-        private readonly object _energyLock = new();
+        protected readonly object EnergyLock = new();
 
         private static readonly ILog log = LogManager.GetLogger(typeof(GrainSquare));
 
@@ -54,9 +54,9 @@ namespace ThedyxEngine.Engine
 
 
         // Cached points of square to not to allocate anything during the runtime
-        Point _cachedPointB = new(0, 0); // right top corner
-        Point _cachedPointC = new(0, 0); // left bottom corner
-        Point _cachedPointD = new(0, 0); // right bottom corner
+        protected Point _cachedPointB = new(0, 0); // right top corner
+        protected Point _cachedPointC = new(0, 0); // left bottom corner
+        protected Point _cachedPointD = new(0, 0); // right bottom corner
 
         /**
          * Generates the polygons that visually represent the square.
@@ -147,8 +147,8 @@ namespace ThedyxEngine.Engine
          */
         public void AddEnergyDelta(double energyDelta)
         {
-            lock (_energyLock)
-                _energyDelta += energyDelta;
+            lock (EnergyLock)
+                EnergyDelta += energyDelta;
         }
 
         /**
@@ -157,12 +157,12 @@ namespace ThedyxEngine.Engine
         public void ApplyEnergyDelta()
         {
             // lock to be accessed by one thread at a time
-            lock (_energyLock) {
-                double tempDelta = _energyDelta / Const.GridStep / Const.GridStep /
-                                   _material.SpecificHeatCapacity / _material.Density;
+            lock (EnergyLock) {
+                double tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                                   _material.SolidSpecificHeatCapacity / _material.SolidDensity;
                 CurrentTemperature = _currentTemperature + tempDelta;
                 CurrentTemperature = Math.Max(0, CurrentTemperature);
-                _energyDelta = 0;
+                EnergyDelta = 0;
             }
         }
 

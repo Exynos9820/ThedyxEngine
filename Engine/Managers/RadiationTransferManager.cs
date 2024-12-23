@@ -26,8 +26,8 @@ namespace ThedyxEngine.Engine.Managers{
         private static void TransferRadiationBetweenTwoSquares(GrainSquare square1, GrainSquare square2) {
             // Calculate emissivity between two objects
             var emmisivityBetweenTwoObjects = 
-                (square1.Material.Emmisivity * square2.Material.Emmisivity) / 
-                (1 / square1.Material.Emmisivity + 1 / square2.Material.Emmisivity - 1);
+                (square1.Material.SolidEmmisivity * square2.Material.SolidEmmisivity) / 
+                (1 / square1.Material.SolidEmmisivity + 1 / square2.Material.SolidEmmisivity - 1);
 
             // Calculate the view factor
             var distance = Math.Sqrt(Math.Pow(square2.Position.X - square1.Position.X, 2) +
@@ -60,7 +60,7 @@ namespace ThedyxEngine.Engine.Managers{
                 // calculated by Stefan-Boltzmann law of radiation and multiplied by the engine update interval
                 // we need to find the area of the square that is not touching other squares to calculate the radiation loss to air
                 var areaRadiationLoss = Math.Max((4 - square.GetAdjacentSquares().Count),0) * Const.GridStep;
-                var energyRadiationLoss = square.Material.Emmisivity * Const.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(Engine.AirTemperature, 4)) * Const.EngineIntervalUpdate / 1000;
+                var energyRadiationLoss = square.Material.SolidEmmisivity * Const.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(Engine.AirTemperature, 4)) * Const.EngineIntervalUpdate / 1000;
                 square.AddEnergyDelta(-energyRadiationLoss);
             }
         }
