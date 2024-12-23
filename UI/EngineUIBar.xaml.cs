@@ -1,10 +1,12 @@
 using Microsoft.Maui.Controls;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Util;
 using CommunityToolkit.Maui.Views;
 using ThedyxEngine.Engine.Managers;
+using CommunityToolkit.Maui.Storage;
 
 namespace ThedyxEngine.UI
 {
@@ -76,16 +78,16 @@ namespace ThedyxEngine.UI
             //FileManager.Save(null, null);
         }
 
-        private async Task OpenFile() {
-
-        }
-
         private async void OnSaveButtonClicked(object sender, EventArgs e) {
-            await SaveFile();
         }
 
         private async void OnOpenButtonClicked(object sender, EventArgs e) {
-            await OpenFile();
+            var options = new PickOptions
+            {
+                PickerTitle = "Select a File",
+                FileTypes = FilePickerFileType.Images // Or define custom types
+            };
+            var file = MacFilePicker.PickAsync(options);
         }
 
         private async void OnClearButtonClicked(object sender, EventArgs e) {

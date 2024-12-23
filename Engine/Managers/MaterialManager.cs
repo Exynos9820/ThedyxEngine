@@ -34,7 +34,8 @@ namespace ThedyxEngine.Engine.Managers {
                 SpecificHeatCapacity = 887,
                 Density = 2700,
                 Emmisivity = 0.05,
-                MaterialColor = Colors.Gray
+                MaterialColor = Colors.Gray,
+                ThermalConductivity = 205
             };
             Materials.Add(m1);
             var m2 = new Material {
@@ -100,7 +101,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Get the coefficient between two objects
          */
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
-            return 2.05;
+            return 2 * obj1.Material.ThermalConductivity * obj2.Material.ThermalConductivity / (obj1.Material.ThermalConductivity + obj2.Material.ThermalConductivity);
         }
 
 

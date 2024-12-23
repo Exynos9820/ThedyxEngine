@@ -22,7 +22,7 @@
          * \param squares1 first list of squares
          * \param squares2 second list of squares
          */
-        private static void FillExternalSquares(List<GrainSquare> squares1, List<GrainSquare> squares2) {
+        private static void FillAdjacentSquares(List<GrainSquare> squares1, List<GrainSquare> squares2) {
             foreach(var square1 in squares1) {
                 foreach(var square2 in squares2) {
                     if (square1.AreTouching(square2)) {
@@ -42,10 +42,11 @@
         private static void OptimizeTouching(List<EngineObject> objects) {
             for (int i = 0; i < objects.Count; i++) {
                 List<GrainSquare> firstExternal = objects[i].GetExternalSquares();
+                FillAdjacentSquares(objects[i].GetSquares(), objects[i].GetSquares());
 
                 for (int j = i + 1; j < objects.Count; j++) {
                     List<GrainSquare> secondExternal = objects[j].GetExternalSquares();
-                    FillExternalSquares(firstExternal, secondExternal);
+                    FillAdjacentSquares(firstExternal, secondExternal);
                 }
             }
         }

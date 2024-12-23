@@ -59,7 +59,7 @@ namespace ThedyxEngine.Engine.Managers{
             foreach(var square in squares) {
                 // calculated by Stefan-Boltzmann law of radiation and multiplied by the engine update interval
                 // we need to find the area of the square that is not touching other squares to calculate the radiation loss to air
-                var areaRadiationLoss = 4 - square.GetAdjacentSquares().Count * Const.GridStep;
+                var areaRadiationLoss = Math.Max((4 - square.GetAdjacentSquares().Count),0) * Const.GridStep;
                 var energyRadiationLoss = square.Material.Emmisivity * Const.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(Engine.AirTemperature, 4)) * Const.EngineIntervalUpdate / 1000;
                 square.AddEnergyDelta(-energyRadiationLoss);
             }

@@ -21,6 +21,8 @@ namespace ThedyxEngine.Engine {
         public double Density { get; set; } /// Gets or sets the density.
 
         public double Emmisivity { get; set; } /// Gets or sets the emissivity.
+        
+        public double ThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
 
         public Color MaterialColor { get; set; } /// Gets or sets the material color.
         /**

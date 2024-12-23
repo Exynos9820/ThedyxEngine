@@ -29,14 +29,13 @@ namespace ThedyxEngine.Engine.Managers {
                 Color.FromRgb(143, 0, 255), // Violet, 0 K
                 Color.FromRgb(0, 0, 255),   // Blue, 100 K
                 Color.FromRgb(173, 216, 230), // Light Blue, 200 K
-                Color.FromRgb(0, 128, 0),   // Green, 250 K
                 Color.FromRgb(255, 255, 0), // Yellow, 320 K
                 Color.FromRgb(255, 165, 0), // Orange, 400 K
                 Color.FromRgb(255, 69, 0),  // Red, 800 K
             };
 
             // Define temperature thresholds
-            var thresholds = new[] { 0, 100, 200, 250, 320, 400, 800 };
+            var thresholds = new[] { 0, 150, 250, 320, 400, 800 };
 
             // Find the position in the gradient
             int index = 0;
