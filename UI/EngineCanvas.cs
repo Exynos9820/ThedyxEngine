@@ -32,7 +32,8 @@ namespace ThedyxEngine.UI {
             canvas.StrokeColor = Colors.Black;
             canvas.StrokeSize = 2;
             canvas.FillColor = Colors.LightBlue;
-            
+            canvas.FontSize = 10;
+
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -47,21 +48,20 @@ namespace ThedyxEngine.UI {
             stopwatch.Stop();
             log.Info("Time to get visible objects: " + stopwatch.ElapsedMilliseconds + " ms");
             stopwatch.Restart();
-
-
-            if (Engine.Engine.ShowGrid) {
-                _gridDrawer.DrawGrid(canvas, _canvasManager, dirtyRect);
-                stopwatch.Stop();
-                log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
-                stopwatch.Restart();
-            }
+            
 
             // get polygons
             foreach (var obj in objects) {
                 obj.GetPolygons(_canvasManager, out var polygons, out var temperatures, out var opacities);
                 // convert polygon points to screen coordinates
                 for (int j = 0; j < polygons.Count; j++) {
-                    RectF polygon = polygons[j];
+                    RectF startRect = polygons[j];
+                    var startPoint = ConvertToScreenCoordinates(new Point(startRect.X, startRect.Y), dirtyRect.Width, dirtyRect.Height);
+                    var endPoint = ConvertToScreenCoordinates(new Point(startRect.X + startRect.Width, startRect.Y + startRect.Height), dirtyRect.Width, dirtyRect.Height);
+                    // сheck if at least one point is inside the dirty rect
+                    if((startPoint.X < 0 && endPoint.X < 0) || (startPoint.X > dirtyRect.Width && endPoint.X > dirtyRect.Width) || (startPoint.Y < 0 && endPoint.Y < 0) || (startPoint.Y > dirtyRect.Height && endPoint.Y > dirtyRect.Height)) {
+                        continue;
+                    }
                     double temp = temperatures[j];
                     float opacity = opacities[j];
                     if (!Engine.Engine.ShowColor) {
@@ -77,10 +77,7 @@ namespace ThedyxEngine.UI {
                         canvas.Alpha = opacity;
                     }
                     
-                    
                     // create new rectangle from converted points and draw it
-                    var startPoint = ConvertToScreenCoordinates(new Point(polygon.X, polygon.Y), dirtyRect.Width, dirtyRect.Height);
-                    var endPoint = ConvertToScreenCoordinates(new Point(polygon.X + polygon.Width, polygon.Y + polygon.Height), dirtyRect.Width, dirtyRect.Height);
                     RectF rect = new RectF((float)startPoint.X, (float)startPoint.Y, (float)(endPoint.X - startPoint.X), (float)(endPoint.Y - startPoint.Y));
                     
                     canvas.FillRectangle(rect);
@@ -94,16 +91,23 @@ namespace ThedyxEngine.UI {
 
                         x = (rect.X + rect.Width / 2);
                         y = (rect.Y + rect.Height / 2);
-                        // get the temperature
                         // draw the label
                         canvas.FillColor = Colors.Black;
-                        canvas.FontSize = 10;
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append((int)temp).Append("°");
-                        canvas.DrawString(sb.ToString(), (float)x-10, (float)y-10, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+                        string text = (int)temp + "°";
+                        canvas.DrawString(text, (float)x-10, (float)y-10, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
                     }
                 }
             }
+            
+            
+            if (Engine.Engine.ShowGrid) {
+                canvas.Alpha = 1;
+                _gridDrawer.DrawGrid(canvas, _canvasManager, dirtyRect);
+                stopwatch.Stop();
+                log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
+                stopwatch.Restart();
+            }
+            
             stopwatch.Stop();
             log.Info("Time to draw polygons: " + stopwatch.ElapsedMilliseconds + " ms");
             stopwatch.Restart();

@@ -53,7 +53,9 @@ public partial class MainPage : ContentPage {
             if (e.Status == GestureStatus.Running)
             {
                 _engineCanvas.Zoom(e.Scale);
-                EngineGraphicsView.Invalidate();
+                // if engine is not running, update the view
+                if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
+                    EngineGraphicsView.Invalidate();
             }
         };
 
@@ -62,7 +64,8 @@ public partial class MainPage : ContentPage {
         panGesture.PanUpdated += (s, e) => {
             if (e.StatusType == GestureStatus.Running) {
                 _engineCanvas.Move(e);
-                EngineGraphicsView.Invalidate();
+                if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
+                    EngineGraphicsView.Invalidate();
             }
         };
 #endif
