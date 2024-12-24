@@ -66,11 +66,13 @@ namespace ThedyxEngine.UI {
                         canvas.FillColor = solidColorBrush.Color;
                         canvas.StrokeColor = solidColorBrush.Color;
                         canvas.StrokeSize = 2;
+                        canvas.Alpha = (float)polygon.Opacity;
                     }
                     else {
                         canvas.FillColor = obj.Material.MaterialColor;
                         canvas.StrokeColor = obj.Material.MaterialColor;
                         canvas.StrokeSize = 2;
+                        canvas.Alpha = (float)polygon.Opacity;
                     }
                     
                     for (int i = 0; i < polygon.Points.Count; i++) {
@@ -102,9 +104,9 @@ namespace ThedyxEngine.UI {
                         // get the temperature
                         // draw the label
                         canvas.FillColor = Colors.Black;
-                        canvas.FontSize = 8;
+                        canvas.FontSize = 10;
                         StringBuilder sb = new StringBuilder();
-                        sb.Append((int)temp).Append("°K");
+                        sb.Append((int)temp).Append("°");
                         canvas.DrawString(sb.ToString(), (float)x-10, (float)y-10, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
                     }
                 }

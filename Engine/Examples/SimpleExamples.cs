@@ -32,7 +32,7 @@ namespace ThedyxEngine.Engine.Examples {
         
         public static void IceMeltingFromHotAluminium() {
             // Create a hot aluminium object
-            EngineRectangle aluminium = new EngineRectangle("Aluminium", 70, 20);
+            EngineRectangle aluminium = new EngineRectangle("Bottom wall", 70, 20);
             aluminium.Position = new Point(-20, 10);
             aluminium.SimulationTemperature = 5000;
             Engine.EngineObjectsManager.AddObject(aluminium);
@@ -46,6 +46,12 @@ namespace ThedyxEngine.Engine.Examples {
             rightWall.Position = new Point(30, 30);
             rightWall.SimulationTemperature = 5000;
             Engine.EngineObjectsManager.AddObject(rightWall);
+            
+            // add top wall
+            EngineRectangle topWall = new EngineRectangle("TopWall", 70, 20);
+            topWall.Position = new Point(-20, 60);
+            topWall.SimulationTemperature = 5000;
+            Engine.EngineObjectsManager.AddObject(topWall);
             
             // Create an ice object
             EngineLiquid ice = new EngineLiquid("Ice", 30, 30);
