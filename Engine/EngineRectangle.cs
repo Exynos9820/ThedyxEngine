@@ -194,9 +194,10 @@ namespace ThedyxEngine.Engine {
          * \returns The polygons(visible) representing the object's shape.
          */
         
-        public override void GetPolygons(CanvasManager canvasManager, out List<Polygon> polygons, out List<double> temperatures){
-            polygons = [];
+        public override void GetPolygons(CanvasManager canvasManager, out List<RectF> rects, out List<double> temperatures, out List<float> opacities){
+            rects = [];
             temperatures = [];
+            opacities = [];
             //  understand how far are we from canvas
             // we will check it by width
             var canvasWidth = canvasManager.CurrentRightXIndex - canvasManager.CurrentLeftXIndex;
@@ -256,29 +257,16 @@ namespace ThedyxEngine.Engine {
                         }
                     }
                     // check if the last group was smaller than groupBy
-                    var groupByX = Math.Min(groupBy, Size.X - i);
-                    var groupByY = Math.Min(groupBy, Size.Y - j);
+                    // check if the last group was smaller than groupBy
+                    int groupByX = (int)Math.Min(groupBy, Size.X - i);
+                    int groupByY = (int)Math.Min(groupBy, Size.Y - j);
                     temperature /= groupByX * groupByY;
                     // get the position of the first square
                     var firstSquare = _grainSquares[i * (int)Size.Y + j];
-                    points.Add(new Point(firstSquare.Position.X, firstSquare.Position.Y));
-                    // get the size of the group and create a bigger square
-                    points.Add(new Point(firstSquare.Position.X + groupByX, firstSquare.Position.Y));
-                    points.Add(new Point(firstSquare.Position.X + groupByX, firstSquare.Position.Y + groupByY));
-                    points.Add(new Point(firstSquare.Position.X, firstSquare.Position.Y + groupByY));
-                    // add the polygon to the list
-                    var polygon = new Polygon(points);
-                    if (!IsSelected)
-                        polygon.Fill = ColorManager.GetColorFromTemperature(temperature);
-                    else
-                    {
-                        polygon.Stroke = SolidColorBrush.Black;
-                        polygon.StrokeThickness = 3;
-                        polygon.Fill = ColorManager.GetColorFromTemperature(temperature);
-                        if (Engine.Mode != Engine.EngineMode.Running)
-                            polygon.Opacity = 0.5;
-                    }
-                    polygons.Add(polygon);
+                    var rect = new RectF((float)firstSquare.Position.X, (float)firstSquare.Position.Y, groupByX, groupByY);
+                    
+                    opacities.Add(1);
+                    rects.Add(rect);
                     temperatures.Add(temperature);
                 }
             }

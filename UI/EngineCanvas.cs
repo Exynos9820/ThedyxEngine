@@ -8,6 +8,7 @@ using log4net;
 using Microsoft.Maui.Controls.Shapes;
 using TempoEngine.UI;
 using ThedyxEngine.Engine;
+using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI {
     public class EngineCanvas : IDrawable {
@@ -57,33 +58,31 @@ namespace ThedyxEngine.UI {
 
             // get polygons
             foreach (var obj in objects) {
-                obj.GetPolygons(_canvasManager, out var polygons, out var temperatures);
+                obj.GetPolygons(_canvasManager, out var polygons, out var temperatures, out var opacities);
                 // convert polygon points to screen coordinates
                 for (int j = 0; j < polygons.Count; j++) {
-                    Polygon polygon = polygons[j];
+                    RectF polygon = polygons[j];
                     double temp = temperatures[j];
-                    if (polygon.Fill is SolidColorBrush solidColorBrush && !Engine.Engine.ShowColor) {
-                        canvas.FillColor = solidColorBrush.Color;
-                        canvas.StrokeColor = solidColorBrush.Color;
+                    float opacity = opacities[j];
+                    if (!Engine.Engine.ShowColor) {
+                        canvas.FillColor = ColorManager.GetColorFromTemperature(temp);
+                        canvas.StrokeColor = ColorManager.GetColorFromTemperature(temp);
                         canvas.StrokeSize = 2;
-                        canvas.Alpha = (float)polygon.Opacity;
+                        canvas.Alpha = opacity;
                     }
                     else {
                         canvas.FillColor = obj.Material.MaterialColor;
                         canvas.StrokeColor = obj.Material.MaterialColor;
                         canvas.StrokeSize = 2;
-                        canvas.Alpha = (float)polygon.Opacity;
+                        canvas.Alpha = opacity;
                     }
                     
-                    for (int i = 0; i < polygon.Points.Count; i++) {
-                        polygon.Points[i] = ConvertToScreenCoordinates(polygon.Points[i], dirtyRect.Width, dirtyRect.Height);
-                    }
                     
-                    double minX = polygon.Points.Min(p => p.X);
-                    double maxX = polygon.Points.Max(p => p.X);
-                    double minY = polygon.Points.Min(p => p.Y);
-                    double maxY = polygon.Points.Max(p => p.Y);
-                    var rect = new RectF((float)minX, (float)minY, (float)(maxX - minX), (float)(maxY - minY));
+                    // create new rectangle from converted points and draw it
+                    var startPoint = ConvertToScreenCoordinates(new Point(polygon.X, polygon.Y), dirtyRect.Width, dirtyRect.Height);
+                    var endPoint = ConvertToScreenCoordinates(new Point(polygon.X + polygon.Width, polygon.Y + polygon.Height), dirtyRect.Width, dirtyRect.Height);
+                    RectF rect = new RectF((float)startPoint.X, (float)startPoint.Y, (float)(endPoint.X - startPoint.X), (float)(endPoint.Y - startPoint.Y));
+                    
                     canvas.FillRectangle(rect);
                     canvas.DrawRectangle(rect);
                     
@@ -92,12 +91,9 @@ namespace ThedyxEngine.UI {
                         // get the center of the polygon
                         double x = 0;
                         double y = 0;
-                        foreach (var point in polygon.Points) {
-                            x += point.X;
-                            y += point.Y;
-                        }
-                        x /= polygon.Points.Count;
-                        y /= polygon.Points.Count;
+
+                        x = (rect.X + rect.Width / 2);
+                        y = (rect.Y + rect.Height / 2);
                         // get the temperature
                         // draw the label
                         canvas.FillColor = Colors.Black;

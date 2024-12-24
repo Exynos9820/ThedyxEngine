@@ -37,36 +37,25 @@ public class EngineGrainLiquid : GrainSquare {
      * This method overrides the abstract method defined in \ref EngineObject.
      * \return List of polygons constituting the square's visual representation.
      */
-    public override void GetPolygons(CanvasManager canvasManager, out List<Polygon> polygons, out List<double> temperatures)
-    {
-        polygons = [];
+    public override void GetPolygons(CanvasManager canvasManager, out List<RectF> rects, out List<double> temperatures, out List<float> opacities) {
+        rects = [];
         temperatures = [];
-        Polygon polygon = new();
-        polygon.Points.Add(_position);
-        polygon.Points.Add(_cachedPointB);
-        polygon.Points.Add(_cachedPointD);
-        polygon.Points.Add(_cachedPointC);
+        opacities = [];
 
-        if (!IsSelected)
-            polygon.Fill = ColorManager.GetColorFromTemperature(_currentTemperature);
-        else
-        {
-            polygon.Stroke = SolidColorBrush.Black;
-            polygon.StrokeThickness = 3;
-            polygon.Fill = ColorManager.GetColorFromTemperature(_currentTemperature);
-            if (Engine.Mode != Engine.EngineMode.Running)
-                polygon.Opacity = 0.5;
-        }
-        
-        if(CurrentState == CurrentSta.Solid) {
-            polygon.Opacity = 1;
-        }else if(CurrentState == CurrentSta.Liquid) {
-            polygon.Opacity = 0.5;
-        }else {
-            polygon.Opacity = 0.1;
+        var rect = new RectF((float)_position.X, (float)_position.Y, (float)(_cachedPointB.X - _position.X), (float)(_cachedPointB.Y - _position.Y));
+        switch (CurrentState) {
+            case CurrentSta.Solid:
+                opacities.Add(1);
+                break;
+            case CurrentSta.Liquid:
+                opacities.Add(0.5f);
+                break;
+            default:
+                opacities.Add(0.1f);
+                break;
         }
 
-        polygons.Add(polygon);
+        rects.Add(rect);
         temperatures.Add(_currentTemperature);
     }
 

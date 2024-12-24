@@ -74,9 +74,10 @@ public class EngineLiquid : EngineObject {
         base.OnPropertyChanged(propertyName);
     }
 
-    public override void GetPolygons(CanvasManager canvasManager, out List<Polygon> polygons, out List<double> temperatures) {
-            polygons = [];
+    public override void GetPolygons(CanvasManager canvasManager, out List<RectF> rects, out List<double> temperatures, out List<float> opacities) {
+            rects = [];
             temperatures = [];
+            opacities = [];
             //  understand how far are we from canvas
             // we will check it by width
             var canvasWidth = canvasManager.CurrentRightXIndex - canvasManager.CurrentLeftXIndex;
@@ -129,45 +130,30 @@ public class EngineLiquid : EngineObject {
                     // iterate through all squares in this group, take average temperature and create polygon
                     var points = new PointCollection();
                     var temperature = 0.0;
-                    var opacity = 0.0;
+                    float opacity = 0.0f;
                     // then we take the position of the first square and create a polygon
                     for(var x = i; x < i + groupBy && x < Size.X; x++) {
                         for(var y = j; y < j + groupBy && y < Size.Y; y++) {
                             var square = _grainSquares[x * (int)Size.Y + y];
                             temperature += square.CurrentTemperature;
                             opacity += square.CurrentState switch {
-                                EngineGrainLiquid.CurrentSta.Solid => 1,
-                                EngineGrainLiquid.CurrentSta.Liquid => 0.3,
-                                EngineGrainLiquid.CurrentSta.Gas => 0.1,
+                                EngineGrainLiquid.CurrentSta.Solid => 1f,
+                                EngineGrainLiquid.CurrentSta.Liquid => 0.3f,
+                                EngineGrainLiquid.CurrentSta.Gas => 0.1f,
                                 _ => 0
                             };
                         }
                     }
                     // check if the last group was smaller than groupBy
-                    var groupByX = Math.Min(groupBy, Size.X - i);
-                    var groupByY = Math.Min(groupBy, Size.Y - j);
+                    int groupByX = (int)Math.Min(groupBy, Size.X - i);
+                    int groupByY = (int)Math.Min(groupBy, Size.Y - j);
                     temperature /= groupByX * groupByY;
                     // get the position of the first square
                     var firstSquare = _grainSquares[i * (int)Size.Y + j];
-                    points.Add(new Point(firstSquare.Position.X, firstSquare.Position.Y));
-                    // get the size of the group and create a bigger square
-                    points.Add(new Point(firstSquare.Position.X + groupByX, firstSquare.Position.Y));
-                    points.Add(new Point(firstSquare.Position.X + groupByX, firstSquare.Position.Y + groupByY));
-                    points.Add(new Point(firstSquare.Position.X, firstSquare.Position.Y + groupByY));
-                    // add the polygon to the list
-                    var polygon = new Polygon(points);
-                    if (!IsSelected)
-                        polygon.Fill = ColorManager.GetColorFromTemperature(temperature);
-                    else
-                    {
-                        polygon.Stroke = SolidColorBrush.Black;
-                        polygon.StrokeThickness = 3;
-                        polygon.Fill = ColorManager.GetColorFromTemperature(temperature);
-                        if (Engine.Mode != Engine.EngineMode.Running)
-                            polygon.Opacity = 0.5;
-                    }
-                    polygon.Opacity = opacity / (groupByX * groupByY);
-                    polygons.Add(polygon);
+                    var rect = new RectF((float)firstSquare.Position.X, (float)firstSquare.Position.Y, groupByX, groupByY);
+                    
+                    opacities.Add(opacity / (groupByX * groupByY));
+                    rects.Add(rect);
                     temperatures.Add(temperature);
                 }
             }

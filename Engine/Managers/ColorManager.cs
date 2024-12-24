@@ -22,7 +22,7 @@ namespace ThedyxEngine.Engine.Managers {
          * \param temperature Temperature of the object
          * \return Brush with the color
          */
-        public static SolidColorBrush GetColorFromTemperature(double temperature) {
+        public static Color GetColorFromTemperature(double temperature) {
             if (temperature < 0) throw new ArgumentException("Temperature cannot be less than 0");
             // Define colors for each temperature range
             var colors = new[] {
@@ -45,7 +45,7 @@ namespace ThedyxEngine.Engine.Managers {
                     break;
                 }
                 if (temperature >= thresholds[thresholds.Length - 1]) {
-                    return new SolidColorBrush(colors[colors.Length - 1]); // Return red for 800+ K
+                    return  (colors[colors.Length - 1]); // Return red for 800+ K
                 }
             }
 
@@ -61,7 +61,7 @@ namespace ThedyxEngine.Engine.Managers {
             byte blue = (byte)((startColor.Blue + (endColor.Blue - startColor.Blue) * factor) * 256);
 
             // Return the brush with the interpolated color
-            return new SolidColorBrush(Color.FromRgb(red, green, blue));
+            return Color.FromRgb(red, green, blue);
         }
     }
 }
