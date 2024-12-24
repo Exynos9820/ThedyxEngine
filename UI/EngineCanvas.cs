@@ -78,17 +78,14 @@ namespace ThedyxEngine.UI {
                     for (int i = 0; i < polygon.Points.Count; i++) {
                         polygon.Points[i] = ConvertToScreenCoordinates(polygon.Points[i], dirtyRect.Width, dirtyRect.Height);
                     }
-                    // add polygon to canvas
-                    var path = new PathF();
-                    path.MoveTo((float)polygon.Points[0].X, (float)polygon.Points[0].Y);
-                    for (int i = 1; i < polygon.Points.Count; i++)
-                    {
-                        path.LineTo((float)polygon.Points[i].X, (float)polygon.Points[i].Y);
-                    }
-                    path.Close();
-
-                    canvas.FillPath(path);
-                    canvas.FillPath(path);
+                    
+                    double minX = polygon.Points.Min(p => p.X);
+                    double maxX = polygon.Points.Max(p => p.X);
+                    double minY = polygon.Points.Min(p => p.Y);
+                    double maxY = polygon.Points.Max(p => p.Y);
+                    var rect = new RectF((float)minX, (float)minY, (float)(maxX - minX), (float)(maxY - minY));
+                    canvas.FillRectangle(rect);
+                    canvas.DrawRectangle(rect);
                     
                     // if we need to show temperature, draw a label in the center of the polygon
                     if (Engine.Engine.ShowTemperature) {
