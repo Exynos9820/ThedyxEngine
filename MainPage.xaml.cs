@@ -44,6 +44,7 @@ public partial class MainPage : ContentPage {
         EngineGraphicsView.Drawable = _engineCanvas;
         EngineGraphicsView.BackgroundColor = Colors.White;
         TabProperties.OnObjectChange = UpdateAll;
+        Engine.Engine.ResetSimulation();
         
 #if MACCATALYST
         // Set up pinch gesture for zooming

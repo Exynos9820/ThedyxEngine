@@ -71,7 +71,8 @@ namespace ThedyxEngine.Engine.Managers {
             var m5 = new Material {
                 Name = "Water",
                 isBaseMaterial = true,
-                SolidSpecificHeatCapacity = 4186,
+                SolidSpecificHeatCapacity = 2090,
+                LiquidSpecificHeatCapacity = 4186,
                 SolidDensity = 900,
                 LiquidDensity = 1000,
                 GasDensity = 0.6,
@@ -79,8 +80,10 @@ namespace ThedyxEngine.Engine.Managers {
                 MeltingTemperature = 273.15,
                 BoilingTemperature = 373.15,
                 MeltingEnergy = 334000,
-                MaterialColor = Colors.Blue
+                SolidThermalConductivity = 0.598,
+                MaterialColor = Colors.DodgerBlue
             };
+            Materials.Add(m5);
         }
 
 

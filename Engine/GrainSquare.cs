@@ -91,7 +91,7 @@ namespace ThedyxEngine.Engine
         /**
          * \brief Sets caeched point of the GrainSquare
          */
-        private void SetCachedPoints()
+        protected void SetCachedPoints()
         {
             _cachedPointB = new(Position.X + 1, Position.Y);
             _cachedPointC = new(Position.X, Position.Y - 1);
@@ -154,7 +154,7 @@ namespace ThedyxEngine.Engine
         /**
          * Applies the energy delta to the grain square, updating the temperature.
          */
-        public void ApplyEnergyDelta()
+        public override void ApplyEnergyDelta()
         {
             // lock to be accessed by one thread at a time
             lock (EnergyLock) {

@@ -14,7 +14,8 @@ namespace ThedyxEngine.Engine
     public enum ObjectType
     {
         GrainSquare,
-        Rectangle
+        Rectangle,
+        Liquid
     }
 
     /**
@@ -221,5 +222,8 @@ namespace ThedyxEngine.Engine
 
         /// Gets all external GrainSquare’s of an object, that can tranfer heat with other external GrainSquare’s of other objects
         abstract public List<GrainSquare> GetExternalSquares();
+        
+        /// Applies the energy delta to the object.
+        abstract public void ApplyEnergyDelta();
     }
 }

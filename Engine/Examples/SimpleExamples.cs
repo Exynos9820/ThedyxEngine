@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.Engine.Examples {
     public static class SimpleExamples {
@@ -27,6 +28,32 @@ namespace ThedyxEngine.Engine.Examples {
             e2.SimulationTemperature = 1000;
             e2.Position = new Point(30, 0);
             Engine.EngineObjectsManager.AddObject(e2);
+        }
+        
+        public static void IceMeltingFromHotAluminium() {
+            // Create a hot aluminium object
+            EngineRectangle aluminium = new EngineRectangle("Aluminium", 70, 20);
+            aluminium.Position = new Point(-20, 10);
+            aluminium.SimulationTemperature = 5000;
+            Engine.EngineObjectsManager.AddObject(aluminium);
+            
+            // add left and right walls
+            EngineRectangle leftWall = new EngineRectangle("LeftWall", 20, 30);
+            leftWall.Position = new Point(-20, 30);
+            leftWall.SimulationTemperature = 5000;
+            Engine.EngineObjectsManager.AddObject(leftWall);
+            EngineRectangle rightWall = new EngineRectangle("RightWall", 20, 30);
+            rightWall.Position = new Point(30, 30);
+            rightWall.SimulationTemperature = 5000;
+            Engine.EngineObjectsManager.AddObject(rightWall);
+            
+            // Create an ice object
+            EngineLiquid ice = new EngineLiquid("Ice", 30, 30);
+            ice.Position = new Point(0, 30);
+            ice.SimulationTemperature = 220;
+            Engine.EngineObjectsManager.AddObject(ice);
+            ice.Material = MaterialManager.GetMaterialByName("Water");
+            
         }
 
         public static void RectangleWithTempDifference(int width, int height) {

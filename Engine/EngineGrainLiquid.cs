@@ -18,6 +18,11 @@ public class EngineGrainLiquid : GrainSquare {
     
     public EngineGrainLiquid(string name, Point position, Material material) : base(name, position) {
         Material = material;
+        SetStateFromTemperature();
+        SetCachedPoints();
+    }
+    
+    public void SetStateFromTemperature() {
         if(_currentTemperature < Material.MeltingTemperature) {
             CurrentState = CurrentSta.Solid;
         } else if(_currentTemperature > Material.BoilingTemperature) {
@@ -82,7 +87,12 @@ public class EngineGrainLiquid : GrainSquare {
                     if (AccumulatedEnergy >= energyToMelt) {
                         AccumulatedEnergy -= energyToMelt;
                         CurrentState = CurrentSta.Liquid;
+                        // transfer the rest of the energy to the liquid
+                        _currentTemperature += AccumulatedEnergy / Const.GridStep / Const.GridStep / _material.LiquidSpecificHeatCapacity / _material.LiquidDensity;
+                        AccumulatedEnergy = 0;
                     }
+                }else {
+                    _currentTemperature += tempDelta;
                 }
             }else if (CurrentState == CurrentSta.Liquid) {
                 // check if we are going to boil the object
@@ -98,7 +108,7 @@ public class EngineGrainLiquid : GrainSquare {
                     }
                 }
                 // check if we are going to freeze the object
-                if (_currentTemperature + tempDelta <= _material.MeltingTemperature) {
+                else if (_currentTemperature + tempDelta <= _material.MeltingTemperature) {
                     _currentTemperature = _material.MeltingTemperature;
                     // we add the rest of the energy to the accumulated energy
                     AccumulatedEnergy += EnergyDelta - (_material.MeltingTemperature - _currentTemperature) * Const.GridStep * Const.GridStep * _material.LiquidSpecificHeatCapacity * _material.LiquidDensity;
@@ -108,6 +118,10 @@ public class EngineGrainLiquid : GrainSquare {
                         AccumulatedEnergy -= energyToFreeze;
                         CurrentState = CurrentSta.Solid;
                     }
+                }
+                else {
+                    // just add temperature
+                    _currentTemperature += tempDelta;
                 }
             }else if (CurrentState == CurrentSta.Gas) {
                 // check if we are going to condense the object
@@ -121,6 +135,8 @@ public class EngineGrainLiquid : GrainSquare {
                         AccumulatedEnergy -= energyToCondense;
                         CurrentState = CurrentSta.Liquid;
                     }
+                }else {
+                    _currentTemperature += tempDelta;
                 }
             }
             CurrentTemperature = Math.Max(0, CurrentTemperature);

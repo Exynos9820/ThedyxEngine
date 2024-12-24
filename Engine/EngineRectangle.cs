@@ -41,7 +41,7 @@ namespace ThedyxEngine.Engine {
         /**
          * \brief Create squares for the shape
          */
-        protected void SetSquaresForShape() {
+        private void SetSquaresForShape() {
             _externalSquares = [];
             _grainSquares = [];
             for (int i = 0; i < Size.X; i++) {
@@ -65,6 +65,12 @@ namespace ThedyxEngine.Engine {
          */
         public override List<GrainSquare> GetExternalSquares() {
           return _externalSquares;
+        }
+
+        public override void ApplyEnergyDelta() {
+            foreach (var sq in _grainSquares) {
+                sq.ApplyEnergyDelta();
+            }
         }
 
 

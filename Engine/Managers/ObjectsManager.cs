@@ -113,10 +113,7 @@ namespace ThedyxEngine.Engine.Managers{
          */
         public void ApplyEnergyDelta(List<EngineObject> objects) {
             foreach (var obj in objects) {
-                List<GrainSquare> objsquares = obj.GetSquares();
-                foreach (var square in objsquares) {
-                    square.ApplyEnergyDelta();
-                }
+                obj.ApplyEnergyDelta();
             }
         }
 
