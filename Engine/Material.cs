@@ -27,7 +27,8 @@ namespace ThedyxEngine.Engine {
         public double SolidEmmisivity { get; set; } /// Gets or sets the emissivity.
         
         public double SolidThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
-        
+        public double LiquidThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
+        public double GasThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
         public double MeltingTemperature { get; set; } /// Gets or sets the solidification temperature.
         
         public double BoilingTemperature { get; set; } /// Gets or sets the boiling temperature.

@@ -6,7 +6,7 @@ using ThedyxEngine.Util;
 namespace ThedyxEngine.Engine;
 
 public class EngineGrainLiquid : GrainSquare {
-    public enum CurrentSta {
+    public enum MaterialState {
         Liquid,
         Solid,
         Gas
@@ -14,7 +14,7 @@ public class EngineGrainLiquid : GrainSquare {
     
     private double AccumulatedEnergy { get; set; }
     
-    public CurrentSta CurrentState { get; set; }
+    public MaterialState CurrentMaterialState { get; set; }
     
     public EngineGrainLiquid(string name, Point position, Material material) : base(name, position) {
         Material = material;
@@ -22,13 +22,14 @@ public class EngineGrainLiquid : GrainSquare {
         SetCachedPoints();
     }
     
+    
     public void SetStateFromTemperature() {
         if(_currentTemperature < Material.MeltingTemperature) {
-            CurrentState = CurrentSta.Solid;
+            CurrentMaterialState = MaterialState.Solid;
         } else if(_currentTemperature > Material.BoilingTemperature) {
-            CurrentState = CurrentSta.Gas;
+            CurrentMaterialState = MaterialState.Gas;
         } else {
-            CurrentState = CurrentSta.Liquid;
+            CurrentMaterialState = MaterialState.Liquid;
         }
     }
     
@@ -43,11 +44,11 @@ public class EngineGrainLiquid : GrainSquare {
         opacities = [];
 
         var rect = new RectF((float)_position.X, (float)_position.Y, (float)(_cachedPointB.X - _position.X), (float)(_cachedPointB.Y - _position.Y));
-        switch (CurrentState) {
-            case CurrentSta.Solid:
+        switch (CurrentMaterialState) {
+            case MaterialState.Solid:
                 opacities.Add(1);
                 break;
-            case CurrentSta.Liquid:
+            case MaterialState.Liquid:
                 opacities.Add(0.5f);
                 break;
             default:
@@ -61,11 +62,25 @@ public class EngineGrainLiquid : GrainSquare {
 
     public new void ApplyEnergyDelta() {
         lock (EnergyLock) {
-            double tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+            double tempDelta;
+            if (CurrentMaterialState == MaterialState.Solid)
+                tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
                                _material.SolidSpecificHeatCapacity / _material.SolidDensity;
+            else if (CurrentMaterialState == MaterialState.Liquid)
+                tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                               _material.LiquidSpecificHeatCapacity / _material.LiquidDensity;
+            else
+                tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                            _material.GasSpecificHeatCapacity / _material.GasDensity;
+            
+            if(tempDelta >= 10000)
+                throw new Exception("Change in temperature is too high");
+            
+            if(Double.IsNaN(tempDelta))
+                throw new Exception("temp delta is NaN");
             // we need to check if the temperature we are going to set is in the right range
             // 1) current State is solid
-            if (CurrentState == CurrentSta.Solid) {
+            if (CurrentMaterialState == MaterialState.Solid) {
                 // check if we are going to melt the object
                 if (_currentTemperature + tempDelta >= _material.MeltingTemperature) {
                     _currentTemperature = _material.MeltingTemperature;
@@ -75,7 +90,7 @@ public class EngineGrainLiquid : GrainSquare {
                     double energyToMelt = _material.MeltingEnergy * Const.GridStep * Const.GridStep * _material.SolidDensity;
                     if (AccumulatedEnergy >= energyToMelt) {
                         AccumulatedEnergy -= energyToMelt;
-                        CurrentState = CurrentSta.Liquid;
+                        CurrentMaterialState = MaterialState.Liquid;
                         // transfer the rest of the energy to the liquid
                         _currentTemperature += AccumulatedEnergy / Const.GridStep / Const.GridStep / _material.LiquidSpecificHeatCapacity / _material.LiquidDensity;
                         AccumulatedEnergy = 0;
@@ -83,7 +98,7 @@ public class EngineGrainLiquid : GrainSquare {
                 }else {
                     _currentTemperature += tempDelta;
                 }
-            }else if (CurrentState == CurrentSta.Liquid) {
+            }else if (CurrentMaterialState == MaterialState.Liquid) {
                 // check if we are going to boil the object
                 if (_currentTemperature + tempDelta >= _material.BoilingTemperature) {
                     _currentTemperature = _material.BoilingTemperature;
@@ -93,7 +108,7 @@ public class EngineGrainLiquid : GrainSquare {
                     double energyToBoil = _material.BoilingEnergy * Const.GridStep * Const.GridStep * _material.LiquidDensity;
                     if (AccumulatedEnergy >= energyToBoil) {
                         AccumulatedEnergy -= energyToBoil;
-                        CurrentState = CurrentSta.Gas;
+                        CurrentMaterialState = MaterialState.Gas;
                     }
                 }
                 // check if we are going to freeze the object
@@ -105,14 +120,14 @@ public class EngineGrainLiquid : GrainSquare {
                     double energyToFreeze = _material.MeltingEnergy * Const.GridStep * Const.GridStep * _material.LiquidDensity;
                     if (AccumulatedEnergy >= energyToFreeze) {
                         AccumulatedEnergy -= energyToFreeze;
-                        CurrentState = CurrentSta.Solid;
+                        CurrentMaterialState = MaterialState.Solid;
                     }
                 }
                 else {
                     // just add temperature
                     _currentTemperature += tempDelta;
                 }
-            }else if (CurrentState == CurrentSta.Gas) {
+            }else if (CurrentMaterialState == MaterialState.Gas) {
                 // check if we are going to condense the object
                 if (_currentTemperature + tempDelta <= _material.BoilingTemperature) {
                     _currentTemperature = _material.BoilingTemperature;
@@ -122,13 +137,16 @@ public class EngineGrainLiquid : GrainSquare {
                     double energyToCondense = _material.BoilingEnergy * Const.GridStep * Const.GridStep * _material.GasDensity;
                     if (AccumulatedEnergy >= energyToCondense) {
                         AccumulatedEnergy -= energyToCondense;
-                        CurrentState = CurrentSta.Liquid;
+                        CurrentMaterialState = MaterialState.Liquid;
                     }
                 }else {
                     _currentTemperature += tempDelta;
                 }
             }
             CurrentTemperature = Math.Max(0, CurrentTemperature);
+            if (CurrentTemperature >= 10000) {
+                throw new Exception("temperature is too high");
+            }
             EnergyDelta = 0;
         }
     }

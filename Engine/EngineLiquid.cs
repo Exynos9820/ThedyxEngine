@@ -136,10 +136,10 @@ public class EngineLiquid : EngineObject {
                         for(var y = j; y < j + groupBy && y < Size.Y; y++) {
                             var square = _grainSquares[x * (int)Size.Y + y];
                             temperature += square.CurrentTemperature;
-                            opacity += square.CurrentState switch {
-                                EngineGrainLiquid.CurrentSta.Solid => 1f,
-                                EngineGrainLiquid.CurrentSta.Liquid => 0.3f,
-                                EngineGrainLiquid.CurrentSta.Gas => 0.1f,
+                            opacity += square.CurrentMaterialState switch {
+                                EngineGrainLiquid.MaterialState.Solid => 1f,
+                                EngineGrainLiquid.MaterialState.Liquid => 0.3f,
+                                EngineGrainLiquid.MaterialState.Gas => 0.1f,
                                 _ => 0
                             };
                         }

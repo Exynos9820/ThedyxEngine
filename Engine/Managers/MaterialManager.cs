@@ -73,6 +73,7 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 2090,
                 LiquidSpecificHeatCapacity = 4186,
+                GasSpecificHeatCapacity = 1.996,
                 SolidDensity = 1000,
                 LiquidDensity = 1000,
                 GasDensity = 1000,
@@ -80,7 +81,10 @@ namespace ThedyxEngine.Engine.Managers {
                 MeltingTemperature = 273.15,
                 BoilingTemperature = 373.15,
                 MeltingEnergy = 334000,
-                SolidThermalConductivity = 0.598,
+                BoilingEnergy = 2257000,
+                SolidThermalConductivity = 2.22,
+                LiquidThermalConductivity = 0.606,
+                GasThermalConductivity = 0.016,
                 MaterialColor = Colors.DodgerBlue
             };
             Materials.Add(m5);
@@ -118,7 +122,35 @@ namespace ThedyxEngine.Engine.Managers {
          * Get the coefficient between two objects
          */
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
-            return 2 * obj1.Material.SolidThermalConductivity * obj2.Material.SolidThermalConductivity / (obj1.Material.SolidThermalConductivity + obj2.Material.SolidThermalConductivity);
+            double thermalConductivity1;
+            double thermalConductivity2;
+            if(obj1 is EngineGrainLiquid) {
+                // check state of the object and get the right thermal conductivity
+                var obj = (EngineGrainLiquid)obj1;
+                if(obj.CurrentMaterialState == EngineGrainLiquid.MaterialState.Solid) {
+                    thermalConductivity1 = obj.Material.SolidThermalConductivity;
+                } else if(obj.CurrentMaterialState == EngineGrainLiquid.MaterialState.Liquid) {
+                    thermalConductivity1 = obj.Material.LiquidThermalConductivity;
+                } else {
+                    thermalConductivity1 = obj.Material.GasThermalConductivity;
+                }
+            }else {
+                thermalConductivity1 = obj1.Material.SolidThermalConductivity;
+            }
+            // the same for the second object
+            if (obj2 is EngineGrainLiquid liquid) {
+                // check state of the object and get the right thermal conductivity
+                if(liquid.CurrentMaterialState == EngineGrainLiquid.MaterialState.Solid) {
+                    thermalConductivity2 = liquid.Material.SolidThermalConductivity;
+                } else if(liquid.CurrentMaterialState == EngineGrainLiquid.MaterialState.Liquid) {
+                    thermalConductivity2 = liquid.Material.LiquidThermalConductivity;
+                } else {
+                    thermalConductivity2 = liquid.Material.GasThermalConductivity;
+                }
+            }else {
+                thermalConductivity2 = obj2.Material.SolidThermalConductivity;
+            }
+            return 2 * thermalConductivity1 * thermalConductivity2 / (thermalConductivity1 + thermalConductivity2);
         }
 
 
