@@ -8,7 +8,13 @@
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
                              WidthRequest="-1" HeightRequest="-1"
                              HorizontalOptions="Center" VerticalOptions="Center">
-
+            <Label Text="Global variables" FontAttributes="Bold" FontSize="15" TextColor="Black" HorizontalOptions="Start"/>
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" Text="Room T, K°" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <Entry x:Name="RoomTemperature" TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
+                </Frame>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </toolkit:Popup.Content>
 </toolkit:Popup>

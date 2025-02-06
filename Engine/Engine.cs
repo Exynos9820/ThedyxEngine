@@ -36,7 +36,7 @@ namespace ThedyxEngine.Engine{
         private static long _simulationTime = 0; // time of the simulation in microseconds
         private static bool _optimize = true; // // should we optimize the engine by setting adjacent squares to be touching
         public static EngineMode Mode { get; private set; } = EngineMode.Stopped; // engine mode
-        public const double AirTemperature = 293; // air temperature in Kelvin
+        public static double AirTemperature = 293; // air temperature in Kelvin
 
         /**
          * \brief Initialize the engine
