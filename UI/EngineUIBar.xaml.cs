@@ -104,7 +104,7 @@ namespace ThedyxEngine.UI
                 case "Grain Object":
                     AddObject(ObjectType.GrainSquare);
                     break;
-                case "Solid Object\"":
+                case "Solid Object":
                     AddObject(ObjectType.Rectangle);
                     break;
                 case "State Object":
