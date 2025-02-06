@@ -71,6 +71,9 @@
       <MauiXaml Update="UI\EngineTabProperties.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
+      <MauiXaml Update="UI\SettingsPopup.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
     </ItemGroup>
 
     <ItemGroup>
@@ -81,6 +84,10 @@
       <Compile Remove="Platforms\Android\**" />
       <Compile Update="UI\EngineTabProperties.xaml.cs">
         <DependentUpon>EngineTabProperties.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="UI\SettingsPopup.xaml.cs">
+        <DependentUpon>SettingsPopup.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

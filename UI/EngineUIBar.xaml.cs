@@ -152,6 +152,12 @@ namespace ThedyxEngine.UI
             UpdateUI?.Invoke();
         }
         
+        private void OnSettingsButtonClicked(object sender, EventArgs e) {
+            var settingsPopup = new SettingsPopup();
+            this.MainPage?.ShowPopup(settingsPopup);
+            UpdateUI?.Invoke();
+        }
+        
         private void OnGridButtonClicked(object sender, EventArgs e) {
             Engine.Engine.ShowGrid = !Engine.Engine.ShowGrid;
             // change color of button
