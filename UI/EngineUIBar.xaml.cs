@@ -99,13 +99,16 @@ namespace ThedyxEngine.UI
         }
 
         private async void OnAddButtonClicked(object sender, EventArgs e) {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Add Item", "Cancel", null, "Grainsquare", "Rectangle", "Circle");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Add Item", "Cancel", null, "Grain Object", "Solid Object", "State Object");
             switch (action) {
-                case "Grainsquare":
+                case "Grain Object":
                     AddObject(ObjectType.GrainSquare);
                     break;
-                case "Rectangle":
+                case "Solid Object\"":
                     AddObject(ObjectType.Rectangle);
+                    break;
+                case "State Object":
+                    AddObject(ObjectType.StateChangeRectangle);
                     break;
             }
         }

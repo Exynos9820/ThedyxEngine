@@ -191,7 +191,7 @@ public class EngineLiquid : EngineObject {
     }
 
     public override ObjectType GetObjectType() {
-        return ObjectType.Liquid;
+        return ObjectType.StateChangeRectangle;
     }
 
     public override string GetJsonRepresentation() {

@@ -15,7 +15,7 @@ namespace ThedyxEngine.Engine
     {
         GrainSquare,
         Rectangle,
-        Liquid
+        StateChangeRectangle
     }
 
     /**
