@@ -31,3 +31,9 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 - **Customizable Materials**: Users can define the thermal properties of materials.
 - **Interactive Visuals**: Real-time graphical representation of temperature changes.
 \
+
+## Installation
+1) Clone the repository
+2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
+3) dotnet workload install MAUI in the terminal
+4) dotnet build ThedyxEngine.sln
