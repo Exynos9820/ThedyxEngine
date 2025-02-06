@@ -64,13 +64,13 @@ public class EngineGrainLiquid : GrainSquare {
         lock (EnergyLock) {
             double tempDelta;
             if (CurrentMaterialState == MaterialState.Solid)
-                tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                tempDelta = EnergyDelta / GlobalVariables.GridStep / GlobalVariables.GridStep /
                                _material.SolidSpecificHeatCapacity / _material.SolidDensity;
             else if (CurrentMaterialState == MaterialState.Liquid)
-                tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                tempDelta = EnergyDelta / GlobalVariables.GridStep / GlobalVariables.GridStep /
                                _material.LiquidSpecificHeatCapacity / _material.LiquidDensity;
             else
-                tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                tempDelta = EnergyDelta / GlobalVariables.GridStep / GlobalVariables.GridStep /
                             _material.GasSpecificHeatCapacity / _material.GasDensity;
             
             if(tempDelta >= 10000)
@@ -85,14 +85,14 @@ public class EngineGrainLiquid : GrainSquare {
                 if (_currentTemperature + tempDelta >= _material.MeltingTemperature) {
                     _currentTemperature = _material.MeltingTemperature;
                     // we add the rest of the energy to the accumulated energy
-                    AccumulatedEnergy += EnergyDelta - (_material.MeltingTemperature - _currentTemperature) * Const.GridStep * Const.GridStep * _material.SolidSpecificHeatCapacity * _material.SolidDensity;
+                    AccumulatedEnergy += EnergyDelta - (_material.MeltingTemperature - _currentTemperature) * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.SolidSpecificHeatCapacity * _material.SolidDensity;
                     // check if we have enough energy to melt the object
-                    double energyToMelt = _material.MeltingEnergy * Const.GridStep * Const.GridStep * _material.SolidDensity;
+                    double energyToMelt = _material.MeltingEnergy * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.SolidDensity;
                     if (AccumulatedEnergy >= energyToMelt) {
                         AccumulatedEnergy -= energyToMelt;
                         CurrentMaterialState = MaterialState.Liquid;
                         // transfer the rest of the energy to the liquid
-                        _currentTemperature += AccumulatedEnergy / Const.GridStep / Const.GridStep / _material.LiquidSpecificHeatCapacity / _material.LiquidDensity;
+                        _currentTemperature += AccumulatedEnergy / GlobalVariables.GridStep / GlobalVariables.GridStep / _material.LiquidSpecificHeatCapacity / _material.LiquidDensity;
                         AccumulatedEnergy = 0;
                     }
                 }else {
@@ -103,9 +103,9 @@ public class EngineGrainLiquid : GrainSquare {
                 if (_currentTemperature + tempDelta >= _material.BoilingTemperature) {
                     _currentTemperature = _material.BoilingTemperature;
                     // we add the rest of the energy to the accumulated energy
-                    AccumulatedEnergy += EnergyDelta - (_material.BoilingTemperature - _currentTemperature) * Const.GridStep * Const.GridStep * _material.LiquidSpecificHeatCapacity * _material.LiquidDensity;
+                    AccumulatedEnergy += EnergyDelta - (_material.BoilingTemperature - _currentTemperature) * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.LiquidSpecificHeatCapacity * _material.LiquidDensity;
                     // check if we have enough energy to boil the object
-                    double energyToBoil = _material.BoilingEnergy * Const.GridStep * Const.GridStep * _material.LiquidDensity;
+                    double energyToBoil = _material.BoilingEnergy * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.LiquidDensity;
                     if (AccumulatedEnergy >= energyToBoil) {
                         AccumulatedEnergy -= energyToBoil;
                         CurrentMaterialState = MaterialState.Gas;
@@ -115,9 +115,9 @@ public class EngineGrainLiquid : GrainSquare {
                 else if (_currentTemperature + tempDelta <= _material.MeltingTemperature) {
                     _currentTemperature = _material.MeltingTemperature;
                     // we add the rest of the energy to the accumulated energy
-                    AccumulatedEnergy += EnergyDelta - (_material.MeltingTemperature - _currentTemperature) * Const.GridStep * Const.GridStep * _material.LiquidSpecificHeatCapacity * _material.LiquidDensity;
+                    AccumulatedEnergy += EnergyDelta - (_material.MeltingTemperature - _currentTemperature) * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.LiquidSpecificHeatCapacity * _material.LiquidDensity;
                     // check if we have enough energy to freeze the object
-                    double energyToFreeze = _material.MeltingEnergy * Const.GridStep * Const.GridStep * _material.LiquidDensity;
+                    double energyToFreeze = _material.MeltingEnergy * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.LiquidDensity;
                     if (AccumulatedEnergy >= energyToFreeze) {
                         AccumulatedEnergy -= energyToFreeze;
                         CurrentMaterialState = MaterialState.Solid;
@@ -132,9 +132,9 @@ public class EngineGrainLiquid : GrainSquare {
                 if (_currentTemperature + tempDelta <= _material.BoilingTemperature) {
                     _currentTemperature = _material.BoilingTemperature;
                     // we add the rest of the energy to the accumulated energy
-                    AccumulatedEnergy += EnergyDelta - (_material.BoilingTemperature - _currentTemperature) * Const.GridStep * Const.GridStep * _material.GasSpecificHeatCapacity * _material.GasDensity;
+                    AccumulatedEnergy += EnergyDelta - (_material.BoilingTemperature - _currentTemperature) * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.GasSpecificHeatCapacity * _material.GasDensity;
                     // check if we have enough energy to condense the object
-                    double energyToCondense = _material.BoilingEnergy * Const.GridStep * Const.GridStep * _material.GasDensity;
+                    double energyToCondense = _material.BoilingEnergy * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.GasDensity;
                     if (AccumulatedEnergy >= energyToCondense) {
                         AccumulatedEnergy -= energyToCondense;
                         CurrentMaterialState = MaterialState.Liquid;

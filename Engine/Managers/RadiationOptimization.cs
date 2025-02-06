@@ -103,7 +103,7 @@ public static class RadiationOptimization{
         }
 
         foreach (var grainSquare in grainSquares) {
-            RetraceSquares(grainSquare, grainSquares, Const.RadiationDepth);
+            RetraceSquares(grainSquare, grainSquares, GlobalVariables.RadiationDepth);
         }
     }
 }

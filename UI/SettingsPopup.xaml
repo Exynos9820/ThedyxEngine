@@ -8,11 +8,25 @@
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
                              WidthRequest="-1" HeightRequest="-1"
                              HorizontalOptions="Center" VerticalOptions="Center">
-            <Label Text="Global variables" FontAttributes="Bold" FontSize="15" TextColor="Black" HorizontalOptions="Start"/>
+            <Label Text="Global variables" FontAttributes="Bold" FontSize="18" TextColor="Black" HorizontalOptions="Start"/>
             <HorizontalStackLayout>
-                <Label VerticalOptions="Center" Text="Room T, K°" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Label VerticalOptions="Center" Text="Room temperature, K°:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="RoomTemperature" TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
+                    <Entry x:Name="RoomTemperature"  TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
+                </Frame>
+            </HorizontalStackLayout>
+            <Label Text="Affects performance" FontAttributes="Bold" FontSize="15" TextColor="Red" HorizontalOptions="Start"/>
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Radiation depth calculations:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <Entry x:Name="RadiationDepth" TextColor="Black" BackgroundColor="Transparent" Completed="OnRadiationCompleted"/>
+                </Frame>
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Engine updates per second:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <Entry x:Name="EngineUpdatesPerSecond" TextColor="Black" BackgroundColor="Transparent" Completed="OnUpdatesCompleted"/>
                 </Frame>
             </HorizontalStackLayout>
         </VerticalStackLayout>

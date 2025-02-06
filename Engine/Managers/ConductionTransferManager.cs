@@ -49,7 +49,7 @@ namespace ThedyxEngine.Engine.Managers {
         private static void TranferHeatBetweenTwoSquares(GrainSquare sq1, GrainSquare sq2) {
             double temperatureDifference = sq1.CurrentTemperature - sq2.CurrentTemperature;
             double coeficient = MaterialManager.GetCoeficientFromMaterial(sq1, sq2);
-            double timeTransfer = Const.EngineIntervalUpdate / 1000;
+            double timeTransfer = 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
             double heatTransfer = coeficient  * temperatureDifference * timeTransfer;
             sq1.AddEnergyDelta(-heatTransfer);
             // removed apply heat to the second square, because this will be called for the second square

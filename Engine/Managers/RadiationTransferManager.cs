@@ -33,15 +33,15 @@ namespace ThedyxEngine.Engine.Managers{
             var distance = Math.Sqrt(Math.Pow(square2.Position.X - square1.Position.X, 2) +
                                      Math.Pow(square2.Position.Y - square1.Position.Y, 2));
     
-            var maxDistance = Math.Sqrt(2) * Const.RadiationDepth; // Max distance within depth range
+            var maxDistance = Math.Sqrt(2) * GlobalVariables.RadiationDepth; // Max distance within depth range
             var viewFactor = Math.Clamp(1.0 / distance, 0.0, 1.0); // Simplified view factor based on inverse distance
             if (distance > maxDistance) return; // If beyond range, no radiation
 
             // Stefan-Boltzmann radiation heat transfer
-            var energyRadiationLoss = emmisivityBetweenTwoObjects * Const.StefanBoltzmannConst *
-                                      Const.GridStep * viewFactor *
+            var energyRadiationLoss = emmisivityBetweenTwoObjects * GlobalVariables.StefanBoltzmannConst *
+                                      GlobalVariables.GridStep * viewFactor *
                                       (Math.Pow(square1.CurrentTemperature, 4) - Math.Pow(square2.CurrentTemperature, 4)) *
-                                      Const.EngineIntervalUpdate / 1000;
+                                      1 / GlobalVariables.EngineIntervalUpdatePerSecond;
 
             // Apply the energy changes to both squares
             //square1.AddEnergyDelta(-energyRadiationLoss / 2);
@@ -59,8 +59,8 @@ namespace ThedyxEngine.Engine.Managers{
             foreach(var square in squares) {
                 // calculated by Stefan-Boltzmann law of radiation and multiplied by the engine update interval
                 // we need to find the area of the square that is not touching other squares to calculate the radiation loss to air
-                var areaRadiationLoss = Math.Max((4 - square.GetAdjacentSquares().Count),0) * Const.GridStep;
-                var energyRadiationLoss = square.Material.SolidEmmisivity * Const.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(Engine.AirTemperature, 4)) * Const.EngineIntervalUpdate / 1000;
+                var areaRadiationLoss = Math.Max((4 - square.GetAdjacentSquares().Count),0) * GlobalVariables.GridStep;
+                var energyRadiationLoss = square.Material.SolidEmmisivity * GlobalVariables.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(GlobalVariables.AirTemperature, 4)) * 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
                 //square.AddEnergyDelta(-energyRadiationLoss);
             }
         }

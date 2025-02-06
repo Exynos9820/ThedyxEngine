@@ -36,7 +36,6 @@ namespace ThedyxEngine.Engine{
         private static long _simulationTime = 0; // time of the simulation in microseconds
         private static bool _optimize = true; // // should we optimize the engine by setting adjacent squares to be touching
         public static EngineMode Mode { get; private set; } = EngineMode.Stopped; // engine mode
-        public static double AirTemperature = 293; // air temperature in Kelvin
 
         /**
          * \brief Initialize the engine
@@ -159,12 +158,12 @@ namespace ThedyxEngine.Engine{
                 }
                 
 
-                while (stopwatch.ElapsedMilliseconds < Const.EngineIntervalUpdate) { }
+                while (stopwatch.ElapsedMilliseconds < 1000 / GlobalVariables.EngineIntervalUpdatePerSecond) { }
                 stopwatch.Stop();
 
                 lock (_engineLock) {
                     _frames++;
-                    _simulationTime = (int)(_frames * Const.EngineIntervalUpdate);
+                    _simulationTime = (int)(_frames * 1000 / GlobalVariables.EngineIntervalUpdatePerSecond);
                 }
             }
         }

@@ -144,7 +144,7 @@ namespace ThedyxEngine.Engine
         {
             // lock to be accessed by one thread at a time
             lock (EnergyLock) {
-                double tempDelta = EnergyDelta / Const.GridStep / Const.GridStep /
+                double tempDelta = EnergyDelta / GlobalVariables.GridStep / GlobalVariables.GridStep /
                                    _material.SolidSpecificHeatCapacity / _material.SolidDensity;
                 CurrentTemperature = _currentTemperature + tempDelta;
                 CurrentTemperature = Math.Max(0, CurrentTemperature);
