@@ -17,7 +17,6 @@ public partial class MainPage : ContentPage {
 
     public MainPage(IFilePickerService picker) {
         InitializeComponent();
-        FileManager.Init(picker);
         log4net.Config.XmlConfigurator.Configure();
 
         // init engine(proccessor of the app with entity of main window)

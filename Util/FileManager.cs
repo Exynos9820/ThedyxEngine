@@ -12,64 +12,99 @@ namespace ThedyxEngine.Util
 {
     /**
      * \class FileManager
-     * \brief Manages file operations for saving and loading engine objects.
+     * \brief Manages the file operations.
+     *
+     * The FileManager class provides methods for managing the file operations.
      */
     public static class FileManager
     {
-        public static IFilePickerService Picker;
-        public static void Init(IFilePickerService picker) {
-            Picker = picker;
-        }
-        
         private static readonly ILog log = LogManager.GetLogger(typeof(FileManager));   // Logger
-        static readonly Dictionary<DevicePlatform, IEnumerable<string>> FileType = new()
-        {
-            {  DevicePlatform.Android, new[] { "text/*" } } ,
-            { DevicePlatform.iOS, new[] { "public.json", "public.plain-text" } },
-            { DevicePlatform.MacCatalyst, new[] { "public.json", "public.plain-text" } },
-            { DevicePlatform.WinUI, new[] { ".txt", ".json" } }
-        };
         /**
-         * Save to file with user-specified file path using LukeMauiFilePicker.
-         */
-        public static async void Save()
-        {
-            var bytes = Encoding.UTF8.GetBytes("Hello World");
-            using var memory = new MemoryStream(bytes);
+        * Save to file
+        * \param path Path to save the file
+        */
+        public static void SaveToFile(string path) {
+            List<EngineObject> engineObjects = Engine.Engine.EngineObjectsManager.GetObjects();
+            List<string> jsonObjects = new List<string>();
 
-            await Picker.SaveFileAsync(new("text.txt", memory)
-            {
-                AndroidMimeType = "text/plain",
-                WindowsFileTypes = ("Text files", new() { ".txt", })
-            });
-        }
+            log.Info("Info: Starting saving.");
 
-        /**
-         * Load from file with user-specified file path using LukeMauiFilePicker.
-         */
-        static async Task OnFilesPickedAsync(IEnumerable<IPickFile> files)
-        {
-            var str = new StringBuilder();
-
-            foreach (var f in files)
-            {
-                using var s = await f.OpenReadAsync();
-                using var reader = new StreamReader(s);
-
-                str.AppendLine(await reader.ReadToEndAsync());
+            try {
+                foreach (var obj in engineObjects) {
+                    string json = obj.GetJsonRepresentation();
+                    jsonObjects.Add(json);
+                }
+            }catch(Exception e) {
+                log.Error("Error: " + e.Message);
             }
 
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-            });
+            string jsonOutput = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
+            File.WriteAllText(path, jsonOutput);
         }
 
-        public static async void PickOne()
-        {
-            var file = await Picker.PickFileAsync("Select a file", FileType);
-            if (file is null) { return; }
+        /**
+         * Load from file
+         * \param path Path to load the file
+         */
+        public static void LoadFromFile(string path) {
+            Engine.Engine.ClearSimulation();
+            log.Info("Info: Starting reading.");
 
-            await OnFilesPickedAsync(new[] { file });
+            string jsonInput = File.ReadAllText(path);
+            List<string> jsonObjects = JsonConvert.DeserializeObject<List<string>>(jsonInput);
+
+            List<EngineObject> engineObjects = new List<EngineObject>();
+            try {
+                foreach (var json in jsonObjects) {
+                    var jObject = JsonConvert.DeserializeObject<dynamic>(json);
+                    EngineObject engineObject = null;
+
+                    string type = jObject["Type"].Value;
+                    if (type == "GrainSquare") {
+                        engineObject = GrainSquare.FromJson(json);
+                    }
+
+                    if (engineObject != null) {
+                        engineObjects.Add(engineObject);
+                        Engine.Engine.EngineObjectsManager.AddObject(engineObject);
+                    }
+                }
+            }catch(Exception e) {
+                log.Error("Error: " + e.Message);
+            }
         }
+        
+        public static void LoadFromContent(string jsonInput) {
+            Engine.Engine.ClearSimulation();
+            log.Info("Info: Starting reading.");
+
+            try {
+                List<string> jsonObjects = JsonConvert.DeserializeObject<List<string>>(jsonInput);
+                List<EngineObject> engineObjects = new List<EngineObject>();
+
+                foreach (var json in jsonObjects) {
+                    var jObject = JsonConvert.DeserializeObject<dynamic>(json);
+                    EngineObject engineObject = null;
+
+                    string type = jObject["Type"].Value;
+                    if (type == "GrainSquare") {
+                        engineObject = GrainSquare.FromJson(json);
+                    }else if (type == "EngineRectangle") {
+                        engineObject = EngineRectangle.FromJson(json);
+                    }else if (type == "EngineLiquid") {
+                        //engineObject = EngineLiquid.FromJson(json);
+                    }
+
+                    if (engineObject != null) {
+                        engineObjects.Add(engineObject);
+                        Engine.Engine.EngineObjectsManager.AddObject(engineObject);
+                    }
+                }
+            }
+            catch (Exception e) {
+                log.Error("Error: " + e.Message);
+            }
+        }
+
     }
 }

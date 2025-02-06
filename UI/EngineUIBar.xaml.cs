@@ -82,13 +82,36 @@ namespace ThedyxEngine.UI
         }
 
         private async void OnOpenButtonClicked(object sender, EventArgs e) {
+            var customFileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.iOS, new[] { ".tdx" } },
+                { DevicePlatform.MacCatalyst, new[] { ".tdx" } },
+                { DevicePlatform.WinUI, new[] { ".tdx" } },
+                { DevicePlatform.Android, new[] { ".tdx" } }
+            });
+
             var options = new PickOptions
             {
-                PickerTitle = "Select a File",
-                FileTypes = FilePickerFileType.Images // Or define custom types
+                PickerTitle = "Select a .tdx File",
+                FileTypes = customFileTypes
             };
-            var file = MacFilePicker.PickAsync(options);
+
+            var file = await FilePicker.Default.PickAsync(options);  // Await the task
+
+            if (file != null) {
+                try {
+                    using (var stream = await file.OpenReadAsync())  // Read the file as a stream
+                    using (var reader = new StreamReader(stream)) {
+                        string fileContent = await reader.ReadToEndAsync();  // Read content as a string
+                        FileManager.LoadFromContent(fileContent);  // Pass content to LoadFromContent
+                    }
+                }
+                catch (Exception ex) {
+                    await Application.Current.MainPage.DisplayAlert("Error", $"Failed to read the file: {ex.Message}", "OK");
+                }
+            }
         }
+
 
         private async void OnClearButtonClicked(object sender, EventArgs e) {
             bool result = await Application.Current.MainPage.DisplayAlert("Confirm Clear", "Are you sure you want to clear all data?", "Yes", "No");
