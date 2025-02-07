@@ -54,7 +54,7 @@ public partial class SettingsPopup : Popup {
         RadiationDepth.Text = GlobalVariables.RadiationDepth.ToString();
     }
     
-    private void OnUpdatesCompleted(object sender, EventArgs e) {
+    private void OnEngineUpdatesCompleted(object sender, EventArgs e) {
         if (int.TryParse(EngineUpdatesPerSecond.Text, out var updates)) {
             if (updates >= 15 && updates < 240) {
                 GlobalVariables.EngineIntervalUpdatePerSecond = updates;
@@ -66,5 +66,19 @@ public partial class SettingsPopup : Popup {
             ShowErrorMessageBox("Engine updates per second must be a number");   
         }
         EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString();
+    }
+    
+    private void OnUIUpdatesCompleted(object sender, EventArgs e) {
+        if (int.TryParse(UIUpdatesPerSecond.Text, out var updates)) {
+            if (updates >= 15 && updates < 240) {
+                GlobalVariables.WindowRefreshRate = updates;
+            }
+            else {
+                ShowErrorMessageBox("UI updates per second must be between 15 and 240");
+            }
+        }else {
+            ShowErrorMessageBox("UI updates per second must be a number");   
+        }
+        UIUpdatesPerSecond.Text = GlobalVariables.WindowRefreshRate.ToString();
     }
 }

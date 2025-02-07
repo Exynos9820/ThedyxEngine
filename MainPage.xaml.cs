@@ -11,7 +11,6 @@ public partial class MainPage : ContentPage {
     int count = 0;
     private readonly Timer updateTimer;
     private bool _objectsChanged = false;
-    private readonly int _windowRefreshRate = 60;
     private EngineCanvas _engineCanvas;
     public readonly IFilePickerService picker;
 
@@ -22,10 +21,10 @@ public partial class MainPage : ContentPage {
         // init engine(proccessor of the app with entity of main window)
         Engine.Engine.Init(this);
 
-        _windowRefreshRate = Util.SystemInfo.GetRefreshRate();
+        GlobalVariables.WindowRefreshRate = Util.SystemInfo.GetRefreshRate();
         updateTimer = new Timer
         {
-            Interval = 1000.0 / _windowRefreshRate // Interval in milliseconds
+            Interval = 1000.0 / GlobalVariables.WindowRefreshRate // Interval in milliseconds
         };
         updateTimer.Elapsed += UpdateTimer_Elapsed;
         updateTimer.Start();

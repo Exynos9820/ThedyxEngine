@@ -26,7 +26,14 @@
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Engine updates per second:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="EngineUpdatesPerSecond" TextColor="Black" BackgroundColor="Transparent" Completed="OnUpdatesCompleted"/>
+                    <Entry x:Name="EngineUpdatesPerSecond" TextColor="Black" BackgroundColor="Transparent" Completed="OnEngineUpdatesCompleted"/>
+                </Frame>
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="UI updates per second:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <Entry x:Name="UIUpdatesPerSecond" TextColor="Black" BackgroundColor="Transparent" Completed="OnUIUpdatesCompleted"/>
                 </Frame>
             </HorizontalStackLayout>
         </VerticalStackLayout>

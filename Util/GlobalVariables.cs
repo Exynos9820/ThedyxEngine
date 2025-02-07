@@ -11,4 +11,6 @@ public static class GlobalVariables {
     public static readonly double StefanBoltzmannConst = 5.67 * Math.Pow(10, -8);
     /// Interval between engine updates
     public static double  EngineIntervalUpdatePerSecond = 60; 
+    /// Interval between UI updates
+    public static int WindowRefreshRate = 60;
 }
