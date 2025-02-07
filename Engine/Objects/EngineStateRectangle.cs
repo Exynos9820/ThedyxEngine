@@ -7,11 +7,11 @@ using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine;
 
-public class EngineLiquid : EngineObject {
-    private List<EngineGrainLiquid> _grainSquares;
-    private List<EngineGrainLiquid> _externalSquares;
+public class EngineStateRectangle : EngineObject {
+    private List<EngineStateGrainSquare> _grainSquares;
+    private List<EngineStateGrainSquare> _externalSquares;
 
-    public EngineLiquid(string name, int width, int height) : base(name) {
+    public EngineStateRectangle(string name, int width, int height) : base(name) {
         _size = new(width, height);
         SetSquaresForShape();
         SetTemperatureForAllSquares();
@@ -25,7 +25,7 @@ public class EngineLiquid : EngineObject {
         _grainSquares = [];
         for (int i = 0; i < Size.X; i++) {
             for (int j = 0; j < Size.Y; j++) {
-                EngineGrainLiquid square = new($"{Name} square {i} {j}", new Point(i, j), Material);
+                EngineStateGrainSquare square = new($"{Name} square {i} {j}", new Point(i, j), Material);
                 square.Position = new Point(_position.X + i, _position.Y + j);
                 square.CurrentTemperature = _simulationTemperature;
                 square.SimulationTemperature = _simulationTemperature;
@@ -98,9 +98,9 @@ public class EngineLiquid : EngineObject {
                             var square = _grainSquares[x * (int)Size.Y + y];
                             temperature += square.CurrentTemperature;
                             opacity += square.CurrentMaterialState switch {
-                                EngineGrainLiquid.MaterialState.Solid => 1f,
-                                EngineGrainLiquid.MaterialState.Liquid => 0.3f,
-                                EngineGrainLiquid.MaterialState.Gas => 0.1f,
+                                EngineStateGrainSquare.MaterialState.Solid => 1f,
+                                EngineStateGrainSquare.MaterialState.Liquid => 0.3f,
+                                EngineStateGrainSquare.MaterialState.Gas => 0.1f,
                                 _ => 0
                             };
                         }

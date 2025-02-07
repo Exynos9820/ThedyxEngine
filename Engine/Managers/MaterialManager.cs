@@ -124,12 +124,12 @@ namespace ThedyxEngine.Engine.Managers {
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
             double thermalConductivity1;
             double thermalConductivity2;
-            if(obj1 is EngineGrainLiquid) {
+            if(obj1 is EngineStateGrainSquare) {
                 // check state of the object and get the right thermal conductivity
-                var obj = (EngineGrainLiquid)obj1;
-                if(obj.CurrentMaterialState == EngineGrainLiquid.MaterialState.Solid) {
+                var obj = (EngineStateGrainSquare)obj1;
+                if(obj.CurrentMaterialState == EngineStateGrainSquare.MaterialState.Solid) {
                     thermalConductivity1 = obj.Material.SolidThermalConductivity;
-                } else if(obj.CurrentMaterialState == EngineGrainLiquid.MaterialState.Liquid) {
+                } else if(obj.CurrentMaterialState == EngineStateGrainSquare.MaterialState.Liquid) {
                     thermalConductivity1 = obj.Material.LiquidThermalConductivity;
                 } else {
                     thermalConductivity1 = obj.Material.GasThermalConductivity;
@@ -138,11 +138,11 @@ namespace ThedyxEngine.Engine.Managers {
                 thermalConductivity1 = obj1.Material.SolidThermalConductivity;
             }
             // the same for the second object
-            if (obj2 is EngineGrainLiquid liquid) {
+            if (obj2 is EngineStateGrainSquare liquid) {
                 // check state of the object and get the right thermal conductivity
-                if(liquid.CurrentMaterialState == EngineGrainLiquid.MaterialState.Solid) {
+                if(liquid.CurrentMaterialState == EngineStateGrainSquare.MaterialState.Solid) {
                     thermalConductivity2 = liquid.Material.SolidThermalConductivity;
-                } else if(liquid.CurrentMaterialState == EngineGrainLiquid.MaterialState.Liquid) {
+                } else if(liquid.CurrentMaterialState == EngineStateGrainSquare.MaterialState.Liquid) {
                     thermalConductivity2 = liquid.Material.LiquidThermalConductivity;
                 } else {
                     thermalConductivity2 = liquid.Material.GasThermalConductivity;

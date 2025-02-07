@@ -73,7 +73,7 @@ public static class EngineObjectsFactory {
      * \param json The JSON representation of the object.
      * \returns The object created from JSON representation.
      */
-    public static EngineLiquid EngineStateObjectFromJson(string json) {
+    public static EngineStateRectangle EngineStateObjectFromJson(string json) {
         var settings = new JsonSerializerSettings {
             NullValueHandling = NullValueHandling.Ignore
         };
@@ -92,7 +92,7 @@ public static class EngineObjectsFactory {
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
 
-        return new EngineLiquid(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
+        return new EngineStateRectangle(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
             SimulationTemperature = simulationTemperature,
             Position = Position,
             Size = Size,

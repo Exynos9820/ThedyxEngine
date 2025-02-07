@@ -29,7 +29,7 @@ public partial class CreateObjectPopup : Popup {
                 break;
             case ObjectType.StateChangeRectangle:
                 TitleLabel.Text = "Create State Change Rectangle";
-                _object = new EngineLiquid("", 10, 10);
+                _object = new EngineStateRectangle("", 10, 10);
                 break;
             default:
                 Debug.Assert(false, "Invalid object type");

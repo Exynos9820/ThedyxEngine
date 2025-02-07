@@ -54,7 +54,7 @@ namespace ThedyxEngine.Engine.Examples {
             Engine.EngineObjectsManager.AddObject(topWall);
             
             // Create an ice object
-            EngineLiquid ice = new EngineLiquid("Ice", 30, 30);
+            EngineStateRectangle ice = new EngineStateRectangle("Ice", 30, 30);
             ice.Position = new Point(0, 30);
             ice.SimulationTemperature = 220;
             Engine.EngineObjectsManager.AddObject(ice);

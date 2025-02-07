@@ -11,7 +11,7 @@ public class EngineObjectTemplateSelector : DataTemplateSelector
     {
         if (item is EngineRectangle or GrainSquare) {
             return ObjectTemplate!;
-        }else if (item is EngineLiquid) {
+        }else if (item is EngineStateRectangle) {
             return LiquidObjectTemplate!;
         }
         throw new ArgumentException("Invalid item type");

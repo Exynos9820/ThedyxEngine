@@ -5,7 +5,7 @@ using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine;
 
-public class EngineGrainLiquid : GrainSquare {
+public class EngineStateGrainSquare : GrainSquare {
     public enum MaterialState {
         Liquid,
         Solid,
@@ -16,7 +16,7 @@ public class EngineGrainLiquid : GrainSquare {
     
     public MaterialState CurrentMaterialState { get; set; }
     
-    public EngineGrainLiquid(string name, Point position, Material material) : base(name, position) {
+    public EngineStateGrainSquare(string name, Point position, Material material) : base(name, position) {
         Material = material;
         SetStateFromTemperature();
         SetCachedPoints();
