@@ -90,20 +90,20 @@ public class CanvasManager{
 #endif
 
         // check if we are out of bounds
-        if (CurrentLeftXIndex < CanvasData.MinLeftXIndex) {
-            CurrentLeftXIndex = CanvasData.MinLeftXIndex;
+        if (CurrentLeftXIndex < CanvasHelper.MinLeftXIndex) {
+            CurrentLeftXIndex = CanvasHelper.MinLeftXIndex;
             CurrentRightXIndex = CurrentLeftXIndex + width;
         }
-        if (CurrentRightXIndex > CanvasData.MaxRightXIndex) {
-            CurrentRightXIndex = CanvasData.MaxRightXIndex;
+        if (CurrentRightXIndex > CanvasHelper.MaxRightXIndex) {
+            CurrentRightXIndex = CanvasHelper.MaxRightXIndex;
             CurrentLeftXIndex = CurrentRightXIndex - width;
         }
-        if (CurrentTopYIndex > CanvasData.MaxYTopIndex) {
-            CurrentTopYIndex = CanvasData.MaxYTopIndex;
+        if (CurrentTopYIndex > CanvasHelper.MaxYTopIndex) {
+            CurrentTopYIndex = CanvasHelper.MaxYTopIndex;
             CurrentBottomYIndex = CurrentTopYIndex - height;
         }
-        if (CurrentBottomYIndex < CanvasData.MinYBottomIndex) {
-            CurrentBottomYIndex = CanvasData.MinYBottomIndex;
+        if (CurrentBottomYIndex < CanvasHelper.MinYBottomIndex) {
+            CurrentBottomYIndex = CanvasHelper.MinYBottomIndex;
             CurrentTopYIndex = CurrentBottomYIndex + height;
         }
     }
@@ -119,17 +119,17 @@ public class CanvasManager{
         CurrentTopYIndex = (int)bottomRight.Y;
         CurrentBottomYIndex = (int)topLeft.Y;
         // check if we are out of bounds
-        if (CurrentLeftXIndex < CanvasData.MinLeftXIndex) {
-            CurrentLeftXIndex = CanvasData.MinLeftXIndex;
+        if (CurrentLeftXIndex < CanvasHelper.MinLeftXIndex) {
+            CurrentLeftXIndex = CanvasHelper.MinLeftXIndex;
         }
-        if (CurrentRightXIndex > CanvasData.MaxRightXIndex) {
-            CurrentRightXIndex = CanvasData.MaxRightXIndex;
+        if (CurrentRightXIndex > CanvasHelper.MaxRightXIndex) {
+            CurrentRightXIndex = CanvasHelper.MaxRightXIndex;
         }
-        if (CurrentTopYIndex > CanvasData.MaxYTopIndex) {
-            CurrentTopYIndex = CanvasData.MaxYTopIndex;
+        if (CurrentTopYIndex > CanvasHelper.MaxYTopIndex) {
+            CurrentTopYIndex = CanvasHelper.MaxYTopIndex;
         }
-        if (CurrentBottomYIndex < CanvasData.MinYBottomIndex) {
-            CurrentBottomYIndex = CanvasData.MinYBottomIndex;
+        if (CurrentBottomYIndex < CanvasHelper.MinYBottomIndex) {
+            CurrentBottomYIndex = CanvasHelper.MinYBottomIndex;
         }
         // check for distance between indexes, if it is smaller than 10, we need to adjust indexes
         if (CurrentRightXIndex - CurrentLeftXIndex < 10) {
@@ -152,16 +152,16 @@ public class CanvasManager{
         int xSize = CurrentRightXIndex - CurrentLeftXIndex;
         int ySize = CurrentTopYIndex - CurrentBottomYIndex;
 
-        if (xSize == CanvasData.MinRightXIndex - CanvasData.MaxLeftXIndex || ySize == CanvasData.MinYTopIndex - CanvasData.MaxYBottomIndex) return;
+        if (xSize == CanvasHelper.MinRightXIndex - CanvasHelper.MaxLeftXIndex || ySize == CanvasHelper.MinYTopIndex - CanvasHelper.MaxYBottomIndex) return;
         int xZoomDelta = (int) (xSize * delta / 100 - xSize) / 5;
         int yZoomDelta = (int) (ySize * delta / 100 - ySize) / 5;
 
         if (xZoomDelta >= 0 || yZoomDelta >= 0) return;
 
-        CurrentRightXIndex = Math.Max(CurrentRightXIndex + xZoomDelta, CanvasData.MinRightXIndex);
-        CurrentLeftXIndex = Math.Min(CurrentLeftXIndex - xZoomDelta, CanvasData.MaxLeftXIndex);
-        CurrentTopYIndex = Math.Max(CurrentTopYIndex + yZoomDelta, CanvasData.MinYTopIndex);
-        CurrentBottomYIndex = Math.Min(CurrentBottomYIndex - yZoomDelta, CanvasData.MaxYBottomIndex);
+        CurrentRightXIndex = Math.Max(CurrentRightXIndex + xZoomDelta, CanvasHelper.MinRightXIndex);
+        CurrentLeftXIndex = Math.Min(CurrentLeftXIndex - xZoomDelta, CanvasHelper.MaxLeftXIndex);
+        CurrentTopYIndex = Math.Max(CurrentTopYIndex + yZoomDelta, CanvasHelper.MinYTopIndex);
+        CurrentBottomYIndex = Math.Min(CurrentBottomYIndex - yZoomDelta, CanvasHelper.MaxYBottomIndex);
     }
 
     /**
@@ -173,7 +173,7 @@ public class CanvasManager{
         int xSize = CurrentRightXIndex - CurrentLeftXIndex;
         int ySize = CurrentTopYIndex - CurrentBottomYIndex;
 
-        if (xSize == CanvasData.MaxRightXIndex - CanvasData.MinLeftXIndex || ySize == CanvasData.MaxYTopIndex - CanvasData.MinYBottomIndex)
+        if (xSize == CanvasHelper.MaxRightXIndex - CanvasHelper.MinLeftXIndex || ySize == CanvasHelper.MaxYTopIndex - CanvasHelper.MinYBottomIndex)
             return;
 
         int xZoomDelta = (int) (xSize * delta / 100 + xSize) / 5;
@@ -185,10 +185,10 @@ public class CanvasManager{
             // adjust y zoom delta to keep aspect ratio
             yZoomDelta = (int)(xZoomDelta * (CurrentTopYIndex - CurrentBottomYIndex) / (CurrentRightXIndex - CurrentLeftXIndex));
         }
-        CurrentRightXIndex = Math.Min(CurrentRightXIndex + xZoomDelta, CanvasData.MaxRightXIndex);
-        CurrentLeftXIndex = Math.Max(CurrentLeftXIndex - xZoomDelta, CanvasData.MinLeftXIndex);
-        CurrentTopYIndex = Math.Min(CurrentTopYIndex + yZoomDelta, CanvasData.MaxYTopIndex);
-        CurrentBottomYIndex = Math.Max(CurrentBottomYIndex - yZoomDelta, CanvasData.MinYBottomIndex);
+        CurrentRightXIndex = Math.Min(CurrentRightXIndex + xZoomDelta, CanvasHelper.MaxRightXIndex);
+        CurrentLeftXIndex = Math.Max(CurrentLeftXIndex - xZoomDelta, CanvasHelper.MinLeftXIndex);
+        CurrentTopYIndex = Math.Min(CurrentTopYIndex + yZoomDelta, CanvasHelper.MaxYTopIndex);
+        CurrentBottomYIndex = Math.Max(CurrentBottomYIndex - yZoomDelta, CanvasHelper.MinYBottomIndex);
     }
 
     /**
