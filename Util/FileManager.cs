@@ -41,38 +41,7 @@ namespace ThedyxEngine.Util
             string jsonOutput = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
             File.WriteAllText(path, jsonOutput);
         }
-
-        /**
-         * Load from file
-         * \param path Path to load the file
-         */
-        public static void LoadFromFile(string path) {
-            Engine.Engine.ClearSimulation();
-            log.Info("Info: Starting reading.");
-
-            string jsonInput = File.ReadAllText(path);
-            List<string> jsonObjects = JsonConvert.DeserializeObject<List<string>>(jsonInput);
-
-            List<EngineObject> engineObjects = new List<EngineObject>();
-            try {
-                foreach (var json in jsonObjects) {
-                    var jObject = JsonConvert.DeserializeObject<dynamic>(json);
-                    EngineObject engineObject = null;
-
-                    string type = jObject["Type"].Value;
-                    if (type == "GrainSquare") {
-                        engineObject = GrainSquare.FromJson(json);
-                    }
-
-                    if (engineObject != null) {
-                        engineObjects.Add(engineObject);
-                        Engine.Engine.EngineObjectsManager.AddObject(engineObject);
-                    }
-                }
-            }catch(Exception e) {
-                log.Error("Error: " + e.Message);
-            }
-        }
+        
         
         public static void LoadFromContent(string jsonInput) {
             Engine.Engine.ClearSimulation();
@@ -88,9 +57,9 @@ namespace ThedyxEngine.Util
 
                     string type = jObject["Type"].Value;
                     if (type == "GrainSquare") {
-                        engineObject = GrainSquare.FromJson(json);
+                        engineObject = EngineObjectsFactory.GrainSquareFromJson(json);
                     }else if (type == "EngineRectangle") {
-                        engineObject = EngineRectangle.FromJson(json);
+                        engineObject = EngineObjectsFactory.EngineRectangleFromJson(json);
                     }else if (type == "EngineLiquid") {
                         //engineObject = EngineLiquid.FromJson(json);
                     }

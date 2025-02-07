@@ -74,38 +74,6 @@ namespace ThedyxEngine.Engine {
             }
         }
 
-
-        /**
-         * \brief Creates and object from JSON representation.
-         * \param json The JSON representation of the object.
-         * \returns The object created from JSON representation.
-         */
-        public static EngineRectangle FromJson(string json) {
-            var settings = new JsonSerializerSettings {
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            var jObject = JsonConvert.DeserializeObject<dynamic>(json, settings);
-
-            string type = jObject.Type;
-
-            if(type != "Rectangle") {
-                throw new ArgumentException("JSON is not of type Rectangle");
-            }
-            string name = jObject.Name;
-            double simulationTemperature = (double)jObject.SimulationTemperature;
-            Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-            Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-            Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
-            Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
-
-            return new EngineRectangle(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
-                _simulationTemperature = simulationTemperature,
-                _position = Position,
-                _size = Size,
-            };
-        }
-
         /**
          * \brief Gets the JSON representation of the object.
          * \returns The JSON representation of the object.

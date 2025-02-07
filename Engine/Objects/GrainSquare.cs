@@ -172,37 +172,6 @@ namespace ThedyxEngine.Engine
 
 
         /**
-         * Deserializes a JSON string to a GrainSquare object.
-         * \param json The JSON string to deserialize.
-         * \return A new GrainSquare object deserialized from the JSON string.
-         */
-        public static GrainSquare FromJson(string json)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            var jObject = JsonConvert.DeserializeObject<dynamic>(json, settings);
-
-            string type = jObject.Type;
-            if (type != "GrainSquare")
-                throw new InvalidOperationException("JSON is not of type Grainsquare.");
-            Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-
-            string name = jObject.Name;
-            double simulationTemperature = (double)jObject.SimulationTemperature;
-            Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
-            return new GrainSquare(name, Position)
-            {
-                _simulationTemperature = simulationTemperature,
-                _currentTemperature = simulationTemperature,
-                _material = Material
-            };
-        }
-
-
-        /**
          * Serializes the grain square to a JSON representation.
          * \return A JSON string representing the grain square.
          */
