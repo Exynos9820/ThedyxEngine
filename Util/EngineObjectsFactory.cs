@@ -21,7 +21,7 @@ public static class EngineObjectsFactory {
         var jObject = JsonConvert.DeserializeObject<dynamic>(json, settings);
 
         string type = jObject.Type;
-        if (type != "GrainSquare")
+        if (type != ObjectType.GrainSquare.ToString())
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
 
@@ -36,13 +36,42 @@ public static class EngineObjectsFactory {
         };
     }
     
+    /**
+     * Deserializes a JSON string to a GrainSquare object.
+     * \param json The JSON string to deserialize.
+     * \return A new GrainSquare object deserialized from the JSON string.
+     */
+    public static StateGrainSquare StateGrainSquareFromJson(string json)
+    {
+        var settings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        var jObject = JsonConvert.DeserializeObject<dynamic>(json, settings);
+
+        string type = jObject.Type;
+        if (type != ObjectType.StateGrainSquare.ToString())
+            throw new InvalidOperationException("JSON is not of type Grainsquare.");
+        Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+
+        string name = jObject.Name;
+        double simulationTemperature = (double)jObject.SimulationTemperature;
+        Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
+        return new StateGrainSquare(name, Position, Material)
+        {
+            SimulationTemperature = simulationTemperature,
+            CurrentTemperature = simulationTemperature,
+        };
+    }
+    
     
     /**
      * \brief Creates and object from JSON representation.
      * \param json The JSON representation of the object.
      * \returns The object created from JSON representation.
      */
-    public static EngineRectangle EngineRectangleFromJson(string json) {
+    public static EngineRectangle RectangleFromJson(string json) {
         var settings = new JsonSerializerSettings {
             NullValueHandling = NullValueHandling.Ignore
         };
@@ -51,7 +80,7 @@ public static class EngineObjectsFactory {
 
         string type = jObject.Type;
 
-        if(type != "Rectangle") {
+        if(type != ObjectType.Rectangle.ToString()) {
             throw new ArgumentException("JSON is not of type Rectangle");
         }
         string name = jObject.Name;
@@ -73,7 +102,7 @@ public static class EngineObjectsFactory {
      * \param json The JSON representation of the object.
      * \returns The object created from JSON representation.
      */
-    public static EngineStateRectangle EngineStateObjectFromJson(string json) {
+    public static EngineStateRectangle StateRectangleFromJson(string json) {
         var settings = new JsonSerializerSettings {
             NullValueHandling = NullValueHandling.Ignore
         };
@@ -82,7 +111,7 @@ public static class EngineObjectsFactory {
 
         string type = jObject.Type;
 
-        if(type != "Rectangle") {
+        if(type != ObjectType.StateRectangle.ToString()) {
             throw new ArgumentException("JSON is not of type Rectangle");
         }
         string name = jObject.Name;

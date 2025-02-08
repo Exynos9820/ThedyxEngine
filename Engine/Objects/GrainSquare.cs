@@ -27,8 +27,7 @@ namespace ThedyxEngine.Engine
      * \see EngineObject
      * \see CanvasManager
      */
-    public class GrainSquare : EngineObject
-    {
+    public class GrainSquare : EngineObject {
         protected double EnergyDelta = 0; // current energy delta
         public event PropertyChangedEventHandler? PositionChanged; // event triggered when position changes
         private List<GrainSquare> _adjacentSquares = []; // list of adjacent squares
@@ -45,8 +44,7 @@ namespace ThedyxEngine.Engine
          * \param p_b Vertex B of the square.
          * \param p_c Vertex C of the square.
          */
-        public GrainSquare(string name, Point position) : base(name)
-        {
+        public GrainSquare(string name, Point position) : base(name) {
             _position = position;
             SetCachedPoints();
             Material = MaterialManager.GetBaseMaterial();
@@ -77,8 +75,7 @@ namespace ThedyxEngine.Engine
         /**
          * \brief Sets caeched point of the GrainSquare
          */
-        protected void SetCachedPoints()
-        {
+        protected void SetCachedPoints() {
             _cachedPointB = new(Position.X + 1, Position.Y);
             _cachedPointC = new(Position.X, Position.Y - 1);
             _cachedPointD = new(Position.X + 1, Position.Y - 1);
@@ -92,11 +89,9 @@ namespace ThedyxEngine.Engine
         /**
          * Gets or sets the position of the grain square.
          */
-        public override Point Position
-        {
+        public override Point Position {
             get => _position;
-            set
-            {
+            set {
                 _position = value;
                 SetCachedPoints();
                 OnPositionChanged(nameof(Position));
@@ -110,8 +105,7 @@ namespace ThedyxEngine.Engine
          * \param canvasManager The canvas manager providing the current view context.
          * \return True if any vertex is visible, otherwise false.
          */
-        public override bool IsVisible(CanvasManager canvasManager)
-        {
+        public override bool IsVisible(CanvasManager canvasManager) {
             //return CanvasManager.isPointVisible(Position, canvasManager);
             return true;
         }
@@ -121,8 +115,7 @@ namespace ThedyxEngine.Engine
          * \param[out] topLeft The top-left corner of the bounding box.
          * \param[out] bottomRight The bottom-right corner of the bounding box.
          */
-        public override void GetObjectVisibleArea(out Vector2 topLeft, out Vector2 bottomRight)
-        {
+        public override void GetObjectVisibleArea(out Vector2 topLeft, out Vector2 bottomRight) {
             topLeft = new Vector2((float)_position.X, (float)_position.Y);
             bottomRight = new Vector2((float)_cachedPointD.X, (float)_cachedPointD.Y);
         }
@@ -131,8 +124,7 @@ namespace ThedyxEngine.Engine
          * Add energy to the grain square that was calculated in one simulation step
          * \param energyDelta The energy to add to the grain square.
          */
-        public void AddEnergyDelta(double energyDelta)
-        {
+        public void AddEnergyDelta(double energyDelta) {
             lock (EnergyLock)
                 EnergyDelta += energyDelta;
         }
@@ -140,8 +132,7 @@ namespace ThedyxEngine.Engine
         /**
          * Applies the energy delta to the grain square, updating the temperature.
          */
-        public override void ApplyEnergyDelta()
-        {
+        public override void ApplyEnergyDelta() {
             // lock to be accessed by one thread at a time
             lock (EnergyLock) {
                 double tempDelta = EnergyDelta / GlobalVariables.GridStep / GlobalVariables.GridStep /
@@ -155,19 +146,9 @@ namespace ThedyxEngine.Engine
         /**
          * Sets the initial temperature of the grain to the simulation temperature.
          */
-        public override void SetStartTemperature()
-        {
+        public override void SetStartTemperature() {
             _currentTemperature = _simulationTemperature;
             OnPropertyChanged(nameof(CurrentTemperature));
-        }
-
-        /**
-         * Provides the type identifier for Grainsquare objects.
-         * \return A string identifier for the type.
-         */
-        public override string GetObjectTypeString()
-        {
-            return "GrainSquare";
         }
 
 
@@ -175,17 +156,14 @@ namespace ThedyxEngine.Engine
          * Serializes the grain square to a JSON representation.
          * \return A JSON string representing the grain square.
          */
-        public override string GetJsonRepresentation()
-        {
-            var settings = new JsonSerializerSettings
-            {
+        public override string GetJsonRepresentation() {
+            var settings = new JsonSerializerSettings {
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore
             };
 
-            return JsonConvert.SerializeObject(new
-            {
-                Type = GetObjectTypeString(),
+            return JsonConvert.SerializeObject(new {
+                Type = ObjectType.GrainSquare.ToString(),
                 Name,
                 Position = _position,
                 SimulationTemperature = _simulationTemperature,
@@ -197,8 +175,7 @@ namespace ThedyxEngine.Engine
          * \brief Determines whether the grain square is intersecting with another object.
          * \returns true if the grain square is intersecting with the object, otherwise false.
          */
-        public override bool IsIntersecting(EngineObject obj)
-        {
+        public override bool IsIntersecting(EngineObject obj) {
             throw new NotImplementedException();
         }
 

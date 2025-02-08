@@ -1,0 +1,17 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="ThedyxEngine.UI.SaveFilePopup">
+    <toolkit:Popup.Content>
+        <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
+                             WidthRequest="-1" HeightRequest="-1"
+                             HorizontalOptions="Center" VerticalOptions="Center">
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="FileName" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <Entry x:Name="FileName" TextColor="Black" BackgroundColor="Transparent"/>
+                </Frame>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </toolkit:Popup.Content>
+</toolkit:Popup>

@@ -1,11 +1,12 @@
 using Microsoft.Maui.Controls.Shapes;
+using Newtonsoft.Json;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine;
 
-public class EngineStateGrainSquare : GrainSquare {
+public class StateGrainSquare : GrainSquare {
     public enum MaterialState {
         Liquid,
         Solid,
@@ -16,12 +17,11 @@ public class EngineStateGrainSquare : GrainSquare {
     
     public MaterialState CurrentMaterialState { get; set; }
     
-    public EngineStateGrainSquare(string name, Point position, Material material) : base(name, position) {
+    public StateGrainSquare(string name, Point position, Material material) : base(name, position) {
         Material = material;
         SetStateFromTemperature();
         SetCachedPoints();
     }
-    
     
     public void SetStateFromTemperature() {
         if(_currentTemperature < Material.MeltingTemperature) {
@@ -31,6 +31,25 @@ public class EngineStateGrainSquare : GrainSquare {
         } else {
             CurrentMaterialState = MaterialState.Liquid;
         }
+    }
+    
+    /**
+     * Serializes the state grain square to a JSON representation.
+     * \return A JSON string representing the state grain square.
+     */
+    public override string GetJsonRepresentation() {
+        var settings = new JsonSerializerSettings {
+            Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        return JsonConvert.SerializeObject(new {
+            Type = ObjectType.StateGrainSquare.ToString(),
+            Name,
+            Position = _position,
+            SimulationTemperature = _simulationTemperature,
+            MaterialName = _material.Name
+        }, settings);
     }
     
     /**

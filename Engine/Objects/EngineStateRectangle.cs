@@ -8,8 +8,8 @@ using ThedyxEngine.Util;
 namespace ThedyxEngine.Engine;
 
 public class EngineStateRectangle : EngineObject {
-    private List<EngineStateGrainSquare> _grainSquares;
-    private List<EngineStateGrainSquare> _externalSquares;
+    private List<StateGrainSquare> _grainSquares;
+    private List<StateGrainSquare> _externalSquares;
 
     public EngineStateRectangle(string name, int width, int height) : base(name) {
         _size = new(width, height);
@@ -25,7 +25,7 @@ public class EngineStateRectangle : EngineObject {
         _grainSquares = [];
         for (int i = 0; i < Size.X; i++) {
             for (int j = 0; j < Size.Y; j++) {
-                EngineStateGrainSquare square = new($"{Name} square {i} {j}", new Point(i, j), Material);
+                StateGrainSquare square = new($"{Name} square {i} {j}", new Point(i, j), Material);
                 square.Position = new Point(_position.X + i, _position.Y + j);
                 square.CurrentTemperature = _simulationTemperature;
                 square.SimulationTemperature = _simulationTemperature;
@@ -98,9 +98,9 @@ public class EngineStateRectangle : EngineObject {
                             var square = _grainSquares[x * (int)Size.Y + y];
                             temperature += square.CurrentTemperature;
                             opacity += square.CurrentMaterialState switch {
-                                EngineStateGrainSquare.MaterialState.Solid => 1f,
-                                EngineStateGrainSquare.MaterialState.Liquid => 0.3f,
-                                EngineStateGrainSquare.MaterialState.Gas => 0.1f,
+                                StateGrainSquare.MaterialState.Solid => 1f,
+                                StateGrainSquare.MaterialState.Liquid => 0.3f,
+                                StateGrainSquare.MaterialState.Gas => 0.1f,
                                 _ => 0
                             };
                         }
@@ -146,27 +146,21 @@ public class EngineStateRectangle : EngineObject {
         OnPropertyChanged(nameof(CurrentTemperature));
         SetTemperatureForAllSquares();
     }
-
-    public override string GetObjectTypeString() {
-       return "StateObject";
-    }
-
+    
     public override ObjectType GetObjectType() {
-        return ObjectType.StateChangeRectangle;
+        return ObjectType.StateRectangle;
     }
     
     
 
     public override string GetJsonRepresentation() {
-        var settings = new JsonSerializerSettings
-        {
+        var settings = new JsonSerializerSettings {
             Formatting = Formatting.Indented,
             NullValueHandling = NullValueHandling.Ignore
         };
 
-        return JsonConvert.SerializeObject(new
-        {
-            Type = GetObjectTypeString(),
+        return JsonConvert.SerializeObject(new {
+            Type = ObjectType.StateRectangle.ToString(),
             Name,
             Position = _position,
             SimulationTemperature = _simulationTemperature,

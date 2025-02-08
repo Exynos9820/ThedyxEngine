@@ -11,11 +11,11 @@ using ThedyxEngine.UI;
 
 namespace ThedyxEngine.Engine
 {
-    public enum ObjectType
-    {
+    public enum ObjectType {
         GrainSquare,
+        StateGrainSquare,
         Rectangle,
-        StateChangeRectangle
+        StateRectangle
     }
 
     /**
@@ -56,8 +56,7 @@ namespace ThedyxEngine.Engine
          * Constructor for creating a new EngineObject.
          * \param name The name of the engine object.
          */
-        public EngineObject(string name)
-        {
+        public EngineObject(string name) {
             Name = name;
             Material = MaterialManager.GetBaseMaterial();
         }
@@ -65,16 +64,14 @@ namespace ThedyxEngine.Engine
         /**
          * Marks the object as selected.
          */
-        public void Select()
-        {
+        public void Select() {
             IsSelected = true;
         }
 
         /**
          * Marks the object as deselected.
          */
-        public void Deselect()
-        {
+        public void Deselect() {
             IsSelected = false;
         }
 
@@ -82,28 +79,23 @@ namespace ThedyxEngine.Engine
          * Returns the name of the object as its string representation.
          * \return The name of the object.
          */
-        public override string ToString()
-        {
+        public override string ToString() {
             return Name;
         }
 
         /// Gets or sets the position of the object.
-        public virtual Point Position
-        {
+        public virtual Point Position {
             get => _position;
-            set
-            {
+            set {
                 _position = value;
                 OnPropertyChanged(nameof(Position));
             }
         }
 
         /// Gets or sets the material of the object.
-        public Material Material
-        {
+        public Material Material {
             get => _material;
-            set 
-            {
+            set {
                 _material = value;  
                 SetMaterialProperties();
             }
@@ -113,16 +105,12 @@ namespace ThedyxEngine.Engine
         protected abstract void SetMaterialProperties();
 
         /// Gets or sets the current temperature.
-        public double CurrentTemperature
-        {
+        public double CurrentTemperature {
             get => _currentTemperature;
-            set
-            {
-                if (_currentTemperature != value)
-                {
+            set {
+                if (_currentTemperature != value) {
                     _currentTemperature = value;
-                    if (Engine.GetMode() == Engine.EngineMode.Running)
-                    {
+                    if (Engine.GetMode() == Engine.EngineMode.Running) {
                         OnPropertyChanged(nameof(CurrentTemperature));
                     }
                 }
@@ -130,13 +118,10 @@ namespace ThedyxEngine.Engine
         }
 
         /// Gets or sets the simulation temperature.
-        public double SimulationTemperature
-        {
+        public double SimulationTemperature {
             get => _simulationTemperature;
-            set
-            {
-                if (_simulationTemperature != value)
-                {
+            set {
+                if (_simulationTemperature != value) {
                     _simulationTemperature = value;
                     _currentTemperature = value;
                     OnPropertyChanged(nameof(SimulationTemperature));
@@ -146,13 +131,10 @@ namespace ThedyxEngine.Engine
 
 
         /// Gets or sets the name of the object.
-        public string Name
-        {
+        public string Name {
             get => _name;
-            set
-            {
-                if (_name != value)
-                {
+            set {
+                if (_name != value) {
                     _name = value;
                     OnPropertyChanged(nameof(Name));
                 }
@@ -171,13 +153,10 @@ namespace ThedyxEngine.Engine
         }
 
         /// Gets or sets whether the object is selected.
-        public bool IsSelected
-        {
+        public bool IsSelected {
             get => _isSelected;
-            set
-            {
-                if (_isSelected != value)
-                {
+            set {
+                if (_isSelected != value) {
                     _isSelected = value;
                     OnPropertyChanged(nameof(IsSelected));
                 }
@@ -185,10 +164,8 @@ namespace ThedyxEngine.Engine
         }
 
         /// Called to notify observers of property changes.
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (Engine.Mode != Engine.EngineMode.Running)
-            {
+        protected virtual void OnPropertyChanged(string propertyName) {
+            if (Engine.Mode != Engine.EngineMode.Running) {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
@@ -207,9 +184,6 @@ namespace ThedyxEngine.Engine
 
         /// Sets the starting temperature for the simulation. Must be implemented by subclasses.
         abstract public void SetStartTemperature();
-
-        /// Gets the type of the object as a string. Must be implemented by subclasses.
-        abstract public string GetObjectTypeString();
 
         /// Gets the type of the object as an ObjectType enum. Must be implemented by subclasses.
         abstract public ObjectType GetObjectType();

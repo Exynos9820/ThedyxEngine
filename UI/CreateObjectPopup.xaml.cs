@@ -27,7 +27,7 @@ public partial class CreateObjectPopup : Popup {
                 TitleLabel.Text = "Create Grain Square";
                 _object = new GrainSquare("", new Point(0,0));
                 break;
-            case ObjectType.StateChangeRectangle:
+            case ObjectType.StateRectangle:
                 TitleLabel.Text = "Create State Change Rectangle";
                 _object = new EngineStateRectangle("", 10, 10);
                 break;

@@ -1,12 +1,15 @@
 using Microsoft.Maui.Controls;
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Util;
 using CommunityToolkit.Maui.Views;
 using ThedyxEngine.Engine.Managers;
 using CommunityToolkit.Maui.Storage;
+using LukeMauiFilePicker;
+using Newtonsoft.Json;
 
 namespace ThedyxEngine.UI
 {
@@ -17,7 +20,6 @@ namespace ThedyxEngine.UI
         public Action<EngineObject>? DeleteSelected;
         public Action? EngineModeChanged;
         public MainPage? MainPage;
-
         public EngineUIBar() {
             InitializeComponent();
             Loaded += (sender, args) => {
@@ -72,26 +74,24 @@ namespace ThedyxEngine.UI
             ClearButton.IsEnabled = false;
             ResetButton.IsEnabled = true;
         }
+        
 
-        private async Task SaveFile() {
-            CancellationToken cs = CancellationToken.None;
-            //FileManager.Save(null, null);
+        private void OnSaveButtonClicked(object sender, EventArgs e) {
+            var savePopup = new SaveFilePopup();
+            this.MainPage?.ShowPopup(savePopup);
+            UpdateUI?.Invoke();
         }
 
-        private async void OnSaveButtonClicked(object sender, EventArgs e) {
-        }
 
         private async void OnOpenButtonClicked(object sender, EventArgs e) {
-            var customFileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-            {
+            var customFileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> {
                 { DevicePlatform.iOS, new[] { ".tdx" } },
                 { DevicePlatform.MacCatalyst, new[] { ".tdx" } },
                 { DevicePlatform.WinUI, new[] { ".tdx" } },
                 { DevicePlatform.Android, new[] { ".tdx" } }
             });
 
-            var options = new PickOptions
-            {
+            var options = new PickOptions {
                 PickerTitle = "Select a .tdx File",
                 FileTypes = customFileTypes
             };
@@ -131,7 +131,7 @@ namespace ThedyxEngine.UI
                     AddObject(ObjectType.Rectangle);
                     break;
                 case "State Object":
-                    AddObject(ObjectType.StateChangeRectangle);
+                    AddObject(ObjectType.StateRectangle);
                     break;
             }
         }
@@ -176,7 +176,7 @@ namespace ThedyxEngine.UI
         }
         
         private void OnSettingsButtonClicked(object sender, EventArgs e) {
-            var settingsPopup = new SettingsPopup();
+            var settingsPopup = new SaveFilePopup();
             this.MainPage?.ShowPopup(settingsPopup);
             UpdateUI?.Invoke();
         }

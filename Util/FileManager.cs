@@ -23,7 +23,7 @@ namespace ThedyxEngine.Util
         * Save to file
         * \param path Path to save the file
         */
-        public static void SaveToFile(string path) {
+        public static string GetObjectsJsonRepresentation() {
             List<EngineObject> engineObjects = Engine.Engine.EngineObjectsManager.GetObjects();
             List<string> jsonObjects = new List<string>();
 
@@ -39,7 +39,7 @@ namespace ThedyxEngine.Util
             }
 
             string jsonOutput = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
-            File.WriteAllText(path, jsonOutput);
+            return jsonOutput;
         }
         
         
@@ -56,12 +56,14 @@ namespace ThedyxEngine.Util
                     EngineObject engineObject = null;
 
                     string type = jObject["Type"].Value;
-                    if (type == "GrainSquare") {
+                    if (type == ObjectType.GrainSquare.ToString()) {
                         engineObject = EngineObjectsFactory.GrainSquareFromJson(json);
-                    }else if (type == "EngineRectangle") {
-                        engineObject = EngineObjectsFactory.EngineRectangleFromJson(json);
-                    }else if (type == "EngineLiquid") {
-                        //engineObject = EngineLiquid.FromJson(json);
+                    }else if (type == ObjectType.StateGrainSquare.ToString()) {
+                        engineObject = EngineObjectsFactory.StateGrainSquareFromJson(json);
+                    }else if (type == ObjectType.Rectangle.ToString()) {
+                        engineObject = EngineObjectsFactory.RectangleFromJson(json);
+                    }else if (type == ObjectType.StateRectangle.ToString()) {
+                        engineObject = EngineObjectsFactory.StateRectangleFromJson(json);
                     }
 
                     if (engineObject != null) {

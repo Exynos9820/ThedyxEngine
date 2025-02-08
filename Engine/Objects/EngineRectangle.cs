@@ -85,7 +85,7 @@ namespace ThedyxEngine.Engine {
             };
 
             return JsonConvert.SerializeObject(new {
-                Type = GetObjectTypeString(),
+                Type = ObjectType.Rectangle.ToString(),
                 Name,
                 Position = _position,
                 Size = _size,
@@ -137,14 +137,6 @@ namespace ThedyxEngine.Engine {
             }
             CurrentTemperature = _simulationTemperature;
             SimulationTemperature = _simulationTemperature;
-        }
-
-        /**
-         * \brief Gets the object type string.
-         * \returns The object type string.
-         */
-        public override string GetObjectTypeString() {
-            return "Rectangle";
         }
 
         /**
