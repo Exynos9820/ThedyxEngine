@@ -54,7 +54,6 @@ namespace ThedyxEngine.Engine.Managers {
             double heatTransfer = coeficient  * temperatureDifference * timeTransfer;
             sq1.AddEnergyDelta(-heatTransfer);
             // removed apply heat to the second square, because this will be called for the second square
-            //sq2.AddEnergyDelta(heatTransfer);
         }
     
         /**
@@ -70,7 +69,8 @@ namespace ThedyxEngine.Engine.Managers {
             double thermalConductivity2 = GlobalVariables.AirThermalConductivity;
             double coeficient = 2 * thermalConductivity1 * thermalConductivity2 / (thermalConductivity1 + thermalConductivity2);
             double timeTransfer = 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
-            double heatTransfer = coeficient  * temperatureDifference * timeTransfer;
+            int areaRadiationLoss = Math.Max((4 - sq.GetAdjacentSquares().Count),0);
+            double heatTransfer = coeficient  * temperatureDifference * timeTransfer * areaRadiationLoss;
             sq.AddEnergyDelta(-heatTransfer);
         }
 

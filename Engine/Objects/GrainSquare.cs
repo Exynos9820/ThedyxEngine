@@ -207,19 +207,19 @@ namespace ThedyxEngine.Engine
          * \param other The other grain square to check for touching.
          * \returns true if the grain square is touching the other grain square, otherwise false.
          */
-        public bool AreTouching(GrainSquare other)
-        {
-            // check the object is not null and that the two squares are not the same
-            if (other == null || this.Name == other.Name)
-            {
+        public bool AreTouching(GrainSquare other) {
+            // Check the object is not null and that the two squares are not the same
+            if (other == null || this.Name == other.Name) {
                 return false;
             }
 
             bool xTouch = Math.Abs(this.Position.X - other.Position.X) == 1 && this.Position.Y == other.Position.Y;
             bool yTouch = Math.Abs(this.Position.Y - other.Position.Y) == 1 && this.Position.X == other.Position.X;
 
-            return xTouch || yTouch;
+            // Ensure that they are not touching at the corners
+            return (xTouch || yTouch) && Math.Abs(this.Position.X - other.Position.X) < 2 && Math.Abs(this.Position.Y - other.Position.Y) < 2;
         }
+
 
         /*
          * \brief Gets the squares that are adjacent to the grain square.
@@ -236,6 +236,10 @@ namespace ThedyxEngine.Engine
          * \param square The adjacent square to add.
          */
         public void AddAdjacentSquare(GrainSquare square) {
+            // check if there is no squre with the same name
+            if (_adjacentSquares.Any(s => s.Name == square.Name)) {
+                return;
+            }
             _adjacentSquares.Add(square);
         }
 
