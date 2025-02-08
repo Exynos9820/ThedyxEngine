@@ -85,7 +85,6 @@ public static class EngineObjectsFactory {
         }
         string name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
@@ -94,6 +93,7 @@ public static class EngineObjectsFactory {
             SimulationTemperature = simulationTemperature,
             Position = Position,
             Size = Size,
+            Material = Material
         };
     }
     
@@ -116,7 +116,6 @@ public static class EngineObjectsFactory {
         }
         string name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
@@ -125,6 +124,7 @@ public static class EngineObjectsFactory {
             SimulationTemperature = simulationTemperature,
             Position = Position,
             Size = Size,
+            Material = Material
         };
     }
 }

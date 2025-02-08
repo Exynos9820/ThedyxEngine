@@ -4,14 +4,17 @@
                x:Class="ThedyxEngine.UI.SaveFilePopup">
     <toolkit:Popup.Content>
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
-                             WidthRequest="-1" HeightRequest="-1"
+                             WidthRequest="400" HeightRequest="-1"
                              HorizontalOptions="Center" VerticalOptions="Center">
+            <Label VerticalOptions="Center" WidthRequest="400" Text="Select a name of file that you want to save" HorizontalOptions="Start" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
             <HorizontalStackLayout>
-                <Label VerticalOptions="Center" WidthRequest="-1" Text="FileName" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="File name" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="FileName" TextColor="Black" BackgroundColor="Transparent"/>
+                    <Entry x:Name="FileName" TextColor="Black" Placeholder="FileName" BackgroundColor="Transparent"/>
                 </Frame>
             </HorizontalStackLayout>
+            <Button Text="Save" x:Name="SaveButton" Clicked="OnSaveClicked" Width="50" HorizontalOptions="End"> </Button>
+
         </VerticalStackLayout>
     </toolkit:Popup.Content>
 </toolkit:Popup>

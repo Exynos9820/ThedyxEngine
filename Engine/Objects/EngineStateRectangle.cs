@@ -163,6 +163,7 @@ public class EngineStateRectangle : EngineObject {
             Type = ObjectType.StateRectangle.ToString(),
             Name,
             Position = _position,
+            Size = _size,
             SimulationTemperature = _simulationTemperature,
             MaterialName = _material.Name
         }, settings);    

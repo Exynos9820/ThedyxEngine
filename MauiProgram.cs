@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Storage;
 using Microsoft.Extensions.Logging;
 
 namespace ThedyxEngine;
@@ -19,7 +20,9 @@ public static class MauiProgram
         
         builder.Services
             .AddFilePicker()
-            .AddSingleton<MainPage>();
+            .AddSingleton<MainPage>() 
+            .AddSingleton<IFileSaver>(FileSaver.Default)
+            .AddSingleton<MainPage>();;
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

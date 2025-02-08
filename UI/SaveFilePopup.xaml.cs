@@ -24,9 +24,9 @@ public partial class SaveFilePopup : Popup
         string json = FileManager.GetObjectsJsonRepresentation();
         
         string workingDirectory = Environment.CurrentDirectory;
-        string path = workingDirectory + "/" + fileName + ".tdx";
+        string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"{fileName}.tdx");
         // check if file exists
-        if (File.Exists(path)) {
+        if (File.Exists(filePath)) {
             // if file exists, ask user if he wants to overwrite it
             bool overwrite = await Application.Current.MainPage.DisplayAlert("Warning", "File already exists. Do you want to overwrite it?", "Yes", "No");
             if (!overwrite) {
@@ -34,9 +34,11 @@ public partial class SaveFilePopup : Popup
             }
         }
         
-        File.WriteAllText(path, json);
-        
-        await Application.Current.MainPage.DisplayAlert("Success", $"File saved to {path}", "OK");
+        using (StreamWriter outputFile = new StreamWriter(filePath)) {
+                outputFile.Write(json);
+        }
+        // Show success message
+        await Application.Current.MainPage.DisplayAlert("Success", $"File saved successfully to {filePath}", "OK");
         this.Close();
         
     }

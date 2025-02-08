@@ -77,16 +77,18 @@ namespace ThedyxEngine.UI
         
 
         private void OnSaveButtonClicked(object sender, EventArgs e) {
-            var savePopup = new SaveFilePopup();
-            this.MainPage?.ShowPopup(savePopup);
-            UpdateUI?.Invoke();
+            string jsonOutput = FileManager.GetObjectsJsonRepresentation();
+            byte[] bytes = Encoding.UTF8.GetBytes(jsonOutput);
+            using var memoryStream = new MemoryStream(bytes);
+
+            var saveResult =  FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
         }
 
 
         private async void OnOpenButtonClicked(object sender, EventArgs e) {
             var customFileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> {
                 { DevicePlatform.iOS, new[] { ".tdx" } },
-                { DevicePlatform.MacCatalyst, new[] { ".tdx" } },
+                { DevicePlatform.MacCatalyst, new[] { "public.data" } },
                 { DevicePlatform.WinUI, new[] { ".tdx" } },
                 { DevicePlatform.Android, new[] { ".tdx" } }
             });
@@ -110,6 +112,7 @@ namespace ThedyxEngine.UI
                     await Application.Current.MainPage.DisplayAlert("Error", $"Failed to read the file: {ex.Message}", "OK");
                 }
             }
+            Engine.Engine.ResetSimulation();
         }
 
 
@@ -176,7 +179,7 @@ namespace ThedyxEngine.UI
         }
         
         private void OnSettingsButtonClicked(object sender, EventArgs e) {
-            var settingsPopup = new SaveFilePopup();
+            var settingsPopup = new SettingsPopup();
             this.MainPage?.ShowPopup(settingsPopup);
             UpdateUI?.Invoke();
         }
