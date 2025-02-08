@@ -124,33 +124,14 @@ namespace ThedyxEngine.Engine.Managers {
          * Get the coefficient between two objects
          */
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
-            double thermalConductivity1;
-            double thermalConductivity2;
-            if(obj1 is StateGrainSquare) {
-                // check state of the object and get the right thermal conductivity
-                var obj = (StateGrainSquare)obj1;
-                if(obj.CurrentMaterialState == StateGrainSquare.MaterialState.Solid) {
-                    thermalConductivity1 = obj.Material.SolidThermalConductivity;
-                } else if(obj.CurrentMaterialState == StateGrainSquare.MaterialState.Liquid) {
-                    thermalConductivity1 = obj.Material.LiquidThermalConductivity;
-                } else {
-                    thermalConductivity1 = obj.Material.GasThermalConductivity;
-                }
-            }else {
-                thermalConductivity1 = obj1.Material.SolidThermalConductivity;
+            double thermalConductivity1 = obj1.Material.SolidThermalConductivity;;
+            double thermalConductivity2 = obj2.Material.SolidThermalConductivity;
+            if(obj1 is StateGrainSquare state1) {
+                thermalConductivity1 = state1.GetMaterialThermalConductivity();
             }
             // the same for the second object
-            if (obj2 is StateGrainSquare liquid) {
-                // check state of the object and get the right thermal conductivity
-                if(liquid.CurrentMaterialState == StateGrainSquare.MaterialState.Solid) {
-                    thermalConductivity2 = liquid.Material.SolidThermalConductivity;
-                } else if(liquid.CurrentMaterialState == StateGrainSquare.MaterialState.Liquid) {
-                    thermalConductivity2 = liquid.Material.LiquidThermalConductivity;
-                } else {
-                    thermalConductivity2 = liquid.Material.GasThermalConductivity;
-                }
-            }else {
-                thermalConductivity2 = obj2.Material.SolidThermalConductivity;
+            if (obj2 is StateGrainSquare state2) {
+                thermalConductivity2 = state2.GetMaterialThermalConductivity();
             }
             return 2 * thermalConductivity1 * thermalConductivity2 / (thermalConductivity1 + thermalConductivity2);
         }

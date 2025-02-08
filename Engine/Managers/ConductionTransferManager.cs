@@ -38,6 +38,7 @@ namespace ThedyxEngine.Engine.Managers {
                 for (int j = 0; j < adjSquares.Count; j++) {
                     TranferHeatBetweenTwoSquares(objsquares[i], adjSquares[j]);
                 }
+                TransferHeatBetweenSquareAndAir(objsquares[i]);;
             }
         }
 
@@ -55,7 +56,23 @@ namespace ThedyxEngine.Engine.Managers {
             // removed apply heat to the second square, because this will be called for the second square
             //sq2.AddEnergyDelta(heatTransfer);
         }
-
+    
+        /**
+         * Transfer heat between square and air
+         * \param sq square
+         */
+        private static void TransferHeatBetweenSquareAndAir(GrainSquare sq) {
+            double temperatureDifference = sq.CurrentTemperature - GlobalVariables.AirTemperature;
+            double thermalConductivity1 = sq.Material.SolidThermalConductivity;
+            if (sq is StateGrainSquare statesq) {
+                thermalConductivity1 = statesq.GetMaterialThermalConductivity();
+            }
+            double thermalConductivity2 = GlobalVariables.AirThermalConductivity;
+            double coeficient = 2 * thermalConductivity1 * thermalConductivity2 / (thermalConductivity1 + thermalConductivity2);
+            double timeTransfer = 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
+            double heatTransfer = coeficient  * temperatureDifference * timeTransfer;
+            sq.AddEnergyDelta(-heatTransfer);
+        }
 
     }
 }

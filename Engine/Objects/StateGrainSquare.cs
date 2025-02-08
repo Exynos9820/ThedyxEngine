@@ -98,6 +98,17 @@ public class StateGrainSquare : GrainSquare {
             return Material.GasEmissivity;
         }
     }
+    
+    public double GetMaterialThermalConductivity() {
+        // check for state of the object and get the right thermal conductivity
+        if (CurrentMaterialState == MaterialState.Solid) {
+            return Material.SolidThermalConductivity;
+        } else if (CurrentMaterialState == MaterialState.Liquid) {
+            return Material.LiquidThermalConductivity;
+        } else {
+            return Material.GasThermalConductivity;
+        }
+    }
 
     public new void ApplyEnergyDelta() {
         lock (EnergyLock) {

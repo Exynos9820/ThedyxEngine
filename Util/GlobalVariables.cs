@@ -7,6 +7,8 @@ public static class GlobalVariables {
     public static int RadiationDepth = 10; 
     /// Air temperature in Kelvin
     public static double AirTemperature = 293;
+    /// Air thermal conductivity
+    public static double AirThermalConductivity = 0.025;
     /// Stefan-Boltzmann constant
     public static readonly double StefanBoltzmannConst = 5.67 * Math.Pow(10, -8);
     /// Interval between engine updates
