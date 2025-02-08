@@ -33,7 +33,7 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 887,
                 SolidDensity = 2700,
-                SolidEmmisivity = 0.05,
+                SolidEmissivity = 0.05,
                 MaterialColor = Colors.Gray,
                 SolidThermalConductivity = 205
             };
@@ -43,7 +43,7 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 1300,
                 SolidDensity = 1000,
-                SolidEmmisivity = 0.84,
+                SolidEmissivity = 0.84,
                 MaterialColor = Colors.LightGray
             };
             Materials.Add(m2);
@@ -53,7 +53,7 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 792,
                 SolidDensity = 2500,
-                SolidEmmisivity = 0.92,
+                SolidEmissivity = 0.92,
                 MaterialColor = Colors.LightBlue
             };
             Materials.Add(m3);
@@ -63,7 +63,7 @@ namespace ThedyxEngine.Engine.Managers {
                 isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 385,
                 SolidDensity = 8940,
-                SolidEmmisivity = 0.65,
+                SolidEmissivity = 0.65,
                 MaterialColor = Colors.Coral
             };
             Materials.Add(m4);
@@ -77,7 +77,9 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidDensity = 1000,
                 LiquidDensity = 1000,
                 GasDensity = 1000,
-                SolidEmmisivity = 0.95,
+                SolidEmissivity = 0.98,
+                LiquidEmissivity = 0.96,
+                GasEmissivity = 0.1,
                 MeltingTemperature = 273.15,
                 BoilingTemperature = 373.15,
                 MeltingEnergy = 334000,

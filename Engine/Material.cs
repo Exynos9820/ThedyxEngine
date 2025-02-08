@@ -24,8 +24,9 @@ namespace ThedyxEngine.Engine {
         public double LiquidDensity { get; set; } /// Gets or sets the density.
         public double GasDensity { get; set; } /// Gets or sets the density.
 
-        public double SolidEmmisivity { get; set; } /// Gets or sets the emissivity.
-        
+        public double SolidEmissivity { get; set; } /// Gets or sets the emissivity.
+        public double LiquidEmissivity { get; set; } /// Gets or sets the emissivity.
+        public double GasEmissivity { get; set; } /// Gets or sets the emissivity.
         public double SolidThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
         public double LiquidThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.
         public double GasThermalConductivity { get; set; } /// Gets or sets the thermal conductivity.

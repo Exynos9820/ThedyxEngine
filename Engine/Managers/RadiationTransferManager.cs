@@ -24,10 +24,17 @@ namespace ThedyxEngine.Engine.Managers{
          * \param square2 Second square.
          */
         private static void TransferRadiationBetweenTwoSquares(GrainSquare square1, GrainSquare square2) {
-            // Calculate emissivity between two objects
-            var emmisivityBetweenTwoObjects = 
-                (square1.Material.SolidEmmisivity * square2.Material.SolidEmmisivity) / 
-                (1 / square1.Material.SolidEmmisivity + 1 / square2.Material.SolidEmmisivity - 1);
+            // check if any of squares is state grain square
+            double emiss1 = square1.Material.SolidEmissivity;   
+            if (square1 is StateGrainSquare statesq1) {
+                emiss1 = statesq1.GetMaterialEmissivity();
+            }
+            double emiss2 = square2.Material.SolidEmissivity;
+            if (square2 is StateGrainSquare statesq2) {
+                emiss2 = statesq2.GetMaterialEmissivity();
+            }
+            
+            var emmisivityBetweenTwoObjects = (emiss1 * emiss2) / (1 / emiss1 + 1 / emiss2 - 1);
 
             // Calculate the view factor
             var distance = Math.Sqrt(Math.Pow(square2.Position.X - square1.Position.X, 2) +
@@ -46,7 +53,6 @@ namespace ThedyxEngine.Engine.Managers{
             // Apply the energy changes to both squares
              square1.AddEnergyDelta(-energyRadiationLoss / 2);
             // removed apply heat to the second square, because this will be called for the second square
-            //square2.AddEnergyDelta(energyRadiationLoss / 2);
         }
 
         /**
@@ -59,8 +65,12 @@ namespace ThedyxEngine.Engine.Managers{
             foreach(var square in squares) {
                 // calculated by Stefan-Boltzmann law of radiation and multiplied by the engine update interval
                 // we need to find the area of the square that is not touching other squares to calculate the radiation loss to air
+                double emissivity = square.Material.SolidEmissivity;
+                if (square is StateGrainSquare stateSquare) {
+                    emissivity = stateSquare.GetMaterialEmissivity();
+                }
                 var areaRadiationLoss = Math.Max((4 - square.GetAdjacentSquares().Count),0) * GlobalVariables.GridStep;
-                var energyRadiationLoss = square.Material.SolidEmmisivity * GlobalVariables.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(GlobalVariables.AirTemperature, 4)) * 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
+                var energyRadiationLoss = emissivity * GlobalVariables.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(GlobalVariables.AirTemperature, 4)) * 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
                 square.AddEnergyDelta(-energyRadiationLoss);
             }
         }
