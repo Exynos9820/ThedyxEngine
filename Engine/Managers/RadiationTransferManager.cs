@@ -44,7 +44,7 @@ namespace ThedyxEngine.Engine.Managers{
                                       1 / GlobalVariables.EngineIntervalUpdatePerSecond;
 
             // Apply the energy changes to both squares
-            //square1.AddEnergyDelta(-energyRadiationLoss / 2);
+             square1.AddEnergyDelta(-energyRadiationLoss / 2);
             // removed apply heat to the second square, because this will be called for the second square
             //square2.AddEnergyDelta(energyRadiationLoss / 2);
         }
@@ -61,7 +61,7 @@ namespace ThedyxEngine.Engine.Managers{
                 // we need to find the area of the square that is not touching other squares to calculate the radiation loss to air
                 var areaRadiationLoss = Math.Max((4 - square.GetAdjacentSquares().Count),0) * GlobalVariables.GridStep;
                 var energyRadiationLoss = square.Material.SolidEmmisivity * GlobalVariables.StefanBoltzmannConst * areaRadiationLoss * (Math.Pow(square.CurrentTemperature, 4) - Math.Pow(GlobalVariables.AirTemperature, 4)) * 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
-                //square.AddEnergyDelta(-energyRadiationLoss);
+                square.AddEnergyDelta(-energyRadiationLoss);
             }
         }
 
