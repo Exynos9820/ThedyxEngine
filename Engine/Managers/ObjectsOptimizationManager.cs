@@ -28,6 +28,8 @@
                     if (square1.AreTouching(square2)) {
                         square1.AddAdjacentSquare(square2);
                         square1.AddRadiationExchangeSquare(square2);
+                        square2.AddAdjacentSquare(square1);
+                        square2.AddRadiationExchangeSquare(square1);
                     }
                 }
             }

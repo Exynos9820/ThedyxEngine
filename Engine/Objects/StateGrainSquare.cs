@@ -78,15 +78,6 @@ public class StateGrainSquare : GrainSquare {
         rects.Add(rect);
         temperatures.Add(_currentTemperature);
     }
-    
-    /**
-     * Add energy to the grain square that was calculated in one simulation step
-     * \param energyDelta The energy to add to the grain square.
-     */
-    public new void AddEnergyDelta(double energyDelta) {
-        lock (EnergyLock)
-            EnergyDelta += energyDelta;
-    }
 
     public double GetMaterialEmissivity() {
         // check for state of the object and get the right emissivity
