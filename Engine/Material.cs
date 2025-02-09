@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ThedyxEngine.Engine {
     /** 
@@ -13,9 +14,7 @@ namespace ThedyxEngine.Engine {
      */
     public class Material {
         public string Name { get; set; }  /// Gets or sets the name of the material.
-
-        public bool isBaseMaterial { get; set; } /// Gets or sets the base material.
-
+        
         public double SolidSpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
         public double LiquidSpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
         public double GasSpecificHeatCapacity { get; set; } /// Gets or sets the specific heat capacity.
@@ -36,13 +35,54 @@ namespace ThedyxEngine.Engine {
         
         public double MeltingEnergy { get; set; } /// Gets or sets the solidification energy.
         public double BoilingEnergy { get; set; } /// Gets or sets the boiling energy.
-        public Color MaterialColor { get; set; } /// Gets or sets the material color.
+        public Color MaterialColor { get; set; }  /// Gets or sets the material color.
+
+        /**
+         * \brief Creates a new material.
+         */
+        public Material() {
+            Name = "Unknown";
+            MaterialColor = Colors.Black;
+        }
         /**
          * \brief Returns the name of the material.
          * \return The name of the material.
          */
         public override string ToString() {
             return Name;
+        }
+        
+        public String ToJson() {
+            // format the material to json
+            var settings = new JsonSerializerSettings {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            
+            // we need to convert the color to string of an array of integers
+            string color = $"[{MaterialColor.Red}, {MaterialColor.Green}, {MaterialColor.Blue}, {MaterialColor.Alpha}]";
+
+            return JsonConvert.SerializeObject(new {
+                Type = "Material",
+                Name = Name,
+                SolidSpecificHeatCapacity = SolidSpecificHeatCapacity,
+                LiquidSpecificHeatCapacity = LiquidSpecificHeatCapacity,
+                GasSpecificHeatCapacity = GasSpecificHeatCapacity,
+                SolidDensity = SolidDensity,
+                LiquidDensity = LiquidDensity,
+                GasDensity = GasDensity,
+                SolidEmissivity = SolidEmissivity,
+                LiquidEmissivity = LiquidEmissivity,
+                GasEmissivity = GasEmissivity,
+                SolidThermalConductivity = SolidThermalConductivity,
+                LiquidThermalConductivity = LiquidThermalConductivity,
+                GasThermalConductivity = GasThermalConductivity,
+                MeltingTemperature = MeltingTemperature,
+                BoilingTemperature = BoilingTemperature,
+                MeltingEnergy = MeltingEnergy,
+                BoilingEnergy = BoilingEnergy,
+                MaterialColor = color
+            }, settings);
         }
     }
 }

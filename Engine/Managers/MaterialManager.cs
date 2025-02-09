@@ -30,17 +30,15 @@ namespace ThedyxEngine.Engine.Managers {
         private static void populateWithBaseMaterials() {
             var m1 = new Material {
                 Name = "Aluminium",
-                isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 887,
                 SolidDensity = 2700,
-                SolidEmissivity = 0.05,
+                SolidEmissivity = 0.2,
                 MaterialColor = Colors.Gray,
                 SolidThermalConductivity = 205
             };
             Materials.Add(m1);
             var m2 = new Material {
                 Name = "Solid White Plastic",
-                isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 1300,
                 SolidDensity = 1000,
                 SolidEmissivity = 0.84,
@@ -50,7 +48,6 @@ namespace ThedyxEngine.Engine.Managers {
             
             var m3 = new Material {
                 Name = "Glass",
-                isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 792,
                 SolidDensity = 2500,
                 SolidEmissivity = 0.92,
@@ -60,7 +57,6 @@ namespace ThedyxEngine.Engine.Managers {
             
             var m4 = new Material {
                 Name = "Copper: oxidized",
-                isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 385,
                 SolidDensity = 8940,
                 SolidEmissivity = 0.65,
@@ -70,7 +66,6 @@ namespace ThedyxEngine.Engine.Managers {
 
             var m5 = new Material {
                 Name = "Water",
-                isBaseMaterial = true,
                 SolidSpecificHeatCapacity = 2090,
                 LiquidSpecificHeatCapacity = 4186,
                 GasSpecificHeatCapacity = 1.996,

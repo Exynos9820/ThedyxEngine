@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
 using LukeMauiFilePicker;
+using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.Util
 {
@@ -27,9 +28,14 @@ namespace ThedyxEngine.Util
             List<EngineObject> engineObjects = Engine.Engine.EngineObjectsManager.GetObjects();
             List<string> jsonObjects = new List<string>();
 
-            log.Info("Info: Starting saving.");
-
             try {
+                log.Info("Info: Starting saving Materials.");
+                foreach (var material in MaterialManager.Materials) {
+                    string json = material.ToJson();
+                    jsonObjects.Add(json);
+                }
+                
+                log.Info("Info: Starting saving Objects.");
                 foreach (var obj in engineObjects) {
                     string json = obj.GetJsonRepresentation();
                     jsonObjects.Add(json);
@@ -45,8 +51,9 @@ namespace ThedyxEngine.Util
         
         public static void LoadFromContent(string jsonInput) {
             Engine.Engine.ClearSimulation();
+            MaterialManager.Materials.Clear();
             log.Info("Info: Starting reading.");
-
+            
             try {
                 List<string> jsonObjects = JsonConvert.DeserializeObject<List<string>>(jsonInput);
                 List<EngineObject> engineObjects = new List<EngineObject>();
@@ -54,16 +61,18 @@ namespace ThedyxEngine.Util
                 foreach (var json in jsonObjects) {
                     var jObject = JsonConvert.DeserializeObject<dynamic>(json);
                     EngineObject engineObject = null;
-
                     string type = jObject["Type"].Value;
                     if (type == ObjectType.GrainSquare.ToString()) {
-                        engineObject = EngineObjectsFactory.GrainSquareFromJson(json);
+                        engineObject = JsonConverters.GrainSquareFromJson(json);
                     }else if (type == ObjectType.StateGrainSquare.ToString()) {
-                        engineObject = EngineObjectsFactory.StateGrainSquareFromJson(json);
+                        engineObject = JsonConverters.StateGrainSquareFromJson(json);
                     }else if (type == ObjectType.Rectangle.ToString()) {
-                        engineObject = EngineObjectsFactory.RectangleFromJson(json);
+                        engineObject = JsonConverters.RectangleFromJson(json);
                     }else if (type == ObjectType.StateRectangle.ToString()) {
-                        engineObject = EngineObjectsFactory.StateRectangleFromJson(json);
+                        engineObject = JsonConverters.StateRectangleFromJson(json);
+                    }else if (type == "Material") {
+                        Material material = JsonConverters.MaterialFromJson(json);
+                        MaterialManager.Materials.Add(material);
                     }
 
                     if (engineObject != null) {
