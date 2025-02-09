@@ -44,8 +44,21 @@ namespace ThedyxEngine.UI
         public void Update() {
             long currentTime = Engine.Engine.GetSimulationTime();
             TimeSpan time = TimeSpan.FromMilliseconds(currentTime);
-            TimeLabel.Text = time.ToString(@"mm\:ss\:ff");
+
+            if (time.Days > 0) {
+                // More than one day: show days, hours, and minutes
+                TimeLabel.Text = time.ToString(@"dd\:hh\:mm");
+            } 
+            else if (time.Hours > 0) {
+                // More than one hour but less than a day: show hours, minutes, and seconds
+                TimeLabel.Text = time.ToString(@"hh\:mm\:ss");
+            } 
+            else {
+                // Less than one hour: show minutes, seconds, and centiseconds
+                TimeLabel.Text = time.ToString(@"mm\:ss\:ff");
+            }
         }
+
 
         private void SetRunningMode() {
             // Set engine controls
