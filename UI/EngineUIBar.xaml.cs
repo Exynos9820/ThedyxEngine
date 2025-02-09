@@ -90,7 +90,7 @@ namespace ThedyxEngine.UI
         
 
         private void OnSaveButtonClicked(object sender, EventArgs e) {
-            string jsonOutput = FileManager.GetObjectsJsonRepresentation();
+            string jsonOutput = FileManager.GetSimulationRepresentation();
             byte[] bytes = Encoding.UTF8.GetBytes(jsonOutput);
             using var memoryStream = new MemoryStream(bytes);
 

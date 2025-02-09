@@ -21,7 +21,7 @@ public partial class SaveFilePopup : Popup
             return;
         }
         string fileName = FileName.Text;
-        string json = FileManager.GetObjectsJsonRepresentation();
+        string json = FileManager.GetSimulationRepresentation();
         
         string workingDirectory = Environment.CurrentDirectory;
         string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"{fileName}.tdx");

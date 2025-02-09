@@ -15,4 +15,8 @@ public static class GlobalVariables {
     public static double  EngineIntervalUpdatePerSecond = 60; 
     /// Interval between UI updates
     public static int WindowRefreshRate = 60;
+    /// Program major version 
+    public static readonly int MajorVersion = 0;
+    /// Program minor version
+    public static readonly int MinorVersion = 1;
 }
