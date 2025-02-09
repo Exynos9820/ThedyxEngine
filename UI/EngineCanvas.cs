@@ -99,6 +99,9 @@ namespace ThedyxEngine.UI {
                 }
             }
             
+            stopwatch.Stop();
+            log.Info("Time to draw polygons: " + stopwatch.ElapsedMilliseconds + " ms");
+            stopwatch.Restart();
             
             if (Engine.Engine.ShowGrid) {
                 canvas.Alpha = 1;
@@ -107,12 +110,6 @@ namespace ThedyxEngine.UI {
                 log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
                 stopwatch.Restart();
             }
-            
-            stopwatch.Stop();
-            log.Info("Time to draw polygons: " + stopwatch.ElapsedMilliseconds + " ms");
-            stopwatch.Restart();
-                
-            log.Info("Time to set clip geometry: " + stopwatch.ElapsedMilliseconds + " ms");
             
         }
 

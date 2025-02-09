@@ -15,7 +15,7 @@
                     <Entry x:Name="RoomTemperature"  TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
                 </Frame>
             </HorizontalStackLayout>
-            <Label Text="Affects performance" FontAttributes="Bold" FontSize="15" TextColor="Red" HorizontalOptions="Start"/>
+            <Label Text="Affects performance" FontAttributes="Bold" FontSize="18" TextColor="Red" HorizontalOptions="Start" Padding="0,15,0,0"/>
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Radiation depth calculations:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
@@ -37,7 +37,7 @@
                 </Frame>
             </HorizontalStackLayout>
             
-            <Label Text="Simulation File" FontAttributes="Bold" FontSize="18" TextColor="Red" HorizontalOptions="Start"/>
+            <Label Text="Simulation File" FontAttributes="Bold" FontSize="18" TextColor="Red" HorizontalOptions="Start" Padding="0,15,0,0"/>
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Save as human-readable?" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">

@@ -1,4 +1,5 @@
 ﻿using System.Timers;
+using log4net;
 using LukeMauiFilePicker;
 using ThedyxEngine.Engine;
 using ThedyxEngine.UI;
@@ -13,6 +14,7 @@ public partial class MainPage : ContentPage {
     private bool _objectsChanged = false;
     private EngineCanvas _engineCanvas;
     public readonly IFilePickerService picker;
+    private static readonly ILog log = LogManager.GetLogger(typeof(MainPage)); // Logger
 
     public MainPage(IFilePickerService picker) {
         InitializeComponent();
@@ -89,6 +91,7 @@ public partial class MainPage : ContentPage {
             TabProperties.Enable(true);
         }
     }
+    
 
     private void SelectedObjectChanged(EngineObject obj) {
         // Implement the logic to handle the selection change
