@@ -19,4 +19,6 @@ public static class GlobalVariables {
     public static readonly int MajorVersion = 0;
     /// Program minor version
     public static readonly int MinorVersion = 1;
+    /// Do we want to save simulation to be human readable
+    public static bool SaveSimulationHumanReadable = false;
 }

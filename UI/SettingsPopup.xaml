@@ -36,6 +36,15 @@
                     <Entry x:Name="UIUpdatesPerSecond" TextColor="Black" BackgroundColor="Transparent" Completed="OnUIUpdatesCompleted"/>
                 </Frame>
             </HorizontalStackLayout>
+            
+            <Label Text="Simulation File" FontAttributes="Bold" FontSize="18" TextColor="Red" HorizontalOptions="Start"/>
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Save as human-readable?" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
+                    <!-- CheckBox -->
+                    <CheckBox x:Name="IsHumanReadable" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnFileCheckBoxChanged"/>
+                </Frame>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </toolkit:Popup.Content>
 </toolkit:Popup>

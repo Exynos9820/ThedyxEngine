@@ -81,4 +81,8 @@ public partial class SettingsPopup : Popup {
         }
         UIUpdatesPerSecond.Text = GlobalVariables.WindowRefreshRate.ToString();
     }
+    
+    private void OnFileCheckBoxChanged(object sender, EventArgs e) {
+        GlobalVariables.SaveSimulationHumanReadable = IsHumanReadable.IsChecked;
+    }
 }

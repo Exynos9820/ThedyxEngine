@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Text;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
@@ -19,96 +20,133 @@ namespace ThedyxEngine.Util
      */
     public static class FileManager
     {
+        public class SimulationData {
+            public Metadata Metadata { get; set; }
+            public List<dynamic?> Materials { get; set; }
+            public List<dynamic?> Objects { get; set; }
+        }
+
+        public class Metadata {
+            public string Version { get; set; }
+            public string Date { get; set; }
+            public string Time { get; set; }
+            public string Platform { get; set; }
+        }
+
         private static readonly ILog log = LogManager.GetLogger(typeof(FileManager));   // Logger
         /**
         * Save to file
-        * \param path Path to save the file
         */
-        public static string GetSimulationRepresentation() {
-            //  first line is version, date, time,platform(macos, windows, linux)
-            string version = GlobalVariables.MajorVersion + "." + GlobalVariables.MinorVersion;
-            string date = DateTime.Now.ToString("yyyy-MM-dd");
-            string time = DateTime.Now.ToString("HH:mm:ss");
-            string platform = Environment.OSVersion.Platform.ToString();
-            string firstLine = version + "," + date + "," + time + "," + platform;
-            List<EngineObject> engineObjects = Engine.Engine.EngineObjectsManager.GetObjects();
-            List<string> jsonObjects = new List<string>();
+        public static byte[] GetSimulationRepresentation() {
+            var simulationData = new FileManager.SimulationData {
+                Metadata = new FileManager.Metadata {
+                    Version = "0.1",
+                    Date = DateTime.Now.ToString("yyyy-MM-dd"),
+                    Time = DateTime.Now.ToString("HH:mm:ss"),
+                    Platform = Environment.OSVersion.Platform.ToString()
+                },
+                Materials = MaterialManager.Materials
+                    .Select(material => JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(material)))
+                    .ToList(),
 
-            try {
-                log.Info("Info: Starting saving Materials.");
-                foreach (var material in MaterialManager.Materials) {
-                    string json = material.ToJson();
-                    jsonObjects.Add(json);
-                }
-                
-                log.Info("Info: Starting saving Objects.");
-                foreach (var obj in engineObjects) {
-                    string json = obj.GetJsonRepresentation();
-                    jsonObjects.Add(json);
-                }
-            }catch(Exception e) {
-                log.Error("Error: " + e.Message);
+                Objects = Engine.Engine.EngineObjectsManager.GetObjects()
+                    .Select(obj => JsonConvert.DeserializeObject<dynamic>(
+                        obj.GetJsonRepresentation()
+                    )).ToList()
+            };
+
+            string jsonOutput = JsonConvert.SerializeObject(simulationData, Formatting.Indented);
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonOutput);
+
+
+            if (GlobalVariables.SaveSimulationHumanReadable) {
+                return jsonBytes;
             }
+            // Encode to Base64
+            string base64String = Convert.ToBase64String(jsonBytes);
+            byte[] base64Bytes = Encoding.UTF8.GetBytes(base64String);
 
-            string jsonOutput = JsonConvert.SerializeObject(jsonObjects, Formatting.Indented);
-            return firstLine + "\n" + jsonOutput;
+            return base64Bytes;
         }
         
-        
-        public static void LoadFromContent(string simulationStringInput) {
+        /**
+         * Load simulation from json content
+         * \param inputString input string
+         */
+        public static void LoadFromContent(string inputString) {
             Engine.Engine.ClearSimulation();
             MaterialManager.Materials.Clear();
             log.Info("Info: Starting reading.");
-            
+
             try {
-                // first line is version, date, time,platform(macos, windows, linux)
-                // check if platform is MacOs
-                if (!simulationStringInput.Contains("Unix")) {
-                    log.Error("Only MacOS is supported.");
-                    return;
+                SimulationData? simulationData;
+                
+                // we do not know if the json is compressed or not, so we need to try both
+                try {
+                    // Decode from Base64
+                    byte[] jsonBytes = Convert.FromBase64String(inputString);
+                    string jsonOutput = Encoding.UTF8.GetString(jsonBytes);
+                    simulationData = JsonConvert.DeserializeObject<SimulationData>(jsonOutput);
                 }
-                // check if the version is 0.1
-                if (!simulationStringInput.Contains("0.1")) {
-                    log.Error("Only version 0.1 is supported.");
+                catch (Exception e) {
+                    simulationData = JsonConvert.DeserializeObject<SimulationData>(inputString);
+                }
+                
+                if(simulationData == null) {
+                    log.Error("Error: Simulation data is null.");
                     return;
                 }
                 
-                // remove the first line
-                simulationStringInput = simulationStringInput.Substring(simulationStringInput.IndexOf('\n') + 1);
-                List<string> jsonObjects = JsonConvert.DeserializeObject<List<string>>(simulationStringInput);
-                LoadJsonObjects(jsonObjects);                
+                // Check metadata
+                if (simulationData.Metadata.Platform != "Unix") {
+                    log.Error("Only MacOS is supported.");
+                    return;
+                }
+                if (simulationData.Metadata.Version != "0.1") {
+                    log.Error("Only version 0.1 is supported.");
+                    return;
+                }
+
+                // Load Materials
+                foreach (var material in simulationData.Materials) {
+                    MaterialManager.Materials.Add(JsonConvert.DeserializeObject<Material>(JsonConvert.SerializeObject(material)));
+                }
+
+                // Load Objects
+                LoadJsonObjects(simulationData.Objects);
             }
             catch (Exception e) {
                 log.Error("Error: " + e.Message);
             }
         }
-        
-        private static void LoadJsonObjects(List<string> jsonObjects) {
-            List<EngineObject> engineObjects = new List<EngineObject>();
 
-            foreach (var json in jsonObjects) {
-                var jObject = JsonConvert.DeserializeObject<dynamic>(json);
+        
+        /**
+         * \brief Load JSON objects
+         * \param jsonObjects The JSON objects to load
+         * We need a custom deserialization because the objects are written in a custom way to save space.
+         */
+        private static void LoadJsonObjects(List<dynamic> jsonObjects) {
+            foreach (var obj in jsonObjects) {
+                var type = obj.Type.ToString();
                 EngineObject engineObject = null;
-                string type = jObject["Type"].Value;
+
                 if (type == ObjectType.GrainSquare.ToString()) {
-                    engineObject = JsonConverters.GrainSquareFromJson(json);
-                }else if (type == ObjectType.StateGrainSquare.ToString()) {
-                    engineObject = JsonConverters.StateGrainSquareFromJson(json);
-                }else if (type == ObjectType.Rectangle.ToString()) {
-                    engineObject = JsonConverters.RectangleFromJson(json);
-                }else if (type == ObjectType.StateRectangle.ToString()) {
-                    engineObject = JsonConverters.StateRectangleFromJson(json);
-                }else if (type == "Material") {
-                    Material material = JsonConverters.MaterialFromJson(json);
-                    MaterialManager.Materials.Add(material);
+                    engineObject = JsonConverters.GrainSquareFromJson(JsonConvert.SerializeObject(obj));
+                } else if (type == ObjectType.StateGrainSquare.ToString()) {
+                    engineObject = JsonConverters.StateGrainSquareFromJson(JsonConvert.SerializeObject(obj));
+                } else if (type == ObjectType.Rectangle.ToString()) {
+                    engineObject = JsonConverters.RectangleFromJson(JsonConvert.SerializeObject(obj));
+                } else if (type == ObjectType.StateRectangle.ToString()) {
+                    engineObject = JsonConverters.StateRectangleFromJson(JsonConvert.SerializeObject(obj));
                 }
 
                 if (engineObject != null) {
-                    engineObjects.Add(engineObject);
                     Engine.Engine.EngineObjectsManager.AddObject(engineObject);
                 }
             }
         }
+
 
     }
 }

@@ -90,12 +90,10 @@ namespace ThedyxEngine.UI
         
 
         private void OnSaveButtonClicked(object sender, EventArgs e) {
-            string jsonOutput = FileManager.GetSimulationRepresentation();
-            byte[] bytes = Encoding.UTF8.GetBytes(jsonOutput);
-            using var memoryStream = new MemoryStream(bytes);
-
-            var saveResult =  FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
+            using var memoryStream = new MemoryStream(FileManager.GetSimulationRepresentation());
+            FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
         }
+
 
 
         private async void OnOpenButtonClicked(object sender, EventArgs e) {
