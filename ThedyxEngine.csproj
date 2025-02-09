@@ -100,4 +100,9 @@
       <None Remove="Platforms\Android\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiPlatformSpecificFolder Remove="Platforms\Tizen\" />
+      <MauiPlatformSpecificFolder Remove="Platforms\iOS\" />
+    </ItemGroup>
+
 </Project>
