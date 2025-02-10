@@ -3,22 +3,27 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:ui="clr-namespace:ThedyxEngine.UI"
                x:Class="ThedyxEngine.UI.MaterialsPopup">
     <toolkit:Popup.Content>
-        <HorizontalStackLayout>
-            <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
-                                 WidthRequest="150" HeightRequest="-1"
-                                 HorizontalOptions="Center" VerticalOptions="Center">
+        <HorizontalStackLayout  BackgroundColor="White">
+
+                <!-- Left Sidebar: Objects List -->
+            <VerticalStackLayout>
+            <ui:MaterialsList x:Name="Materials" Grid.Column="0"
+                              HorizontalOptions="FillAndExpand"
+                              VerticalOptions="FillAndExpand"
+                              WidthRequest="150" HeightRequest="600" BackgroundColor="White"/>
+            
+            <Button Text="Create New" Padding="5" x:Name="CreateButton" Clicked="OnNameCompleted" Width="80" Height="30" HorizontalOptions="Center"> </Button>
             </VerticalStackLayout>
             
             <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
-                                 WidthRequest="150" HeightRequest="-1"
-                                 HorizontalOptions="Center" VerticalOptions="Center">
+                                 WidthRequest="200" HeightRequest="-1"
+                                 HorizontalOptions="Center" VerticalOptions="Start">
                 <HorizontalStackLayout>
-                    <Label VerticalOptions="Center" WidthRequest="-1" Text="Name:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
-                    <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                        <Entry x:Name="Name" TextColor="Black" BackgroundColor="Transparent" Completed="OnNameCompleted"/>
-                    </Frame>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Name:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="Name" TextColor="Black" WidthRequest="150" BackgroundColor="Transparent" Completed="OnNameCompleted"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </HorizontalStackLayout>
