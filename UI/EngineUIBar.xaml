@@ -22,6 +22,8 @@
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="70"/>
             <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
@@ -70,7 +72,10 @@
         <Button Grid.Column="15" Margin="0,4,0, 4" Text="Temp" Width="70" BackgroundColor="DarkGray" 
                 Clicked="OnColorModeButtonClicked" x:Name="ColorModeButton"/>
         
-        <ImageButton Grid.Column="17" Padding="0,1,0, 1" Source="settings_button.png" BackgroundColor="Transparent" 
+        <ImageButton Grid.Column="17" Padding="0,5,0, 1" Source="materials_button.png" BackgroundColor="Transparent" 
+                     Clicked="OnMaterialsButtonClicked" x:Name="MaterialsButton"/>
+        
+        <ImageButton Grid.Column="19" Padding="0,1,0, 1" Source="settings_button.png" BackgroundColor="Transparent" 
                      Clicked="OnSettingsButtonClicked" x:Name="SettingsButton"/>
     </Grid>
 </ContentView>

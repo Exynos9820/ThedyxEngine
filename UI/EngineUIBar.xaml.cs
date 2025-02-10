@@ -189,6 +189,12 @@ namespace ThedyxEngine.UI
             UpdateUI?.Invoke();
         }
         
+        private void OnMaterialsButtonClicked(object sender, EventArgs e) {
+            var materialsPopup = new MaterialsPopup();
+            this.MainPage?.ShowPopup(materialsPopup);
+            UpdateUI?.Invoke();
+        }
+        
         private void OnSettingsButtonClicked(object sender, EventArgs e) {
             var settingsPopup = new SettingsPopup();
             this.MainPage?.ShowPopup(settingsPopup);

@@ -85,7 +85,7 @@ public class CanvasManager{
 #elif MACCATALYST
         CurrentLeftXIndex += (int)args.TotalX / 100;
         CurrentRightXIndex += (int)args.TotalX / 100;
-        CurrentTopYIndex += (int)args.TotalX / 100;
+        CurrentTopYIndex += (int)args.TotalY / 100;
         CurrentBottomYIndex += (int)args.TotalY / 100;
 #endif
 
