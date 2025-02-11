@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThedyxEngine.Engine;
+using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI;
 
@@ -13,12 +14,16 @@ public partial class MaterialsList : ContentView {
 
     public MaterialsList() {
         InitializeComponent();
+        EngineCollectionView.ItemsSource  = MaterialManager.Materials;
+    }
+    
+    public void SelectMaterial(Material material) {
+        _currentSelectedMaterial = material;
+        EngineCollectionView.SelectedItem = material;
     }
 
-    public void Update(List<Material> materials) {
-        EngineCollectionView.ItemsSource = null;
-        EngineCollectionView.ItemsSource = materials;
-        if (_currentSelectedMaterial != null && !materials.Contains(_currentSelectedMaterial)) {
+    public void Update() {
+        if (_currentSelectedMaterial != null && !MaterialManager.Materials.Contains(_currentSelectedMaterial)) {
             _currentSelectedMaterial = null;
         }
     }

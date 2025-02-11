@@ -4,27 +4,132 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:ui="clr-namespace:ThedyxEngine.UI"
+               xmlns:maui="https://trungnt2910.github.io/schemas/maui/2022/colorpicker"
+               xmlns:colorPicker="clr-namespace:Maui.ColorPicker;assembly=Maui.ColorPicker"
                x:Class="ThedyxEngine.UI.MaterialsPopup">
     <toolkit:Popup.Content>
         <HorizontalStackLayout  BackgroundColor="White">
 
                 <!-- Left Sidebar: Objects List -->
             <VerticalStackLayout>
-            <ui:MaterialsList x:Name="Materials" Grid.Column="0"
+            <ui:MaterialsList x:Name="ListMaterials" Grid.Column="0"
                               HorizontalOptions="FillAndExpand"
                               VerticalOptions="FillAndExpand"
-                              WidthRequest="150" HeightRequest="600" BackgroundColor="White"/>
+                              WidthRequest="150" HeightRequest="550" BackgroundColor="White"/>
             
-            <Button Text="Create New" Padding="5" x:Name="CreateButton" Clicked="OnNameCompleted" Width="80" Height="30" HorizontalOptions="Center"> </Button>
+            <Button Text="Create New" Padding="5" x:Name="CreateButton" Clicked="OnAddMaterialClicked" Width="80" Height="30" HorizontalOptions="Center"> </Button>
             </VerticalStackLayout>
             
-            <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
-                                 WidthRequest="200" HeightRequest="-1"
+            <VerticalStackLayout Spacing="-10" BackgroundColor="White"
+                                 WidthRequest="300" HeightRequest="-1"
                                  HorizontalOptions="Center" VerticalOptions="Start">
                 <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Name:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="Name" TextColor="Black" WidthRequest="150" BackgroundColor="Transparent" Completed="OnNameCompleted"/>
+                    <Entry x:Name="Name" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnNameCompleted"/>
                 </HorizontalStackLayout>
+                
+                <Label VerticalOptions="Center" Padding="0,5,0,0  "  WidthRequest="-1" Text="Specific Heat Capacity J/(kg*°K)" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
+
+                <HorizontalStackLayout>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="SolidSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidSpecificHeatCapacityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="LiquidSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidSpecificHeatCapacityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="GasSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasSpecificHeatCapacityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <Label VerticalOptions="Center" Padding="0,5,0,0  "  WidthRequest="-1" Text="Density kg/m^3:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
+
+                <HorizontalStackLayout>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="SolidDensity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidDensityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="LiquidDensity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidDensityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="GasDensity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasDensityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <Label VerticalOptions="Center" Padding="0,5,0,0  " WidthRequest="-1" Text="Emissivity (0-1):" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
+
+                <HorizontalStackLayout>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="SolidEmissivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidEmissivityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="LiquidEmissivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidEmissivityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="GasEmissivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasEmissivityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <Label VerticalOptions="Center" Padding="0,5,0,0  "  WidthRequest="-1" Text="Thermal Conductivity W/(m*°K):" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
+                
+                <HorizontalStackLayout>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="SolidThermalConductivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidThermalConductivityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="LiquidThermalConductivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidThermalConductivityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="GasThermalConductivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasThermalConductivityCompleted"/>
+                </HorizontalStackLayout>
+                
+                <Label VerticalOptions="Center"  WidthRequest="-1" Padding="0,5,0,0  " Text="Other parameters:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
+                <HorizontalStackLayout>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Melting Temperature °K" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="MeltingTemperature" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnMeltingTemperatureCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Boiling Temperature °K" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="BoilingTemperature" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnBoilingTemperatureCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Melting energy J/kg" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="MeltingEnergy" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnMeltingEnergyCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Boiling energy J/kg" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="BoilingEnergy" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnBoilingEnergyCompleted"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Color:  " HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="R:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Red"/>
+                    <Entry x:Name="ColorR" TextColor="Black" WidthRequest="-1" BackgroundColor="Transparent" Completed="OnRedColorCompleted"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="G:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Green"/>
+                    <Entry x:Name="ColorG" TextColor="Black" WidthRequest="-1" BackgroundColor="Transparent" Completed="OnGreenColorCompleted"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="B:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Blue"/>
+                    <Entry x:Name="ColorB" TextColor="Black" WidthRequest="-1" BackgroundColor="Transparent" Completed="OnBlueColorCompleted"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="A:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Blue"/>
+                    <Entry x:Name="ColorA" TextColor="Black" WidthRequest="-1" BackgroundColor="Transparent" Completed="OnAlphaColorCompleted"/>
+                </HorizontalStackLayout>
+                
+                <Button Text="Delete this" Padding="5" x:Name="DeleteButton" Clicked="OnDeleteButtonClicked" Width="80" Height="30" HorizontalOptions="Center"> </Button>
             </VerticalStackLayout>
         </HorizontalStackLayout>
     </toolkit:Popup.Content>

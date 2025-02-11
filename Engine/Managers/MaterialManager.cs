@@ -113,6 +113,15 @@ namespace ThedyxEngine.Engine.Managers {
         public static List<Material> GetMaterials() {
            return Materials;
         }
+        
+        
+        /**
+         * Check if the name is available
+         * \param name Name of the material
+         */
+        public static bool IsNameAvailable(string name) {
+            return Materials.Find(x => x.Name == name) == null;
+        }
 
         
         /**

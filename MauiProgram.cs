@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Storage;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace ThedyxEngine;
 
@@ -11,6 +12,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseSkiaSharp()
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
@@ -22,7 +24,8 @@ public static class MauiProgram
             .AddFilePicker()
             .AddSingleton<MainPage>() 
             .AddSingleton<IFileSaver>(FileSaver.Default)
-            .AddSingleton<MainPage>();;
+            .AddSingleton<MainPage>();
+        
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
