@@ -15,7 +15,7 @@
             <ui:MaterialsList x:Name="ListMaterials" Grid.Column="0"
                               HorizontalOptions="FillAndExpand"
                               VerticalOptions="FillAndExpand"
-                              WidthRequest="150" HeightRequest="550" BackgroundColor="White"/>
+                              WidthRequest="150" HeightRequest="610" BackgroundColor="White"/>
             
             <Button Text="Create New" Padding="5" x:Name="CreateButton" Clicked="OnAddMaterialClicked" Width="80" Height="30" HorizontalOptions="Center"> </Button>
             </VerticalStackLayout>
@@ -129,7 +129,7 @@
                     <Entry x:Name="ColorA" TextColor="Black" WidthRequest="-1" BackgroundColor="Transparent" Completed="OnAlphaColorCompleted"/>
                 </HorizontalStackLayout>
                 
-                <Button Text="Delete this" Padding="5" x:Name="DeleteButton" Clicked="OnDeleteButtonClicked" Width="80" Height="30" HorizontalOptions="Center"> </Button>
+                <Button Text="Delete this" Padding="5" x:Name="DeleteButton" Clicked="OnDeleteButtonClicked" Width="80" Height="30" HorizontalOptions="End"> </Button>
             </VerticalStackLayout>
         </HorizontalStackLayout>
     </toolkit:Popup.Content>

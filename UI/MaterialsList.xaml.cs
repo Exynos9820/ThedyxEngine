@@ -14,16 +14,25 @@ public partial class MaterialsList : ContentView {
 
     public MaterialsList() {
         InitializeComponent();
-        EngineCollectionView.ItemsSource  = MaterialManager.Materials;
+        MatCollectionView.ItemsSource  = MaterialManager.Materials;
     }
     
     public void SelectMaterial(Material material) {
         _currentSelectedMaterial = material;
-        EngineCollectionView.SelectedItem = material;
+        MatCollectionView.SelectedItem = material;
     }
 
     public void Update() {
+        MatCollectionView.ItemsSource = null;
         if (_currentSelectedMaterial != null && !MaterialManager.Materials.Contains(_currentSelectedMaterial)) {
+            _currentSelectedMaterial = null;
+        }
+    }
+    
+    public void Update(List<Material> materials) {
+        MatCollectionView.ItemsSource = null;
+        MatCollectionView.ItemsSource = materials;
+        if (!materials.Contains(_currentSelectedMaterial)) {
             _currentSelectedMaterial = null;
         }
     }

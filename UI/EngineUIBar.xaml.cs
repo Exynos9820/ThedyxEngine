@@ -198,9 +198,20 @@ namespace ThedyxEngine.UI
         private void OnMaterialsButtonClicked(object sender, EventArgs e) {
             var materialsPopup = new MaterialsPopup();
             this.MainPage?.ShowPopup(materialsPopup);
+            // use action to reopen the popup
+            materialsPopup.ReopenMaterialPopup = OnMaterialsButtonClicked;
             UpdateUI?.Invoke();
         }
-        
+
+        private void OnMaterialsButtonClicked(Material obj) {
+            var materialsPopup = new MaterialsPopup();
+            this.MainPage?.ShowPopup(materialsPopup);
+            materialsPopup.SelectMaterial(obj);
+            // use action to reopen the popup
+            materialsPopup.ReopenMaterialPopup = OnMaterialsButtonClicked;
+            UpdateUI?.Invoke();
+        }
+
         private void OnSettingsButtonClicked(object sender, EventArgs e) {
             var settingsPopup = new SettingsPopup();
             this.MainPage?.ShowPopup(settingsPopup);

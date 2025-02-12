@@ -13,6 +13,7 @@ namespace ThedyxEngine.UI;
 
 public partial class MaterialsPopup : Popup {
     private Material? _currentSelectedMaterial;
+    public Action<Material> ReopenMaterialPopup;
     public MaterialsPopup() {
         InitializeComponent();
         // we need to update the list of materials
@@ -70,8 +71,17 @@ public partial class MaterialsPopup : Popup {
         ListMaterials.SelectMaterial(material);
         // update the list
         Update();
+        ReOpenMaterialPopup(material);
     }
     
+    public void SelectMaterial(Material material) {
+        ListMaterials.SelectMaterial(material);
+    }
+    
+    private void ReOpenMaterialPopup(Material material) {
+        this.Close();
+       ReopenMaterialPopup?.Invoke(material);
+    }
     
     private void OnNameCompleted(object sender, EventArgs e) {
         // if name is the same, we don't need to update, show a message
@@ -101,6 +111,10 @@ public partial class MaterialsPopup : Popup {
                 Update();
             }
         });
+        if (MaterialManager.Materials.Count == 0)
+            ReOpenMaterialPopup(null);
+        else
+            ReOpenMaterialPopup(MaterialManager.Materials[0]);
     }
 
     private void OnSolidSpecificHeatCapacityCompleted(object sender, EventArgs e) {
