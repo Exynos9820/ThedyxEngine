@@ -39,6 +39,8 @@ namespace ThedyxEngine.UI
             OpenButton.IsEnabled = true;
             ClearButton.IsEnabled = true;
             ResetButton.IsEnabled = true;
+            MaterialsButton.IsEnabled = true;
+            SettingsButton.IsEnabled = true;
         }
 
         public void Update() {
@@ -72,6 +74,8 @@ namespace ThedyxEngine.UI
             OpenButton.IsEnabled = false;
             ClearButton.IsEnabled = false;
             ResetButton.IsEnabled = false;
+            MaterialsButton.IsEnabled = false;
+            SettingsButton.IsEnabled = false;
         }
 
         private void SetPausedMode() {
@@ -85,6 +89,8 @@ namespace ThedyxEngine.UI
             SaveButton.IsEnabled = false;
             OpenButton.IsEnabled = false;
             ClearButton.IsEnabled = false;
+            MaterialsButton.IsEnabled = false;
+            SettingsButton.IsEnabled = false;
             ResetButton.IsEnabled = true;
         }
         
