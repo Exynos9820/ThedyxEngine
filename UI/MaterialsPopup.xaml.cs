@@ -18,6 +18,9 @@ public partial class MaterialsPopup : Popup {
         InitializeComponent();
         // we need to update the list of materials
         ListMaterials.OnSelectedMaterialChanged += OnSelectedMaterialChanged;
+        // select the first material if there is any
+        if(MaterialManager.Materials.Count > 0)
+            ListMaterials.SelectMaterial(MaterialManager.Materials[0]);
     }
     
     private void OnSelectedMaterialChanged(Material material) {
