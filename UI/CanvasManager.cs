@@ -9,10 +9,14 @@ namespace ThedyxEngine.UI;
  * Manages the canvas
  */
 public class CanvasManager{
-    public int CurrentLeftXIndex { get; private set; }  /// Gets the current left X index.
-    public int CurrentRightXIndex { get; private set; } /// Gets the current right X index.
-    public int CurrentTopYIndex { get; private set; }   /// Gets the current top Y index.
-    public int CurrentBottomYIndex { get; private set; }/// Gets the current bottom Y index.
+    /** Gets the current left X index. */
+    public int CurrentLeftXIndex { get; private set; }
+    /** Gets the current right X index. */
+    public int CurrentRightXIndex { get; private set; }
+    /** Gets the current top Y index. */
+    public int CurrentTopYIndex { get; private set; }
+    /** Gets the current bottom Y index. */
+    public int CurrentBottomYIndex { get; private set; }
 
     /**
      * \brief Initializes a new instance of the CanvasManager class.

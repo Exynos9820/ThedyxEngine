@@ -11,21 +11,42 @@ using ThedyxEngine.Util;
 
 namespace ThedyxEngine.UI;
 
+/**
+ * SettingsPopup is a popup that allows the user to change the settings of the simulation.
+ */
 public partial class SettingsPopup : Popup {
+    /**
+     * Constructor for the SettingsPopup class.
+     */
     public SettingsPopup() {
         InitializeComponent();
         FillEntriesValues();
     }
     
+    /**
+     * ShowErrorMessageBox shows a message box with an error message.
+     * \param text The text to display in the message box.
+     */
     private async void ShowErrorMessageBox(string text) {
         await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
     }
+    
+    /**
+     * FillEntriesValues fills the entries with the current values of the settings.
+     */
     private void FillEntriesValues() {
         RoomTemperature.Text        = GlobalVariables.AirTemperature.ToString();
         RadiationDepth.Text         = GlobalVariables.RadiationDepth.ToString();
         EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString();
+        UIUpdatesPerSecond.Text     = GlobalVariables.WindowRefreshRate.ToString();
+        IsHumanReadable.IsChecked   = GlobalVariables.SaveSimulationHumanReadable;
     }
     
+    /**
+     * OnTemperatureCompleted is called when the user has finished editing the temperature.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnTemperatureCompleted(object sender, EventArgs e) {
         if (double.TryParse(RoomTemperature.Text, out var temp)) {
             if (temp >= 0 && temp < 1000) {
@@ -40,6 +61,11 @@ public partial class SettingsPopup : Popup {
         RoomTemperature.Text = GlobalVariables.AirTemperature.ToString();
     }
     
+    /**
+     * OnRadiationCompleted is called when the user has finished editing the radiation depth.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnRadiationCompleted(object sender, EventArgs e) {
         if (int.TryParse(RadiationDepth.Text, out var depth)) {
             if (depth >= 0 && depth < 30) {
@@ -54,6 +80,11 @@ public partial class SettingsPopup : Popup {
         RadiationDepth.Text = GlobalVariables.RadiationDepth.ToString();
     }
     
+    /**
+     * OnEngineUpdatesCompleted is called when the user has finished editing the engine updates per second.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnEngineUpdatesCompleted(object sender, EventArgs e) {
         if (int.TryParse(EngineUpdatesPerSecond.Text, out var updates)) {
             if (updates >= 15 && updates < 240) {
@@ -68,6 +99,11 @@ public partial class SettingsPopup : Popup {
         EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString();
     }
     
+    /**
+     * OnUIUpdatesCompleted is called when the user has finished editing the UI updates per second.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnUIUpdatesCompleted(object sender, EventArgs e) {
         if (int.TryParse(UIUpdatesPerSecond.Text, out var updates)) {
             if (updates >= 15 && updates < 240) {
@@ -82,6 +118,11 @@ public partial class SettingsPopup : Popup {
         UIUpdatesPerSecond.Text = GlobalVariables.WindowRefreshRate.ToString();
     }
     
+    /**
+     * OnFileCheckBoxChanged is called when the user has changed the human readable checkbox.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnFileCheckBoxChanged(object sender, EventArgs e) {
         GlobalVariables.SaveSimulationHumanReadable = IsHumanReadable.IsChecked;
     }

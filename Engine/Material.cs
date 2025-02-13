@@ -52,6 +52,10 @@ namespace ThedyxEngine.Engine {
             return Name;
         }
         
+        /**
+         * \brief Converts the material to a JSON string.
+         * \return The JSON string.
+         */
         public String ToJson() {
             // format the material to json
             var settings = new JsonSerializerSettings {

@@ -4,19 +4,30 @@ using System.Collections.Generic;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 
-namespace ThedyxEngine.UI
-{
+namespace ThedyxEngine.UI {
+    /**
+     * EngineTabProperties is a tab that displays the properties of the selected object.
+     */
     public partial class EngineTabProperties : ContentView {
+        /** The currently selected object. */
         private EngineObject? _selectedObject;
+        /** Whether the tab is enabled. */
         private bool isEnabled = true;
+        /** The event that is called when the object changes. */
         public Action OnObjectChange;
         
+        /**
+         * Constructor for the EngineTabProperties class.
+         */
         public EngineTabProperties() {
             InitializeComponent();
             // On Loaded event, we need to update the properties tab
             this.Loaded += (sender, args) => Update();
         }
 
+        /**
+         * Update updates the properties tab.
+         */
         public void Update() {
             if (_selectedObject == null) {
                 SetFieldsEnabled(false);
@@ -31,14 +42,23 @@ namespace ThedyxEngine.UI
 
             SetObjectParameters();
         }
-
+        
+        /**
+         * Enable enables or disables the tab.
+         * \param IsEnabled Whether the tab is enabled.
+         */
         public void Enable(bool IsEnabled) {
             isEnabled = IsEnabled;
             if (!isEnabled) {
                 SetFieldsEnabled(false);
             }
         }
-
+        
+        /**
+         * SetObjectParameters sets the selected object.
+         * Sets the text fields to the object's parameters.
+         * \param obj The object to set.
+         */
         private void SetObjectParameters() {
             if (_selectedObject == null) return;
 
@@ -52,13 +72,21 @@ namespace ThedyxEngine.UI
             cbMaterial.ItemsSource = MaterialManager.GetMaterials();
             cbMaterial.SelectedItem = _selectedObject.Material;
         }
-
+        
+        /**
+         * SetObject sets the selected object.
+         * \param obj The object to set.
+         */
         public void SetObject(EngineObject obj) {
             ClearFields();
             _selectedObject = obj;
             Update();
         }
-
+        
+        /**
+         * SetFieldsEnabled sets the fields to be enabled or disabled.
+         * \param enabled Whether the fields are enabled.
+         */
         private void SetFieldsEnabled(bool enabled) {
             tbName.IsEnabled = enabled;
             tbTemperature.IsEnabled = enabled;
@@ -68,7 +96,10 @@ namespace ThedyxEngine.UI
             tbWidth.IsEnabled = enabled;
             cbMaterial.IsEnabled = enabled;
         }
-
+        
+        /**
+         * ClearFields clears the text fields.
+         */
         private void ClearFields() {
             tbName.Text = "";
             tbTemperature.Text = "";
@@ -78,11 +109,21 @@ namespace ThedyxEngine.UI
             tbWidth.Text = "";
             cbMaterial.SelectedIndex = -1;
         }
-
+        
+        /**
+         * ShowErrorMessageBox shows a message box with an error message.
+         * \param text The text to display in the message box.
+         */
         private async void ShowErrorMessageBox(string text) {
             await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
         }
 
+        
+        /**
+         * OnNameCompleted is called when the user has finished editing the name.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnNameCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (_selectedObject.Name != tbName.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(tbName.Text)) {
@@ -94,6 +135,12 @@ namespace ThedyxEngine.UI
             tbName.BackgroundColor = Colors.White;
         }
 
+        
+        /**
+         * OnTemperatureCompleted is called when the user has finished editing the temperature.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnTemperatureCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (double.TryParse(tbTemperature.Text, out double temperature)) {
@@ -105,7 +152,12 @@ namespace ThedyxEngine.UI
             }
             OnObjectChange?.Invoke();
         }
-
+        
+        /**
+         * OnXPositionCompleted is called when the user has finished editing the x position.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnXPositionCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (double.TryParse(tbXPosition.Text, out double x)) {
@@ -113,7 +165,13 @@ namespace ThedyxEngine.UI
             }
             OnObjectChange?.Invoke();
         }
-
+    
+        
+        /**
+         * OnYPositionCompleted is called when the user has finished editing the y position.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnYPositionCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (double.TryParse(tbYPosition.Text, out double y)) {
@@ -121,7 +179,12 @@ namespace ThedyxEngine.UI
             }
             OnObjectChange?.Invoke();
         }
-
+    
+        /**
+         * OnHeightCompleted is called when the user has finished editing the height.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnHeightCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (_selectedObject.GetObjectType() == ObjectType.GrainSquare) {
@@ -134,6 +197,12 @@ namespace ThedyxEngine.UI
             OnObjectChange?.Invoke();
         }
         
+        
+        /**
+         * OnWidthCompleted is called when the user has finished editing the width.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnWidthCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (_selectedObject.GetObjectType() == ObjectType.GrainSquare) {
@@ -145,13 +214,23 @@ namespace ThedyxEngine.UI
             }
             OnObjectChange?.Invoke();
         }
-
+        
+        /**
+         * OnMaterialChanged is called when the user has selected a material.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnMaterialChanged(object sender, EventArgs e) {
             if (_selectedObject == null) return;
             if (cbMaterial.SelectedItem != null)
                 _selectedObject.Material = (Material)cbMaterial.SelectedItem;
         }
-
+        
+        /**
+         * OnDeleteButtonClicked is called when the user clicks the delete button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnDeleteButtonClicked(object sender, EventArgs e) {
             if(Engine.Engine.IsRunning()) return;
             ClearFields();

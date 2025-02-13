@@ -11,15 +11,24 @@ using CommunityToolkit.Maui.Storage;
 using LukeMauiFilePicker;
 using Newtonsoft.Json;
 
-namespace ThedyxEngine.UI
-{
-    public partial class EngineUIBar : ContentView
-    {
-        // Callback to update the UI
+namespace ThedyxEngine.UI {
+    /**
+     * EngineUIBar is a class that represents the UI bar at the top of the screen.
+     * It contains buttons for starting, stopping, and pausing the simulation, as well as buttons for adding, saving, and opening objects.
+     */
+    public partial class EngineUIBar : ContentView {
+        /** The event that is called when the UI needs to be updated. */
         public Action? UpdateUI;
+        /** The event that is called when the selected object is deleted. */
         public Action<EngineObject>? DeleteSelected;
+        /** The event that is called when the engine mode is changed. */
         public Action? EngineModeChanged;
+        /** The main page of the app. */
         public MainPage? MainPage;
+        
+        /**
+         * Constructor for the EngineUIBar class.
+         */
         public EngineUIBar() {
             InitializeComponent();
             Loaded += (sender, args) => {
@@ -27,6 +36,9 @@ namespace ThedyxEngine.UI
             };
         }
 
+        /**
+         * SetStoppedMode sets the UI to the stopped mode.
+         */
         private void SetStoppedMode() {
             // Set engine controls
             StartButton.IsEnabled = true;
@@ -43,6 +55,9 @@ namespace ThedyxEngine.UI
             SettingsButton.IsEnabled = true;
         }
 
+        /**
+         * Update updates the time label on the UI.
+         */
         public void Update() {
             long currentTime = Engine.Engine.GetSimulationTime();
             TimeSpan time = TimeSpan.FromMilliseconds(currentTime);
@@ -61,7 +76,9 @@ namespace ThedyxEngine.UI
             }
         }
 
-
+        /**
+         * SetRunningMode sets the UI to the running mode.
+         */
         private void SetRunningMode() {
             // Set engine controls
             StartButton.IsEnabled = false;
@@ -78,6 +95,9 @@ namespace ThedyxEngine.UI
             SettingsButton.IsEnabled = false;
         }
 
+        /**
+         * SetPausedMode sets the UI to the paused mode.
+         */
         private void SetPausedMode() {
             // Set engine controls
             StartButton.IsEnabled = true;
@@ -94,14 +114,22 @@ namespace ThedyxEngine.UI
             ResetButton.IsEnabled = true;
         }
         
-
+        /**
+         * OnSaveButtonClicked is called when the user clicks the save button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnSaveButtonClicked(object sender, EventArgs e) {
             using var memoryStream = new MemoryStream(FileManager.GetSimulationRepresentation());
             FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
         }
 
 
-
+        /**
+         * OnOpenButtonClicked is called when the user clicks the open button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private async void OnOpenButtonClicked(object sender, EventArgs e) {
             var customFileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> {
                 { DevicePlatform.iOS, new[] { ".tdx" } },
@@ -132,7 +160,11 @@ namespace ThedyxEngine.UI
             Engine.Engine.ResetSimulation();
         }
 
-
+        /**
+         * OnClearButtonClicked is called when the user clicks the clear button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private async void OnClearButtonClicked(object sender, EventArgs e) {
             bool result = await Application.Current.MainPage.DisplayAlert("Confirm Clear", "Are you sure you want to clear all data?", "Yes", "No");
             if (result) {
@@ -141,6 +173,11 @@ namespace ThedyxEngine.UI
             }
         }
 
+        /**
+         * OnAddButtonClicked is called when the user clicks the add button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private async void OnAddButtonClicked(object sender, EventArgs e) {
             string action = await Application.Current.MainPage.DisplayActionSheet("Add Item", "Cancel", null, "Grain Object", "Solid Object", "State Object");
             switch (action) {
@@ -156,34 +193,64 @@ namespace ThedyxEngine.UI
             }
         }
 
+        /**
+         * AddObject opens a popup to add an object to the simulation.
+         * \param objectType The type of object to add.
+         */
         private void AddObject(ObjectType objectType) {
             var createPopup = new CreateObjectPopup(objectType);
             this.MainPage?.ShowPopup(createPopup);
             if (UpdateUI != null) createPopup.OnObjectCreated += UpdateAll;
         }
         
+        /**
+         * OnSettingsButtonClicked is called when the user clicks the settings button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void UpdateAll() {
             UpdateUI?.Invoke();
         }
 
+        /**
+         * OnStartButtonClicked is called when the user clicks the start button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnStartButtonClicked(object sender, EventArgs e) {
             Engine.Engine.Start();
             EngineModeChanged?.Invoke();
             SetRunningMode();
         }
         
+        /**
+         * OnStopButtonClicked is called when the user clicks the stop button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnStopButtonClicked(object sender, EventArgs e) {
             Engine.Engine.Stop();
             EngineModeChanged?.Invoke();
             SetStoppedMode();
         }
 
+        /**
+         * OnPauseButtonClicked is called when the user clicks the pause button.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnPauseButtonClicked(object sender, EventArgs e) {
             Engine.Engine.Pause();
             EngineModeChanged?.Invoke();
             SetPausedMode();
         }
     
+        /**
+         * OnResetButtonClicked is called when the user clicks the reset button.
+         * Resets the simulation data.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnTemperatureModeButtonClicked(object sender, EventArgs e) {
             Engine.Engine.ShowTemperature = !Engine.Engine.ShowTemperature;
             // change color of button
@@ -195,6 +262,12 @@ namespace ThedyxEngine.UI
             UpdateUI?.Invoke();
         }
         
+        /**
+         * OnMaterialsButtonClicked is called when the user clicks the materials button.
+         * Opens the materials popup.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnMaterialsButtonClicked(object sender, EventArgs e) {
             var materialsPopup = new MaterialsPopup();
             this.MainPage?.ShowPopup(materialsPopup);
@@ -202,7 +275,14 @@ namespace ThedyxEngine.UI
             materialsPopup.ReopenMaterialPopup = OnMaterialsButtonClicked;
             UpdateUI?.Invoke();
         }
-
+    
+        /**
+         * OnSettingsButtonClicked is called when the user clicks the settings button.
+         * Opens the settings popup.
+         * Used when we want to reopen the materials popup.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnMaterialsButtonClicked(Material obj) {
             var materialsPopup = new MaterialsPopup();
             this.MainPage?.ShowPopup(materialsPopup);
@@ -212,12 +292,24 @@ namespace ThedyxEngine.UI
             UpdateUI?.Invoke();
         }
 
+        /**
+         * OnSettingsButtonClicked is called when the user clicks the settings button.
+         * Opens the settings popup.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnSettingsButtonClicked(object sender, EventArgs e) {
             var settingsPopup = new SettingsPopup();
             this.MainPage?.ShowPopup(settingsPopup);
             UpdateUI?.Invoke();
         }
         
+        /**
+         * OnGridButtonClicked is called when the user clicks the grid button.
+         * Toggles the grid on and off.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnGridButtonClicked(object sender, EventArgs e) {
             Engine.Engine.ShowGrid = !Engine.Engine.ShowGrid;
             // change color of button
@@ -229,6 +321,12 @@ namespace ThedyxEngine.UI
             UpdateUI?.Invoke();
         }
         
+        /**
+         * OnColorModeButtonClicked is called when the user clicks the color mode button.
+         * Toggles the color mode on and off.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnColorModeButtonClicked(object sender, EventArgs e) {
             Engine.Engine.ShowColor = !Engine.Engine.ShowColor;
             if (Engine.Engine.ShowColor) {
@@ -241,6 +339,12 @@ namespace ThedyxEngine.UI
             UpdateUI?.Invoke();
         }
         
+        /**
+         * OnResetButtonClicked is called when the user clicks the reset button.
+         * Resets the simulation data.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private async void OnResetButtonClicked(object sender, EventArgs e) {
             bool result = await Application.Current.MainPage.DisplayAlert("Confirm Reset", "Are you sure you want to reset simulation data?", "Yes", "No");
             if (result) {

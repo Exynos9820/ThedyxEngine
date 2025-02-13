@@ -3,21 +3,31 @@ using System;
 using System.Collections.Generic;
 using ThedyxEngine.Engine;
 
-namespace ThedyxEngine.UI
-{
-    public partial class EngineObjectsList : ContentView
-    {
+namespace ThedyxEngine.UI {
+    /**
+     * EngineObjectsList is a list of engine objects that the user can select from.
+     */
+    public partial class EngineObjectsList : ContentView {
+        /** The currently selected object. */
         private EngineObject? _currentSelectedEngineObject;
+        /** The event that is called when the selected object changes. */
         public Action<EngineObject>? OnSelectedObjectChanged;
+        /** The event that is called when the user wants to zoom to an object. */
         public Action<EngineObject>? OnZoomToObject;
+        /** The event that is called when the user wants to delete an object. */
         public Action? OnDeleteObject;
 
-        public EngineObjectsList()
-        {
+        /**
+         * Constructor for the EngineObjectsList class.
+         */
+        public EngineObjectsList() {
             InitializeComponent();
         }
 
-        // Method to update the list of objects
+        /**
+         * SelectObject selects an object in the list.
+         * \param obj The object to select.
+         */
         public void Update(List<EngineObject> objects) {
             EngineCollectionView.ItemsSource = null;
             EngineCollectionView.ItemsSource = objects;
@@ -26,14 +36,21 @@ namespace ThedyxEngine.UI
             }
         }
 
-        // Method to enable or disable the control
+        /**
+         * Enable enables or disables the list.
+         * \param isEnabled Whether the list is enabled.
+         */
         public void Enable(bool isEnabled) {
             EngineCollectionView.IsEnabled = isEnabled;
         }
 
 
 
-        // Method to handle item selection
+        /**
+         * OnSelectionChanged is called when the user selects an object.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
         private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e) {
             if (e.CurrentSelection.Count > 0) {
                 var selectedObject = e.CurrentSelection[0] as EngineObject;

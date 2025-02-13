@@ -2,9 +2,17 @@ using Microsoft.Maui.Graphics;
 using System;
 using ThedyxEngine.UI;
 
-namespace TempoEngine.UI
-{
+namespace TempoEngine.UI {
+    /**
+     * GridDrawer is a class that draws a grid on the canvas.
+     */
     public class GridDrawer {
+        /**
+         * DrawGrid draws a grid on the canvas.
+         * \param canvas The canvas to draw on.
+         * \param manager The canvas manager.
+         * \param viewport The viewport to draw on.
+         */
         public void DrawGrid(ICanvas canvas, CanvasManager manager, RectF viewport) {
             // Set static properties outside the loop
             canvas.StrokeColor = Colors.LightGray;

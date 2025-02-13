@@ -10,10 +10,21 @@ using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI;
 
+/**
+ * CreateObjectPopup is a popup that allows the user to create an object.
+ */
 public partial class CreateObjectPopup : Popup {
+    /** The object type. */
     private ObjectType _objectType;
+    /** The object being created. */
     private EngineObject _object;
+    /** The event that is called when the object is created. */
     public Action OnObjectCreated;
+    
+    /**
+     * Constructor for the CreateObjectPopup class.
+     * \param objectType The object type.
+     */
     public CreateObjectPopup(ObjectType objectType) {
         InitializeComponent();
         _objectType = objectType;
@@ -49,10 +60,18 @@ public partial class CreateObjectPopup : Popup {
         _object.SimulationTemperature = 200;
         Temperature.Text = "200";
     }
+    
+    /**
+     * Close closes the popup.
+     */
     private async void ShowErrorMessageBox(string text) {
         await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
     }
-
+    
+    /**
+     * UpdateAll updates all the fields.
+     * Before closing the popup, this function is called to update all the fields of the created object.
+     */
     private void UpdateAll() {
         OnNameCompleted(null, null);
         OnTemperatureCompleted(null, null);
@@ -63,7 +82,11 @@ public partial class CreateObjectPopup : Popup {
         OnMaterialChanged(null, null);
     }
 
-    
+    /**
+     * OnNameCompleted is called when the user has finished editing the name.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnNameCompleted(object sender, EventArgs e) {
         if (_object.Name != NameEntry.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(NameEntry.Text)) {
             ShowErrorMessageBox("Name is not available");
@@ -74,6 +97,12 @@ public partial class CreateObjectPopup : Popup {
         NameEntry.BackgroundColor = Colors.White;
     }
     
+    
+    /**
+     * OnTemperatureCompleted is called when the user has finished editing the temperature.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnTemperatureCompleted(object sender, EventArgs e) {
         if (double.TryParse(Temperature.Text, out double temperature)) {
             _object.SimulationTemperature = temperature;
@@ -83,18 +112,34 @@ public partial class CreateObjectPopup : Popup {
             Temperature.BackgroundColor = Colors.Red;
         }
     }
+    
+    /**
+     * OnXPositionCompleted is called when the user has finished editing the x position.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnXPositionCompleted(object sender, EventArgs e) {
         if (double.TryParse(XPosition.Text, out double x)) {
             _object.Position = new Microsoft.Maui.Graphics.Point(x, _object.Position.Y);
         }
     }
-
+    
+    /**
+     * OnYPositionCompleted is called when the user has finished editing the y position.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnYPositionCompleted(object sender, EventArgs e) {
         if (double.TryParse(YPosition.Text, out double y)) {
             _object.Position = new Microsoft.Maui.Graphics.Point(_object.Position.X, y);
         }
     }
-
+    
+    /**
+     * OnHeightCompleted is called when the user has finished editing the height.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnHeightCompleted(object sender, EventArgs e) {
         if (_object.GetObjectType() == ObjectType.GrainSquare) {
             Height.Text = "1";
@@ -105,6 +150,11 @@ public partial class CreateObjectPopup : Popup {
         }
     }
     
+    /**
+     * OnWidthCompleted is called when the user has finished editing the width.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnWidthCompleted(object sender, EventArgs e) {
         if (_object.GetObjectType() == ObjectType.GrainSquare) {
             Height.Text = "1";
@@ -115,15 +165,29 @@ public partial class CreateObjectPopup : Popup {
         }
     }
     
+    /**
+     * OnMaterialChanged is called when the user selects a material.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnMaterialChanged(object sender, EventArgs e) {
         if (_object == null) return;
         if (Material.SelectedItem != null)
             _object.Material = (Material)Material.SelectedItem;
     }
+    
+    /**
+     * MakeEntriesWhite makes all the entries white.
+     */
     private void MakeEntriesWhite() {
         NameEntry.BackgroundColor = Colors.White;
     }
     
+    /**
+     * OnCreateButtonClicked is called when the user clicks the create button.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnCreateButtonClicked(object sender, EventArgs e) {
         // make checks for object name
         Debug.Assert(Engine.Engine.EngineObjectsManager != null, "Engine.Engine.EngineObjectsManager != null");
@@ -138,6 +202,11 @@ public partial class CreateObjectPopup : Popup {
         Close();
     }
 
+    /**
+     * OnCloseButtonClicked is called when the user clicks the close button.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnCloseButtonClicked(object sender, EventArgs e) {
         Close();
     }

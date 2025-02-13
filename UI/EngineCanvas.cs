@@ -11,11 +11,22 @@ using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI {
+    /**
+     * EngineCanvas is a canvas that displays the simulation.
+     */
     public class EngineCanvas : IDrawable {
-        private readonly CanvasManager _canvasManager;   // Canvas manager
+        /** The canvas manager. It makes some math */
+        private readonly CanvasManager _canvasManager;
+        /** The grid drawer. It draws the grid */
         private readonly GridDrawer _gridDrawer;
-        private static readonly ILog log = LogManager.GetLogger(typeof(EngineCanvas)); // Logger
+        /** The logger */
+        private static readonly ILog log = LogManager.GetLogger(typeof(EngineCanvas));
+        /** The main page of the whole program*/
         private MainPage _mainPage;
+        /**
+         * Constructor for the EngineCanvas class.
+         * \param mainPage The main page of the program.
+         */
         public EngineCanvas(MainPage mainPage) : base() {
             _canvasManager = new CanvasManager();
             _gridDrawer = new GridDrawer();
@@ -27,7 +38,14 @@ namespace ThedyxEngine.UI {
                 BackgroundColor = Colors.White
             };
         }
-            
+        
+        /**
+         * Draw draws the simulation on the canvas.
+         * Draws every polygon of every object that is visible on the canvas.
+         * Draws the grid if it is enabled.
+         * \param canvas The canvas to draw on.
+         * \param dirtyRect The dirty rectangle.
+         */
         public void Draw(ICanvas canvas, RectF dirtyRect) {
             canvas.StrokeColor = Colors.Black;
             canvas.StrokeSize = 2;
@@ -114,17 +132,29 @@ namespace ThedyxEngine.UI {
         }
 
         
+        /**
+         * Zoom zooms in or out.
+         * \param delta The delta.
+         */
         public void Zoom(double delta) {
             if (delta > 1)
                 _canvasManager.ZoomIn(delta);
             else
                 _canvasManager.ZoomOut(delta);
         }
-
+        
+        /**
+         * Move moves the canvas.
+         * \param args The pan updated event arguments.
+         */
         public void Move(PanUpdatedEventArgs args) {
             _canvasManager.Move(args);
         }
         
+        /**
+         * ZoomToObject zooms to an object.
+         * \param obj The object to zoom to.
+         */
         public void ZoomToObject(EngineObject obj) {
             // get object data
             Vector2 topLeft, bottomRight;
@@ -132,7 +162,14 @@ namespace ThedyxEngine.UI {
             _canvasManager.ZoomToArea(topLeft, bottomRight);
             _mainPage.Update();
         }
-
+        
+        /**
+         * ConvertToScreenCoordinates converts a point in simulation to screen coordinates.
+         * \param point The point to convert.
+         * \param actualWidth The actual width of the canvas.
+         * \param actualHeight The actual height of the canvas.
+         * \return The point in screen coordinates.
+         */
         private Point ConvertToScreenCoordinates(Point point, double actualWidth, double actualHeight) {
             // get ActualWidth and Height
             double width = actualWidth;
