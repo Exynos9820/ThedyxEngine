@@ -36,7 +36,8 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 1) Clone the repository
 2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
 3) dotnet workload install MAUI in the terminal
-4) dotnet build ThedyxEngine.sln
+4) dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0 (sometimes)
+5) dotnet build ThedyxEngine.sln
 
 ## Installation Windows
 1) Clone the repository
