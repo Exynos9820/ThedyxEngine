@@ -32,8 +32,17 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 - **Interactive Visuals**: Real-time graphical representation of temperature changes.
 \
 
-## Installation
+## Installation MacOS
 1) Clone the repository
 2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
 3) dotnet workload install MAUI in the terminal
 4) dotnet build ThedyxEngine.sln
+
+## Installation Windows
+1) Clone the repository
+2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
+3) https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-9.0.2-windows-x64-installer
+4) dotnet workload install MAUI in the terminal
+5) Download and install https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads
+6) dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0
+7) dotnet build ThedyxEngine.sln
