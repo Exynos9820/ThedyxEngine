@@ -58,41 +58,14 @@ public class CanvasManager{
      * \brief Moves the view.
      * \param key The key pressed.
      */
-#if WINDOWS
-    public void Move(System.Windows.Input.Key key) {
-#elif MACCATALYST
     public void Move(PanUpdatedEventArgs args) {
-#endif
         int width = CurrentRightXIndex - CurrentLeftXIndex;
         int height = CurrentTopYIndex - CurrentBottomYIndex;
         int step = getStep();
-        
-#if WINDOWS
-        switch (key) {
-            case System.Windows.Input.Key.A:
-                CurrentLeftXIndex -= step;
-                CurrentRightXIndex -= step;
-                break;
-            case System.Windows.Input.Key.D:
-                CurrentLeftXIndex += step;
-                CurrentRightXIndex += step;
-                break;
-            case System.Windows.Input.Key.W:
-                CurrentTopYIndex += step;
-                CurrentBottomYIndex += step;
-                break;
-            case System.Windows.Input.Key.S:
-                CurrentTopYIndex -= step;
-                CurrentBottomYIndex -= step;
-                break;
-        }
-#elif MACCATALYST
         CurrentLeftXIndex += (int)args.TotalX / 100;
         CurrentRightXIndex += (int)args.TotalX / 100;
         CurrentTopYIndex += (int)args.TotalY / 100;
         CurrentBottomYIndex += (int)args.TotalY / 100;
-#endif
-
         // check if we are out of bounds
         if (CurrentLeftXIndex < CanvasHelper.MinLeftXIndex) {
             CurrentLeftXIndex = CanvasHelper.MinLeftXIndex;

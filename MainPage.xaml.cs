@@ -46,7 +46,6 @@ public partial class MainPage : ContentPage {
         TabProperties.OnObjectChange = UpdateAll;
         Engine.Engine.ResetSimulation();
         
-#if MACCATALYST
         // Set up pinch gesture for zooming
         var pinchGesture = new PinchGestureRecognizer();
         pinchGesture.PinchUpdated += (s, e) => {
@@ -68,7 +67,6 @@ public partial class MainPage : ContentPage {
                     EngineGraphicsView.Invalidate();
             }
         };
-#endif
         EngineGraphicsView.GestureRecognizers.Add(pinchGesture);
         EngineGraphicsView.GestureRecognizers.Add(panGesture);
     }
