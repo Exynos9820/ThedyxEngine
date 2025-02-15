@@ -68,6 +68,10 @@ namespace ThedyxEngine.Engine {
           return _externalSquares;
         }
 
+        /**
+         * \brief Apply energy delta to all squares.
+         * Called after the heat transfer is calculated
+         */
         public override void ApplyEnergyDelta() {
             foreach (var sq in _grainSquares) {
                 sq.ApplyEnergyDelta();
@@ -191,12 +195,30 @@ namespace ThedyxEngine.Engine {
                 }
             }
         }
-
+        
+        /**
+         * \brief Gets the squares that are part of the object.
+         * \returns The squares that are part of the object.
+         */
         public override List<GrainSquare> GetSquares() {
             return _grainSquares;
         }
-
+        
+        
+        /**
+         * \brief Determines if the object is intersecting with another object.
+         * \param obj The object to check for intersection.
+         * \returns True if the object is intersecting with the given object, false otherwise.
+         */
         public override bool IsIntersecting(EngineObject obj) {
+            // get external squares of the object
+            List<GrainSquare> list1 = obj.GetExternalSquares();
+            List<GrainSquare> list2 = GetExternalSquares();
+            foreach (var sq1 in list1) {
+                foreach (var sq2 in list2) {
+                    if (sq1.Position == sq2.Position) return true;
+                }
+            }
             return false;
         }
         

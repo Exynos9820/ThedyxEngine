@@ -18,22 +18,38 @@ namespace ThedyxEngine.Util
      *
      * The FileManager class provides methods for managing the file operations.
      */
-    public static class FileManager
-    {
+    public static class FileManager {
+        
+        /**
+         * \class SimulationData
+         * Structure of the simulation data
+         */
         public class SimulationData {
-            public Metadata Metadata { get; set; }
-            public List<dynamic?> Materials { get; set; }
-            public List<dynamic?> Objects { get; set; }
+            /** Metadata */
+            public required Metadata Metadata { get; set; }
+            /** List of materials */
+            public required List<dynamic?> Materials { get; set; }
+            /** List of objects */
+            public required List<dynamic?> Objects { get; set; }
         }
-
+        
+        /**
+         * \class Metadata
+         * \brief Metadata of the simulation data
+         */
         public class Metadata {
-            public string Version { get; set; }
-            public string Date { get; set; }
-            public string Time { get; set; }
-            public string Platform { get; set; }
+            /** Version of the program */
+            public required string Version { get; set; }
+            /** Date of the simulation */
+            public required string Date { get; set; }
+            /** Time of the simulation */
+            public required string Time { get; set; }
+            /** Platform of the simulation */
+            public required string Platform { get; set; }
         }
-
-        private static readonly ILog log = LogManager.GetLogger(typeof(FileManager));   // Logger
+        
+        /** Logger */
+        private static readonly ILog Log = LogManager.GetLogger(typeof(FileManager));
         /**
         * Save to file
         */
@@ -76,7 +92,7 @@ namespace ThedyxEngine.Util
         public static void LoadFromContent(string inputString) {
             Engine.Engine.ClearSimulation();
             MaterialManager.Materials.Clear();
-            log.Info("Info: Starting reading.");
+            Log.Info("Info: Starting reading.");
 
             try {
                 SimulationData? simulationData;
@@ -93,17 +109,12 @@ namespace ThedyxEngine.Util
                 }
                 
                 if(simulationData == null) {
-                    log.Error("Error: Simulation data is null.");
+                    Log.Error("Error: Simulation data is null.");
                     return;
                 }
                 
-                // Check metadata
-                if (simulationData.Metadata.Platform != "Unix") {
-                    log.Error("Only MacOS is supported.");
-                    return;
-                }
                 if (simulationData.Metadata.Version != "0.1") {
-                    log.Error("Only version 0.1 is supported.");
+                    Log.Error("Only version 0.1 is supported.");
                     return;
                 }
 
@@ -116,7 +127,7 @@ namespace ThedyxEngine.Util
                 LoadJsonObjects(simulationData.Objects);
             }
             catch (Exception e) {
-                log.Error("Error: " + e.Message);
+                Log.Error("Error: " + e.Message);
             }
         }
 

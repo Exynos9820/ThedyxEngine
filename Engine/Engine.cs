@@ -21,20 +21,34 @@ namespace ThedyxEngine.Engine{
             Running,
             Paused
         }
-
+        
+        /** Do we want to show the temperature */
         public static bool ShowTemperature = false;
+        /** Do we want to show the grid */
         public static bool ShowGrid = true;
+        /** Do we want to show the color */
         public static bool ShowColor = false;
+        
+        /** Logger for the engine */
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Engine));
+        /** Lock for the engine */
+        private static object? _engineLock; 
+        /** Manager for the engine objects */
+        public static ObjectsManager? EngineObjectsManager;
+        /** Main window */
+        private static MainPage? _mainWindow;
+        /** Engine thread */
+        private static TempoThread? _engineThread;
+        /** Frames counter */
+        private static int _frames = 0;
+        /** Simulation refresh rate, per second */
+        private static int _simulationRefreshRate = 60;
 
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Engine)); // log4net logger
-        private static object?          _engineLock; // lock for the engine
-        public static ObjectsManager? EngineObjectsManager; // manager for the engine objects
-        private static MainPage?      _mainWindow; // main window
-        private static TempoThread?     _engineThread; // engine thread
-        private static int _frames = 0;     // frames counter
-        private static int _simulationRefreshRate = 60; // updates per second 
-        private static long _simulationTime = 0; // time of the simulation in microseconds
-        private static bool _optimize = true; // // should we optimize the engine by setting adjacent squares to be touching
+        /** Time of the simulation in microseconds */
+        private static long _simulationTime = 0;
+        /** Should we optimize the engine by setting adjacent squares to be touching */
+        private static bool _optimize = true;
+        /** Current Engine mode */
         public static EngineMode Mode { get; private set; } = EngineMode.Stopped; // engine mode
 
         /**
@@ -144,13 +158,6 @@ namespace ThedyxEngine.Engine{
                 }
                 // wait for all tasks to finish
                 Task.WaitAll(tasks.ToArray());
-                
-                
-                // simplify the logic for now
-                //RadiationTransferManager.TransferRadiationHeat(EngineObjectsManager.GetObjects());
-                //ConductionTransferManager.TransferConductionHeat(EngineObjectsManager.GetObjects());
-                //EngineObjectsManager.ApplyEnergyDeltaObjects();
-                
 
                 double elapsedTimeMs = stopwatch.ElapsedMilliseconds;
                 if (msPerFrame - elapsedTimeMs < 0) {

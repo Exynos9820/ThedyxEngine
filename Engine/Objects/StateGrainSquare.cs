@@ -6,23 +6,46 @@ using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine;
 
+/**
+ * \class StateGrainSquare
+ * \brief Represents a square of state in the simulation.
+ *
+ * The StateGrainSquare class represents a square of state in the simulation.
+ * The difference with GrainSquare that the aggregate state of the square can be changed.
+ */
 public class StateGrainSquare : GrainSquare {
+    
+    /**
+     * \brief Material state of the square.
+     */
     public enum MaterialState {
         Liquid,
         Solid,
         Gas
     }
     
+    /** Accumulated energy between different states */
     private double AccumulatedEnergy { get; set; }
+    
+    /** Current aggregate state of the square */
     
     public MaterialState CurrentMaterialState { get; set; }
     
+    /**
+     * \brief Constructor for creating a new StateGrainSquare.
+     * \param name The name of the engine object.
+     * \param position The position of the square.
+     * \param material The material of the square.
+     */
     public StateGrainSquare(string name, Point position, Material material) : base(name, position) {
         Material = material;
         SetStateFromTemperature();
         SetCachedPoints();
     }
     
+    /**
+     * \brief Sets the state of the square based on the current temperature.
+     */
     public void SetStateFromTemperature() {
         if(_currentTemperature < Material.MeltingTemperature) {
             CurrentMaterialState = MaterialState.Solid;
@@ -79,6 +102,10 @@ public class StateGrainSquare : GrainSquare {
         temperatures.Add(_currentTemperature);
     }
 
+    /**
+     * \brief Gets the emissivity of the material based on the current state.
+     * \return The emissivity of the material.
+     */
     public double GetMaterialEmissivity() {
         // check for state of the object and get the right emissivity
         if (CurrentMaterialState == MaterialState.Solid) {
@@ -90,6 +117,10 @@ public class StateGrainSquare : GrainSquare {
         }
     }
     
+    /**
+     * \brief Gets the specific heat capacity of the material based on the current state.
+     * \return The specific heat capacity of the material.
+     */
     public double GetMaterialThermalConductivity() {
         // check for state of the object and get the right thermal conductivity
         if (CurrentMaterialState == MaterialState.Solid) {
@@ -101,6 +132,11 @@ public class StateGrainSquare : GrainSquare {
         }
     }
 
+    /**
+     * \brief Applies the energy delta to the square.
+     * It checks if we are going to change aggregate state of the square.
+     * If no, it just changes the temperature and/or accumulates the energy.
+     */
     public new void ApplyEnergyDelta() {
         lock (EnergyLock) {
             double tempDelta;

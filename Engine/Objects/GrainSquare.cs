@@ -14,8 +14,7 @@ using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine
-{
+namespace ThedyxEngine.Engine {
     /**
      * \class GrainSquare
      * \brief Represents a square grain object within the simulation engine.

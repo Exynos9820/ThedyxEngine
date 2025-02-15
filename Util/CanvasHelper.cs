@@ -13,22 +13,36 @@ namespace ThedyxEngine.Util{
      */
     static class CanvasHelper {
         // X > 0 parameters
-        public static int MinLeftXIndex = -1000;  // Minimum left X index
-        public static int MaxLeftXIndex = -10;    // Maximum left X index
+        /** Maximum left X index */
+        public static int MinLeftXIndex = -1000;
+        /** Maximum left X index */
+        public static int MaxLeftXIndex = -10;
         
         // X < 0 parameters
-        public static int MaxRightXIndex = 1000;  // Maximum right X index
-        public static int MinRightXIndex = 10;    // Minumum right X index
+        /** Maximum right X index */
+        public static int MaxRightXIndex = 1000; 
+        /** Minumum right X index */
+        public static int MinRightXIndex = 10;
 
         // Y > 0 parameters
-        public static int MaxYTopIndex = 1000;    // Maximum top Y index
-        public static int MinYTopIndex = 10;      // Minimum top Y index
+        /** Maximum top Y index */
+        public static int MaxYTopIndex = 1000;
+        /** Minimum top Y index */
+        public static int MinYTopIndex = 10;
 
         // Y < 0 parameters
-        public static int MinYBottomIndex = -1000;// Minimum bottom Y index
-        public static int MaxYBottomIndex = -10;  // Maximum bottom Y index
+        /** Minimum bottom Y index */
+        public static int MinYBottomIndex = -1000;
+        /** Maximum bottom Y index */
+        public static int MaxYBottomIndex = -10;
 
-
+        
+        /**
+         * Get the group by value for the current canvas width
+         * \param canvasWidth Width of the canvas
+         * \param Size Size of the object
+         * \return Group by value
+         */
         public static int GetGroubByValue(int canvasWidth, Point Size) {
             var groupBy = 1;
             

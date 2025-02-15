@@ -4,6 +4,12 @@ using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.Util;
 
+/**
+ * \class JsonConverters
+ * \brief Provides methods for converting JSON strings to objects.
+ *
+ * The JsonConverters class provides methods for converting JSON strings to objects.
+ */
 public static class JsonConverters {
     
     /**
@@ -127,7 +133,12 @@ public static class JsonConverters {
             Material = Material
         };
     }
-
+    
+    /**
+     * \brief Creates and object from JSON representation.
+     * \param json The JSON representation of the object.
+     * \returns The object created from JSON representation.
+     */
     public static Material MaterialFromJson(string json) {
         var settings = new JsonSerializerSettings {
             NullValueHandling = NullValueHandling.Ignore

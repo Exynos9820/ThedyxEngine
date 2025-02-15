@@ -9,8 +9,12 @@ using Microsoft.Maui.Controls.Shapes;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 
-namespace ThedyxEngine.Engine
-{
+namespace ThedyxEngine.Engine {
+    
+    /**
+     * \enum ObjectType
+     * \brief Enum representing the type of an object.
+     */
     public enum ObjectType {
         GrainSquare,
         StateGrainSquare,

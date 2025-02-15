@@ -1,24 +1,24 @@
 namespace ThedyxEngine.Util;
 
 public static class GlobalVariables {
-    /// Grid step
+    /** Grid step */
     public static double GridStep = 0.01;
-    // Depth of looking for radiation squares
+    /** Depth of looking for radiation squares */
     public static int RadiationDepth = 10; 
-    /// Air temperature in Kelvin
+    /** Air temperature in Kelvin*/
     public static double AirTemperature = 293;
-    /// Air thermal conductivity
+    /** Air thermal conductivity */
     public static double AirThermalConductivity = 0.025;
-    /// Stefan-Boltzmann constant
+    /** Stefan-Boltzmann constant */
     public static readonly double StefanBoltzmannConst = 5.67 * Math.Pow(10, -8);
-    /// Interval between engine updates
+    /** Engine update interval */
     public static double  EngineIntervalUpdatePerSecond = 60; 
-    /// Interval between UI updates
+    /** Interval between UI updates */
     public static int WindowRefreshRate = 60;
-    /// Program major version 
+    /** Program major version */
     public static readonly int MajorVersion = 0;
-    /// Program minor version
+    /** Program minor version */
     public static readonly int MinorVersion = 1;
-    /// Do we want to save simulation to be human readable
+    /** Program patch version */
     public static bool SaveSimulationHumanReadable = false;
 }

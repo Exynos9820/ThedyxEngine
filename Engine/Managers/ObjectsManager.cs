@@ -54,9 +54,16 @@ namespace ThedyxEngine.Engine.Managers{
             }
         }
 
-        /// TODO: Implement the logic for this function
-        /// Check if the position is available for the object, if not return false
+        /**
+         * Check if the position is available for the object
+         * \param obj EngineObject that need to be checked
+         */
         public  bool IsPositionAvailable(EngineObject obj) {
+            // check intersection with other objects
+            foreach (var ob in _objects) {
+                if (ob == obj) continue;
+                    if (ob.IsIntersecting(obj)) return false;
+            }
             return true;
         }
 
@@ -72,7 +79,7 @@ namespace ThedyxEngine.Engine.Managers{
 
         /** 
          * Get all objects of the simulation
-         * \returns List<EngineObject> All objects
+         * \returns List of EngineObject All objects
          */
         public List<EngineObject> GetObjects() {
             return _objects;

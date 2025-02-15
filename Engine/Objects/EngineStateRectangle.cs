@@ -7,10 +7,25 @@ using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine;
 
+/**
+ * \class EngineStateRectangle
+ * \brief Represents a rectangle of state squares in the simulation.
+ *
+ * The EngineStateRectangle class represents a rectangle of state squares in the simulation.
+ * The difference with EngineRectangle that the aggregate state of the squares can be changed.
+ */
 public class EngineStateRectangle : EngineObject {
+    /** all squares in the rectangle */
     private List<StateGrainSquare> _grainSquares;
+    /** external squares of the rectangle */
     private List<StateGrainSquare> _externalSquares;
 
+    /**
+     * \brief Constructor for creating a new EngineStateRectangle.
+     * \param name The name of the engine object.
+     * \param width The width of the rectangle.
+     * \param height The height of the rectangle.
+     */
     public EngineStateRectangle(string name, int width, int height) : base(name) {
         _size = new(width, height);
         SetSquaresForShape();
@@ -75,7 +90,14 @@ public class EngineStateRectangle : EngineObject {
         // call base method
         base.OnPropertyChanged(propertyName);
     }
-
+    
+    /**
+     * \brief Get the polygons for the canvas
+     * \param canvasManager The canvas manager.
+     * \param rects The list of rectangles.
+     * \param temperatures The list of temperatures.
+     * \param opacities The list of opacities.
+     */
     public override void GetPolygons(CanvasManager canvasManager, out List<RectF> rects, out List<double> temperatures, out List<float> opacities) {
             rects = [];
             temperatures = [];
@@ -120,10 +142,19 @@ public class EngineStateRectangle : EngineObject {
             }
     }
 
+    /**
+     * \brief Get the squares of the object.
+     * \return The list of squares.
+     */
     public override List<GrainSquare> GetSquares() {
         return [.._grainSquares];
     }
 
+    /**
+     * \brief Determines if the object is visible on the given canvas.
+     * \param canvasManager The canvas manager.
+     * \return True if the object is visible, false otherwise.
+     */
     public override bool IsVisible(CanvasManager canvasManager) {
         // we need to check coordinates of the canvas manager and check if there is any square in the visible area
         Vector2 topLeft, bottomRight;
@@ -135,24 +166,39 @@ public class EngineStateRectangle : EngineObject {
         }
         return true;
     }
-
+    
+    /**
+     * \brief Get the visible area of the object.
+     * \param topLeft The top left corner of the object.
+     * \param bottomRight The bottom right corner of the object.
+     */
     public override void GetObjectVisibleArea(out Vector2 topLeft, out Vector2 bottomRight) {
         topLeft = new Vector2((float)_position.X, (float)_position.Y);
         bottomRight = new Vector2((float)(_position.X + _size.X), (float)(_position.Y + _size.Y));
     }
 
+    /**
+     * \brief Set the starting temperature for the simulation.
+     */
     public override void SetStartTemperature() {
         _currentTemperature = _simulationTemperature;
         OnPropertyChanged(nameof(CurrentTemperature));
         SetTemperatureForAllSquares();
     }
     
+    /**
+     * \brief Get the object type.
+     * \return The object type.
+     */
     public override ObjectType GetObjectType() {
         return ObjectType.StateRectangle;
     }
     
     
-
+    /**
+     * \brief Get the JSON representation of the object.
+     * \return The JSON representation.
+     */
     public override string GetJsonRepresentation() {
         var settings = new JsonSerializerSettings {
             Formatting = Formatting.Indented,
@@ -168,7 +214,12 @@ public class EngineStateRectangle : EngineObject {
             MaterialName = _material.Name
         }, settings);    
     }
-
+    
+    /**
+     * \brief Determines if the object is intersecting with another object.
+     * \param obj The object to check for intersection.
+     * \return True if the objects are intersecting, false otherwise.
+     */
     public override bool IsIntersecting(EngineObject obj) {
         return false;
     }
@@ -176,7 +227,10 @@ public class EngineStateRectangle : EngineObject {
     public override List<GrainSquare> GetExternalSquares() {
         return new List<GrainSquare>(_externalSquares);
     }
-
+    
+    /**
+     * \brief Apply the energy delta to the squares.
+     */
     public override void ApplyEnergyDelta() {
         foreach (var square in _grainSquares) {
             square.ApplyEnergyDelta();
