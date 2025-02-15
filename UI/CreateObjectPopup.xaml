@@ -6,51 +6,39 @@
                x:Class="ThedyxEngine.UI.CreateObjectPopup">
     <toolkit:Popup.Content>
         <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="White"
-                             WidthRequest="-1" HeightRequest="-1"
+                             WidthRequest="350" HeightRequest="-1"
                              HorizontalOptions="Center" VerticalOptions="Center">
             <Label x:Name="TitleLabel" Text="This is a custom popup" FontSize="18" TextColor="Black" HorizontalOptions="Center" />
             <HorizontalStackLayout Padding="0,0,0,0">
                 <Label VerticalOptions="Center" Text="Name:" x:Name="Nameabel" HorizontalOptions="Start" TextColor="Black" />
-                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="NameEntry"  Completed="OnNameCompleted" Placeholder="Enter a name" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start"/>
-                </Frame>
+                <Entry x:Name="NameEntry"  Completed="OnNameCompleted" Placeholder="Enter a name" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start"/>
             </HorizontalStackLayout>
             <Label Text="Position" TextColor="Black" HorizontalOptions="Start"/>
             <HorizontalStackLayout Padding="10,-5,0,0">
                 <Label VerticalOptions="Center" Text="X:" x:Name="XPositionLabel" HorizontalOptions="Start" TextColor="Black" />
-                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="XPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnXPositionCompleted" />
-                </Frame>
+                <Entry x:Name="XPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnXPositionCompleted" />
                 
                 <Label VerticalOptions="Center" Text="Y:" x:Name="YPositionLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black" />
-                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="YPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnYPositionCompleted" />
-                </Frame>
+                <Entry x:Name="YPosition" TextColor="Black" BackgroundColor="Transparent" Completed="OnYPositionCompleted" />
             </HorizontalStackLayout>
             
             <Label Text="Size" TextColor="Black" HorizontalOptions="Start"/>
             <HorizontalStackLayout Padding="10,-5,0,0">
                 <Label VerticalOptions="Center" Text="W:" x:Name="WidthLabel" HorizontalOptions="Start" TextColor="Black" />
-                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
                     <Entry x:Name="Width" TextColor="Black" BackgroundColor="Transparent" Completed="OnWidthCompleted" />
-                </Frame>
                 
                 <Label VerticalOptions="Center" Text="H:" x:Name="HeightLabel" Margin="5,0,5,0" HorizontalOptions="Start" TextColor="Black" />
-                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="Height" TextColor="Black" BackgroundColor="Transparent" Completed="OnHeightCompleted" />
-                </Frame>
+                <Entry x:Name="Height" TextColor="Black" BackgroundColor="Transparent" Completed="OnHeightCompleted" />
             </HorizontalStackLayout>
             
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" Text="T, K°" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
-                <Frame VerticalOptions="Center" BackgroundColor="Transparent" BorderColor="Transparent" CornerRadius="5" Padding="2" HasShadow="False" HeightRequest="30">
-                    <Entry x:Name="Temperature" TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
-                </Frame>
+                <Entry x:Name="Temperature" TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
             </HorizontalStackLayout>
             
             <HorizontalStackLayout >
                 <Label VerticalOptions="Center" Text="Material" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold" TextColor="Black"/>
-                <Picker HeightRequest="23" WidthRequest="110" x:Name="Material" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnMaterialChanged"/>
+                <Picker HeightRequest="23" WidthRequest="160" x:Name="Material" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnMaterialChanged"/>
             </HorizontalStackLayout>
             
             

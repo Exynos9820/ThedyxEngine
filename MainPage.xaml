@@ -8,7 +8,7 @@
              Shell.FlyoutBehavior="Disabled">
 
     <!-- Main Grid with two rows and three columns that fill the entire screen -->
-    <Grid RowDefinitions="50,*"
+    <Grid RowDefinitions="55,*"
           ColumnDefinitions="200,*,200"
           HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand"
@@ -41,7 +41,7 @@
             <ui:EngineTabProperties x:Name="TabProperties" Grid.Column="2"
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="FillAndExpand"
-                                    WidthRequest="200" />
+                                    WidthRequest="250" />
 
         </Grid>
     </Grid>

@@ -9,16 +9,16 @@
         <HorizontalStackLayout  BackgroundColor="White">
 
                 <!-- Left Sidebar: Objects List -->
-            <VerticalStackLayout>
+            <VerticalStackLayout BackgroundColor="White">
             <ui:MaterialsList x:Name="ListMaterials" Grid.Column="0"
                               HorizontalOptions="FillAndExpand"
                               VerticalOptions="FillAndExpand"
-                              WidthRequest="150" HeightRequest="610" BackgroundColor="White"/>
+                              WidthRequest="150" HeightRequest="850" BackgroundColor="White"/>
             
             <Button Text="Create New" Padding="5" x:Name="CreateButton" Clicked="OnAddMaterialClicked" Width="80" Height="30" HorizontalOptions="Center"> </Button>
             </VerticalStackLayout>
             
-            <VerticalStackLayout Spacing="-10" BackgroundColor="White"
+            <VerticalStackLayout BackgroundColor="White"
                                  WidthRequest="300" HeightRequest="-1"
                                  HorizontalOptions="Center" VerticalOptions="Start">
                 <HorizontalStackLayout>
@@ -33,7 +33,7 @@
                     <Entry x:Name="SolidSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidSpecificHeatCapacityCompleted"/>
                 </HorizontalStackLayout>
                 
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
                     <Entry x:Name="LiquidSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidSpecificHeatCapacityCompleted"/>
                 </HorizontalStackLayout>
