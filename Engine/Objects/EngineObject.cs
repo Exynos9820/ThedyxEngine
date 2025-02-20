@@ -55,6 +55,9 @@ namespace ThedyxEngine.Engine {
 
         /// Material of the object.
         protected Material _material;
+        
+        /// Is temperature of the object is fixed
+        protected bool _isTemperatureFixed = false;
 
         /**
          * Constructor for creating a new EngineObject.
@@ -105,6 +108,15 @@ namespace ThedyxEngine.Engine {
             }
         }
         
+        /// Gets or sets the fixed temperature of the object.
+        public bool IsTemperatureFixed {
+            get => _isTemperatureFixed;
+            set {
+                _isTemperatureFixed = value;
+                OnPropertyChanged(nameof(IsTemperatureFixed));
+            }
+        }
+        
         /// Sets the material properties of the object.
         protected abstract void SetMaterialProperties();
 
@@ -146,8 +158,7 @@ namespace ThedyxEngine.Engine {
         }
 
         /// Gets or sets the size of the object.
-        public Point Size
-        {
+        public Point Size {
             get => _size;
             set
             {

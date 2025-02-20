@@ -73,6 +73,7 @@ namespace ThedyxEngine.Engine {
          * Called after the heat transfer is calculated
          */
         public override void ApplyEnergyDelta() {
+            if(_isTemperatureFixed) return;
             foreach (var sq in _grainSquares) {
                 sq.ApplyEnergyDelta();
             }
@@ -106,6 +107,16 @@ namespace ThedyxEngine.Engine {
         public override ObjectType GetObjectType() {
             return ObjectType.Rectangle;
         }
+        
+        /**
+         * \brief Sets the fixed temperature for the object.
+         */
+        private void SetFixedTemperature() {
+            foreach (var square in _grainSquares) {
+                square.IsTemperatureFixed = _isTemperatureFixed;
+            }
+        }
+
 
         /**
          * \brief OnPropertyChanged
@@ -116,6 +127,10 @@ namespace ThedyxEngine.Engine {
             if(propertyName == "Size")      SetSquaresForShape();
             
             if (propertyName == "Position") SetSquaresForShape();
+            
+            if (propertyName == "SimulationTemperature") SetTemperatureForAllSquares();
+            
+            if (propertyName == "IsTemperatureFixed") SetFixedTemperature();
 
             // call base method
             base.OnPropertyChanged(propertyName);

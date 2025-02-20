@@ -41,6 +41,10 @@
                 <Picker HeightRequest="23" WidthRequest="160" x:Name="Material" HorizontalOptions="End" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnMaterialChanged"/>
             </HorizontalStackLayout>
             
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Fixed Temperature" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <CheckBox Grid.Column="1" x:Name="FixedTemperatureCheckBox" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnFixedTemperatureCheckBoxChanged"/>
+            </HorizontalStackLayout>
             
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                 <Button Text="Create" Clicked="OnCreateButtonClicked" />

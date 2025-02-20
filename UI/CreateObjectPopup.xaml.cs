@@ -114,6 +114,17 @@ public partial class CreateObjectPopup : Popup {
     }
     
     /**
+     * OnFixedTemperatureCheckBoxChanged is called when the user has changed the fixed temperature checkbox.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
+    private void OnFixedTemperatureCheckBoxChanged(object sender, EventArgs e) {
+        if (_object == null) return; 
+        _object.IsTemperatureFixed = FixedTemperatureCheckBox.IsChecked;
+    }
+
+    
+    /**
      * OnXPositionCompleted is called when the user has finished editing the x position.
      * \param sender The object that sent the event.
      * \param e The event arguments.

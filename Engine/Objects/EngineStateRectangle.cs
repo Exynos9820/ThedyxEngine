@@ -78,6 +78,15 @@ public class EngineStateRectangle : EngineObject {
     }
     
     /**
+     * \brief Sets the fixed temperature for the object.
+     */
+    private void SetFixedTemperature() {
+        foreach (var square in _grainSquares) {
+            square.IsTemperatureFixed = _isTemperatureFixed;
+        }
+    }
+    
+    /**
      * \brief OnPropertyChanged
      * Based on which property has been changed, set the parameters for the squares
      */
@@ -86,6 +95,10 @@ public class EngineStateRectangle : EngineObject {
         if(propertyName == "Size")      SetSquaresForShape();
             
         if (propertyName == "Position") SetSquaresForShape();
+        
+        if (propertyName == "SimulationTemperature") SetTemperatureForAllSquares();
+        
+        if (propertyName == "IsTemperatureFixed") SetFixedTemperature();
 
         // call base method
         base.OnPropertyChanged(propertyName);
@@ -232,6 +245,7 @@ public class EngineStateRectangle : EngineObject {
      * \brief Apply the energy delta to the squares.
      */
     public override void ApplyEnergyDelta() {
+        if(_isTemperatureFixed) return;
         foreach (var square in _grainSquares) {
             square.ApplyEnergyDelta();
         }

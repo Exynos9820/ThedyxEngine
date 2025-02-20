@@ -95,6 +95,7 @@ namespace ThedyxEngine.UI {
             tbHeight.IsEnabled = enabled;
             tbWidth.IsEnabled = enabled;
             cbMaterial.IsEnabled = enabled;
+            FixedTemperatureCheckBox.IsEnabled = enabled;
         }
         
         /**
@@ -133,6 +134,7 @@ namespace ThedyxEngine.UI {
             }
             _selectedObject.Name = tbName.Text;
             tbName.BackgroundColor = Colors.White;
+            OnObjectChange?.Invoke();
         }
 
         
@@ -152,6 +154,18 @@ namespace ThedyxEngine.UI {
             }
             OnObjectChange?.Invoke();
         }
+        
+        /**
+         * OnFixedTemperatureCheckBoxChanged is called when the user has changed the fixed temperature checkbox.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
+        private void OnFixedTemperatureCheckBoxChanged(object sender, EventArgs e) {
+            if (_selectedObject == null) return; 
+            _selectedObject.IsTemperatureFixed = FixedTemperatureCheckBox.IsChecked;
+            OnObjectChange?.Invoke();
+        }
+    
         
         /**
          * OnXPositionCompleted is called when the user has finished editing the x position.

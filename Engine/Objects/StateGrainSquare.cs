@@ -138,6 +138,7 @@ public class StateGrainSquare : GrainSquare {
      * If no, it just changes the temperature and/or accumulates the energy.
      */
     public new void ApplyEnergyDelta() {
+        if(_isTemperatureFixed) return;
         lock (EnergyLock) {
             double tempDelta;
             if (CurrentMaterialState == MaterialState.Solid)

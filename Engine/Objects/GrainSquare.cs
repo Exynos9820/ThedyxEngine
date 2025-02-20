@@ -132,6 +132,7 @@ namespace ThedyxEngine.Engine {
          * Applies the energy delta to the grain square, updating the temperature.
          */
         public override void ApplyEnergyDelta() {
+            if(_isTemperatureFixed) return;
             // lock to be accessed by one thread at a time
             lock (EnergyLock) {
                 double tempDelta = EnergyDelta / GlobalVariables.GridStep / GlobalVariables.GridStep /
