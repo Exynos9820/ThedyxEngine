@@ -126,4 +126,8 @@ public partial class SettingsPopup : Popup {
     private void OnFileCheckBoxChanged(object sender, EventArgs e) {
         GlobalVariables.SaveSimulationHumanReadable = IsHumanReadable.IsChecked;
     }
+    
+    private void OnWaitToBeInTimeChanged(object sender, EventArgs e) {
+        GlobalVariables.WaitToBeInTime = IsWaitToBeInTime.IsChecked;
+    }
 }

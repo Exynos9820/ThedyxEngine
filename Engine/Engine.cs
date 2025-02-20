@@ -174,7 +174,7 @@ namespace ThedyxEngine.Engine{
                 }
                 
 
-                //while (stopwatch.ElapsedMilliseconds < 1000 / GlobalVariables.EngineIntervalUpdatePerSecond) { }
+                while (GlobalVariables.WaitToBeInTime && stopwatch.ElapsedMilliseconds < 1000 / GlobalVariables.EngineIntervalUpdatePerSecond) { }
                 stopwatch.Stop();
 
                 lock (_engineLock) {

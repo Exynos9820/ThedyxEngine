@@ -20,6 +20,11 @@
             </HorizontalStackLayout>
             
             <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Run simulation in time?" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <CheckBox x:Name="IsWaitToBeInTime" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnWaitToBeInTimeChanged"/>
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Engine updates per second:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Entry x:Name="EngineUpdatesPerSecond" TextColor="Black" BackgroundColor="Transparent" Completed="OnEngineUpdatesCompleted"/>
             </HorizontalStackLayout>

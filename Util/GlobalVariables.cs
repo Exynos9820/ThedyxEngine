@@ -1,7 +1,7 @@
 namespace ThedyxEngine.Util;
 
 public static class GlobalVariables {
-    /** Grid step */
+    /** Grid step in meters*/
     public static double GridStep = 0.01;
     /** Depth of looking for radiation squares */
     public static int RadiationDepth = 10; 
@@ -21,4 +21,6 @@ public static class GlobalVariables {
     public static readonly int MinorVersion = 1;
     /** Program patch version */
     public static bool SaveSimulationHumanReadable = false;
+    /** If engine is going to wait to be in time with real time */
+    public static bool WaitToBeInTime = false;
 }
