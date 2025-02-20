@@ -119,9 +119,9 @@ namespace ThedyxEngine.UI {
          * \param sender The object that sent the event.
          * \param e The event arguments.
          */
-        private void OnSaveButtonClicked(object sender, EventArgs e) {
+        private async void OnSaveButtonClicked(object sender, EventArgs e) {
             using var memoryStream = new MemoryStream(FileManager.GetSimulationRepresentation());
-            FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
+            var result = await FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
         }
 
 
