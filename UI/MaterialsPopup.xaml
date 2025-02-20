@@ -75,7 +75,7 @@
                 <HorizontalStackLayout Padding="0, -7, 0, 0">
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid " HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
                     <Entry x:Name="LiquidConvectiveHeatTransferCoefficient" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnLiquidConvectiveHeatTransferCoefficientCompleted"/>
-                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
                     <Entry x:Name="GasConvectiveHeatTransferCoefficient" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnGasConvectiveHeatTransferCoefficientCompleted"/>
                 </HorizontalStackLayout>
                 
