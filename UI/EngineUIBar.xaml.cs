@@ -39,7 +39,7 @@ namespace ThedyxEngine.UI {
         /**
          * SetStoppedMode sets the UI to the stopped mode.
          */
-        private void SetStoppedMode() {
+        public void SetStoppedMode() {
             // Set engine controls
             StartButton.IsEnabled = true;
             StopButton.IsEnabled = false;

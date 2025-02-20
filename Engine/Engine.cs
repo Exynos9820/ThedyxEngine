@@ -43,6 +43,8 @@ namespace ThedyxEngine.Engine{
         private static int _frames = 0;
         /** Simulation refresh rate, per second */
         private static int _simulationRefreshRate = 60;
+        /** Action to Show an error message */
+        public static Action<string>? ShowErrorMessage;
 
         /** Time of the simulation in microseconds */
         private static long _simulationTime = 0;
@@ -133,31 +135,38 @@ namespace ThedyxEngine.Engine{
                 lock (_engineLock) {
                     if (Mode != EngineMode.Running) break;
                 }
+                List<Task> tasks = new List<Task>();
                 // update logic
                 // create tasks
-                List<Task> tasks = new List<Task>();
-                for (int i = 0; i < coresToUse; i++) {
-                    var i1 = i;
-                    tasks.Add(Task.Run(() => {
-                        if (i1 < objectsToProcess.Count) {
-                            RadiationTransferManager.TransferRadiationHeat(objectsToProcess[i1]);
-                            ConductionTransferManager.TransferConductionHeat(objectsToProcess[i1]);
-                        }
-                    }));
+                try {
+                    for (int i = 0; i < coresToUse; i++) {
+                        var i1 = i;
+                        tasks.Add(Task.Run(() => {
+                            if (i1 < objectsToProcess.Count) {
+                                RadiationTransferManager.TransferRadiationHeat(objectsToProcess[i1]);
+                                ConductionTransferManager.TransferConductionHeat(objectsToProcess[i1]);
+                            }
+                        }));
+                    }
+                    // wait for all tasks to finish
+                    Task.WaitAll(tasks.ToArray());
+                    // apply energy delta
+                    tasks = new List<Task>();
+                    for(int i = 0; i < coresToUse; i++) {
+                        var i1 = i;
+                        tasks.Add(Task.Run(() => {
+                            if (i1 < objectsToProcess.Count)
+                                EngineObjectsManager.ApplyEnergyDelta(objectsToProcess[i1]);
+                        }));
+                    }
+                    // wait for all tasks to finish
+                    Task.WaitAll(tasks.ToArray());
                 }
-                // wait for all tasks to finish
-                Task.WaitAll(tasks.ToArray());
-                // apply energy delta
-                tasks = new List<Task>();
-                for(int i = 0; i < coresToUse; i++) {
-                    var i1 = i;
-                    tasks.Add(Task.Run(() => {
-                        if (i1 < objectsToProcess.Count)
-                            EngineObjectsManager.ApplyEnergyDelta(objectsToProcess[i1]);
-                    }));
+                catch (Exception e) {
+                    ShowErrorMessage?.Invoke($"Engine failed to run with {e.Message}. Check the parameters of the materials and objects");
+                    break;
                 }
-                // wait for all tasks to finish
-                Task.WaitAll(tasks.ToArray());
+
 
                 double elapsedTimeMs = stopwatch.ElapsedMilliseconds;
                 if (msPerFrame - elapsedTimeMs < 0) {
@@ -165,7 +174,7 @@ namespace ThedyxEngine.Engine{
                 }
                 
 
-                while (stopwatch.ElapsedMilliseconds < 1000 / GlobalVariables.EngineIntervalUpdatePerSecond) { }
+                //while (stopwatch.ElapsedMilliseconds < 1000 / GlobalVariables.EngineIntervalUpdatePerSecond) { }
                 stopwatch.Stop();
 
                 lock (_engineLock) {

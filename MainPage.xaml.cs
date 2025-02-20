@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage {
     private EngineCanvas _engineCanvas;
     public readonly IFilePickerService picker;
     private static readonly ILog log = LogManager.GetLogger(typeof(MainPage)); // Logger
-
+    private string _currentError = "";
     public MainPage(IFilePickerService picker) {
         InitializeComponent();
         log4net.Config.XmlConfigurator.Configure();
@@ -45,6 +45,10 @@ public partial class MainPage : ContentPage {
         EngineGraphicsView.BackgroundColor = Colors.White;
         TabProperties.OnObjectChange = UpdateAll;
         Engine.Engine.ResetSimulation();
+        // show error messages
+        Engine.Engine.ShowErrorMessage = (message) => {
+            _currentError = message;
+        }; 
         
         // Set up pinch gesture for zooming
         var pinchGesture = new PinchGestureRecognizer();
@@ -122,6 +126,13 @@ public partial class MainPage : ContentPage {
     }
 
     public void Update() {
+        if(_currentError != "") {
+            Engine.Engine.Stop();
+            ControlPanel.SetStoppedMode();
+            DisplayAlert("Error", _currentError, "OK");
+            _currentError = "";
+        }
+        
         if (!Engine.Engine.IsRunning() && !_objectsChanged) return;
         if(_objectsChanged) _objectsChanged = false;
 
