@@ -17,10 +17,8 @@ public static class JsonConverters {
      * \param json The JSON string to deserialize.
      * \return A new GrainSquare object deserialized from the JSON string.
      */
-    public static GrainSquare GrainSquareFromJson(string json)
-    {
-        var settings = new JsonSerializerSettings
-        {
+    public static GrainSquare GrainSquareFromJson(string json) {
+        var settings = new JsonSerializerSettings {
             NullValueHandling = NullValueHandling.Ignore
         };
 
@@ -34,11 +32,14 @@ public static class JsonConverters {
         string name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
-        return new GrainSquare(name, Position)
-        {
+        bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
+        bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
+        return new GrainSquare(name, Position) {
             SimulationTemperature = simulationTemperature,
             CurrentTemperature = simulationTemperature,
-            Material = Material
+            Material = Material,
+            IsTemperatureFixed = isTemperatureFixed,
+            IsGasStateAllowed = isGasStateAllowed
         };
     }
     
@@ -47,10 +48,8 @@ public static class JsonConverters {
      * \param json The JSON string to deserialize.
      * \return A new GrainSquare object deserialized from the JSON string.
      */
-    public static StateGrainSquare StateGrainSquareFromJson(string json)
-    {
-        var settings = new JsonSerializerSettings
-        {
+    public static StateGrainSquare StateGrainSquareFromJson(string json) {
+        var settings = new JsonSerializerSettings {
             NullValueHandling = NullValueHandling.Ignore
         };
 
@@ -64,10 +63,14 @@ public static class JsonConverters {
         string name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
-        return new StateGrainSquare(name, Position, Material)
-        {
+        bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
+        bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
+        return new StateGrainSquare(name, Position, Material) {
             SimulationTemperature = simulationTemperature,
             CurrentTemperature = simulationTemperature,
+            Material = Material,
+            IsTemperatureFixed = isTemperatureFixed,
+            IsGasStateAllowed = isGasStateAllowed
         };
     }
     
@@ -94,12 +97,15 @@ public static class JsonConverters {
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
         Material Material = MaterialManager.GetMaterialByName((string)jObject.Material);
-
+        bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
+        bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
         return new EngineRectangle(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
             SimulationTemperature = simulationTemperature,
             Position = Position,
             Size = Size,
-            Material = Material
+            Material = Material,
+            IsTemperatureFixed = isTemperatureFixed,
+            IsGasStateAllowed = isGasStateAllowed
         };
     }
     
@@ -125,12 +131,16 @@ public static class JsonConverters {
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
+        bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
+        bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
 
         return new EngineStateRectangle(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
             SimulationTemperature = simulationTemperature,
             Position = Position,
             Size = Size,
-            Material = Material
+            Material = Material,
+            IsTemperatureFixed = isTemperatureFixed,
+            IsGasStateAllowed = isGasStateAllowed
         };
     }
     

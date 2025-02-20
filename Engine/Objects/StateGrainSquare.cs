@@ -71,7 +71,8 @@ public class StateGrainSquare : GrainSquare {
             Name,
             Position = _position,
             SimulationTemperature = _simulationTemperature,
-            MaterialName = _material.Name
+            MaterialName = _material.Name,
+            IsGasStateAllowed = _isGasStateAllowed
         }, settings);
     }
     
@@ -152,10 +153,10 @@ public class StateGrainSquare : GrainSquare {
                             _material.GasSpecificHeatCapacity / _material.GasDensity;
             
             if(tempDelta >= 10000)
-                throw new Exception("Change in temperature is too high");
+                throw new Exception($"Change in temperature is too high. Happened for {Name}, energy delta {EnergyDelta}, material state {CurrentMaterialState}, Material: {_material.Name}\"");
             
             if(Double.IsNaN(tempDelta))
-                throw new Exception("temp delta is NaN");
+                throw new Exception($"temp delta is NaN. Happened for {Name}, energy delta {EnergyDelta}, material state {CurrentMaterialState}, Material: {_material.Name}");
             // we need to check if the temperature we are going to set is in the right range
             // 1) current State is solid
             if (CurrentMaterialState == MaterialState.Solid) {
@@ -184,7 +185,7 @@ public class StateGrainSquare : GrainSquare {
                     AccumulatedEnergy += EnergyDelta - (_material.BoilingTemperature - _currentTemperature) * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.LiquidSpecificHeatCapacity * _material.LiquidDensity;
                     // check if we have enough energy to boil the object
                     double energyToBoil = _material.BoilingEnergy * GlobalVariables.GridStep * GlobalVariables.GridStep * _material.LiquidDensity;
-                    if (AccumulatedEnergy >= energyToBoil) {
+                    if (AccumulatedEnergy >= energyToBoil && _isGasStateAllowed) {
                         AccumulatedEnergy -= energyToBoil;
                         CurrentMaterialState = MaterialState.Gas;
                     }

@@ -122,6 +122,16 @@ public partial class CreateObjectPopup : Popup {
         if (_object == null) return; 
         _object.IsTemperatureFixed = FixedTemperatureCheckBox.IsChecked;
     }
+    
+    /**
+     * OnGasStateAllowedCheckBoxChanged is called when the user has changed the gas state allowed checkbox.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
+    private void OnGasStateAllowedCheckBoxChanged(object sender, EventArgs e) {
+        if (_object == null) return; 
+        _object.IsGasStateAllowed = GasAllowedCheckBox.IsChecked;
+    }
 
     
     /**

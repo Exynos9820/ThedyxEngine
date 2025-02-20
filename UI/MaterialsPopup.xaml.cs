@@ -56,6 +56,8 @@ public partial class MaterialsPopup : Popup {
         BoilingTemperature.Text = material.BoilingTemperature.ToString();
         MeltingEnergy.Text = material.MeltingEnergy.ToString();
         BoilingEnergy.Text = material.BoilingEnergy.ToString();
+        LiquidConvectiveHeatTransferCoefficient.Text = material.LiquidConvectiveHeatTransferCoefficient.ToString();
+        GasConvectiveHeatTransferCoefficient.Text = material.GasConvectiveHeatTransferCoefficient.ToString();
         ColorR.Text = material.MaterialColor.GetByteRed().ToString();
         ColorG.Text = material.MaterialColor.GetByteGreen().ToString();
         ColorB.Text = material.MaterialColor.GetByteBlue().ToString();
@@ -447,6 +449,34 @@ public partial class MaterialsPopup : Popup {
             _currentSelectedMaterial.MaterialColor.GetByteGreen(), 
             _currentSelectedMaterial.MaterialColor.GetByteBlue(),
             value);
+    }
+    
+    /**
+     * This method is called when the user finishes editing the solid convective heat transfer coefficient
+     * \param sender The object that sent the event
+     * \param e The event arguments
+     */
+    private void OnLiquidConvectiveHeatTransferCoefficientCompleted(object sender, EventArgs e) {
+        if (_currentSelectedMaterial == null ) return;
+        if (!double.TryParse(LiquidConvectiveHeatTransferCoefficient.Text, out double value)) {
+            Application.Current.MainPage?.DisplayAlert("Error", "Invalid value", "Ok");
+            return;
+        }
+        _currentSelectedMaterial.LiquidConvectiveHeatTransferCoefficient = value;
+    }
+    
+    /**
+     * This method is called when the user finishes editing the gas convective heat transfer coefficient
+     * \param sender The object that sent the event
+     * \param e The event arguments
+     */
+    private void OnGasConvectiveHeatTransferCoefficientCompleted(object sender, EventArgs e) {
+        if (_currentSelectedMaterial == null ) return;
+        if (!double.TryParse(GasConvectiveHeatTransferCoefficient.Text, out double value)) {
+            Application.Current.MainPage?.DisplayAlert("Error", "Invalid value", "Ok");
+            return;
+        }
+        _currentSelectedMaterial.GasConvectiveHeatTransferCoefficient = value;
     }
     
 }

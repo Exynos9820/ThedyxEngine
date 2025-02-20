@@ -95,7 +95,9 @@ namespace ThedyxEngine.Engine {
                 Position = _position,
                 Size = _size,
                 SimulationTemperature = _simulationTemperature,
-                Material = _material.Name
+                Material = _material.Name,
+                IsTemperatureFixed = _isTemperatureFixed,
+                IsGasStateAllowed = _isGasStateAllowed
             }, settings);
         }
 
@@ -116,7 +118,15 @@ namespace ThedyxEngine.Engine {
                 square.IsTemperatureFixed = _isTemperatureFixed;
             }
         }
-
+        
+        /**
+         * \brief Sets the gas state allowed for the object.
+         */
+        private void SetIsGasStateAllowed() {
+            foreach (var square in _grainSquares) {
+                square.IsGasStateAllowed = _isGasStateAllowed;
+            }
+        }   
 
         /**
          * \brief OnPropertyChanged
@@ -131,6 +141,8 @@ namespace ThedyxEngine.Engine {
             if (propertyName == "SimulationTemperature") SetTemperatureForAllSquares();
             
             if (propertyName == "IsTemperatureFixed") SetFixedTemperature();
+            
+            if (propertyName == "IsGasStateAllowed") SetIsGasStateAllowed();
 
             // call base method
             base.OnPropertyChanged(propertyName);

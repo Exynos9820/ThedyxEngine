@@ -35,6 +35,8 @@ namespace ThedyxEngine.Engine {
         
         public double MeltingEnergy { get; set; } /// Gets or sets the solidification energy.
         public double BoilingEnergy { get; set; } /// Gets or sets the boiling energy.
+        public double LiquidConvectiveHeatTransferCoefficient { get; set; } /// Gets or sets the liquid convective heat transfer coefficient.
+        public double GasConvectiveHeatTransferCoefficient { get; set; } /// Gets or sets the gas convective heat transfer coefficient.
         public Color MaterialColor { get; set; }  /// Gets or sets the material color.
 
         /**

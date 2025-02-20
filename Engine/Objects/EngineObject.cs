@@ -58,6 +58,9 @@ namespace ThedyxEngine.Engine {
         
         /// Is temperature of the object is fixed
         protected bool _isTemperatureFixed = false;
+        
+        /// Is Gas State of the object is allowed
+        protected bool _isGasStateAllowed = false;
 
         /**
          * Constructor for creating a new EngineObject.
@@ -175,6 +178,15 @@ namespace ThedyxEngine.Engine {
                     _isSelected = value;
                     OnPropertyChanged(nameof(IsSelected));
                 }
+            }
+        }
+        
+        /// Gets or sets whether the object is allowed to be in gas state.
+        public bool IsGasStateAllowed {
+            get => _isGasStateAllowed;
+            set {
+                _isGasStateAllowed = value;
+                OnPropertyChanged(nameof(IsGasStateAllowed));
             }
         }
 

@@ -167,7 +167,9 @@ namespace ThedyxEngine.Engine {
                 Name,
                 Position = _position,
                 SimulationTemperature = _simulationTemperature,
-                MaterialName = _material.Name
+                MaterialName = _material.Name,
+                IsTemperatureFixed = _isTemperatureFixed,
+                IsGasStateAllowed = _isGasStateAllowed
             }, settings);
         }
 

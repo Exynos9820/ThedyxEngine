@@ -13,13 +13,13 @@
             <ui:MaterialsList x:Name="ListMaterials" Grid.Column="0"
                               HorizontalOptions="FillAndExpand"
                               VerticalOptions="FillAndExpand"
-                              WidthRequest="150" HeightRequest="850" BackgroundColor="White"/>
+                              WidthRequest="150" HeightRequest="610" BackgroundColor="White"/>
             
             <Button Text="Create New" Padding="5" x:Name="CreateButton" Clicked="OnAddMaterialClicked" Width="80" Height="30" HorizontalOptions="Center"> </Button>
             </VerticalStackLayout>
             
             <VerticalStackLayout BackgroundColor="White"
-                                 WidthRequest="300" HeightRequest="-1"
+                                 WidthRequest="500" HeightRequest="-1"
                                  HorizontalOptions="Center" VerticalOptions="Start">
                 <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Name:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
@@ -30,69 +30,55 @@
 
                 <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="SolidSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidSpecificHeatCapacityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout>
+                    <Entry x:Name="SolidSpecificHeatCapacity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnSolidSpecificHeatCapacityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="LiquidSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidSpecificHeatCapacityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Entry x:Name="LiquidSpecificHeatCapacity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnLiquidSpecificHeatCapacityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="GasSpecificHeatCapacity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasSpecificHeatCapacityCompleted"/>
+                    <Entry x:Name="GasSpecificHeatCapacity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnGasSpecificHeatCapacityCompleted"/>
+
                 </HorizontalStackLayout>
                 
                 <Label VerticalOptions="Center" Padding="0,5,0,0  "  WidthRequest="-1" Text="Density kg/m^3:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
 
                 <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="SolidDensity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidDensityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Entry x:Name="SolidDensity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnSolidDensityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="LiquidDensity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidDensityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Entry x:Name="LiquidDensity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnLiquidDensityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="GasDensity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasDensityCompleted"/>
+                    <Entry x:Name="GasDensity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnGasDensityCompleted"/>
                 </HorizontalStackLayout>
                 
                 <Label VerticalOptions="Center" Padding="0,5,0,0  " WidthRequest="-1" Text="Emissivity (0-1):" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
 
                 <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="SolidEmissivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidEmissivityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Entry x:Name="SolidEmissivity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnSolidEmissivityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="LiquidEmissivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidEmissivityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Entry x:Name="LiquidEmissivity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnLiquidEmissivityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="GasEmissivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasEmissivityCompleted"/>
+                    <Entry x:Name="GasEmissivity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnGasEmissivityCompleted"/>
                 </HorizontalStackLayout>
                 
                 <Label VerticalOptions="Center" Padding="0,5,0,0  "  WidthRequest="-1" Text="Thermal Conductivity W/(m*°K):" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
                 
                 <HorizontalStackLayout>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="SolidThermalConductivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnSolidThermalConductivityCompleted"/>
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Padding="0, -7, 0, 0">
+                    <Entry x:Name="SolidThermalConductivity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnSolidThermalConductivityCompleted"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="LiquidThermalConductivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnLiquidThermalConductivityCompleted"/>
+                    <Entry x:Name="LiquidThermalConductivity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnLiquidThermalConductivityCompleted"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="GasThermalConductivity" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnGasThermalConductivityCompleted"/>
                 </HorizontalStackLayout>
                 
+                <Label VerticalOptions="Center"  WidthRequest="-1" Padding="0,5,0,0  " Text="Convective heat transfer coefficient W/(m2*°C)" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
                 <HorizontalStackLayout Padding="0, -7, 0, 0">
-                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Gas:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
-                    <Entry x:Name="GasThermalConductivity" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnGasThermalConductivityCompleted"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Liquid " HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="LiquidConvectiveHeatTransferCoefficient" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnLiquidConvectiveHeatTransferCoefficientCompleted"/>
+                    <Label VerticalOptions="Center"  WidthRequest="-1" Text="Solid" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
+                    <Entry x:Name="GasConvectiveHeatTransferCoefficient" TextColor="Black" WidthRequest="90" BackgroundColor="Transparent" Completed="OnGasConvectiveHeatTransferCoefficientCompleted"/>
                 </HorizontalStackLayout>
+                
                 
                 <Label VerticalOptions="Center"  WidthRequest="-1" Padding="0,5,0,0  " Text="Other parameters:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="DarkRed"/>
                 <HorizontalStackLayout>
@@ -114,7 +100,7 @@
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Boiling energy J/kg" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
                     <Entry x:Name="BoilingEnergy" TextColor="Black" WidthRequest="200" BackgroundColor="Transparent" Completed="OnBoilingEnergyCompleted"/>
                 </HorizontalStackLayout>
-                
+
                 <HorizontalStackLayout Padding="0, -7, 0, 0">
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="Color:  " HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Olive"/>
                     <Label VerticalOptions="Center"  WidthRequest="-1" Text="R:" HorizontalOptions="Start" FontSize="14" FontAttributes="Bold" TextColor="Red"/>

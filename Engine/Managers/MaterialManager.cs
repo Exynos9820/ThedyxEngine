@@ -25,8 +25,13 @@ namespace ThedyxEngine.Engine.Managers {
         /**
          * Populate the materials with base materials
          */
-        // https://www.thermoworks.com/emissivity-table/?srsltid=AfmBOopr9aZ1nes5l5xnvluHzu6TTiJtLAQOXSMWJnuCAe5oc_aQNfxm
-        // https://en.wikipedia.org/wiki/Density
+        /* for emissivity
+        https://www.thermoworks.com/emissivity-table/?srsltid=AfmBOopr9aZ1nes5l5xnvluHzu6TTiJtLAQOXSMWJnuCAe5oc_aQNfxm
+        for density
+        https://en.wikipedia.org/wiki/Density
+        for thermal conductivity
+        https://www.engineeringtoolbox.com/
+        */
         private static void populateWithBaseMaterials() {
             var m1 = new Material {
                 Name = "Aluminium",
@@ -42,6 +47,7 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidSpecificHeatCapacity = 1300,
                 SolidDensity = 1000,
                 SolidEmissivity = 0.84,
+                SolidThermalConductivity = 0.33,
                 MaterialColor = Colors.LightGray
             };
             Materials.Add(m2);
@@ -82,6 +88,8 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidThermalConductivity = 2.22,
                 LiquidThermalConductivity = 0.606,
                 GasThermalConductivity = 0.016,
+                GasConvectiveHeatTransferCoefficient = 60000,
+                LiquidConvectiveHeatTransferCoefficient = 1500,
                 MaterialColor = Colors.DodgerBlue
             };
             Materials.Add(m5);

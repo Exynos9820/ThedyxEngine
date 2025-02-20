@@ -17,9 +17,8 @@ namespace ThedyxEngine.Engine.Managers {
     public class ConductionTransferManager {
 
         /**
-         * Transfer heat between two squares
-         * \param sq1 first square
-         * \param sq2 second square
+         * Transfer conduction heat for specified objects
+         * \param objects List of objects
          */
         public static void TransferConductionHeat(List<EngineObject> objects) {
             foreach (var obj in objects) {

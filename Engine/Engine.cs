@@ -145,6 +145,7 @@ namespace ThedyxEngine.Engine{
                             if (i1 < objectsToProcess.Count) {
                                 RadiationTransferManager.TransferRadiationHeat(objectsToProcess[i1]);
                                 ConductionTransferManager.TransferConductionHeat(objectsToProcess[i1]);
+                                ConvectionTransferManager.TransferConvectionHeat(objectsToProcess[i1]);
                             }
                         }));
                     }

@@ -87,6 +87,15 @@ public class EngineStateRectangle : EngineObject {
     }
     
     /**
+    * \brief Sets the gas state allowed for the object.
+    */
+    private void SetIsGasStateAllowed() {
+        foreach (var square in _grainSquares) {
+            square.IsGasStateAllowed = _isGasStateAllowed;
+        }
+    }   
+    
+    /**
      * \brief OnPropertyChanged
      * Based on which property has been changed, set the parameters for the squares
      */
@@ -99,6 +108,8 @@ public class EngineStateRectangle : EngineObject {
         if (propertyName == "SimulationTemperature") SetTemperatureForAllSquares();
         
         if (propertyName == "IsTemperatureFixed") SetFixedTemperature();
+        
+        if (propertyName == "IsGasStateAllowed") SetIsGasStateAllowed();
 
         // call base method
         base.OnPropertyChanged(propertyName);
@@ -224,7 +235,9 @@ public class EngineStateRectangle : EngineObject {
             Position = _position,
             Size = _size,
             SimulationTemperature = _simulationTemperature,
-            MaterialName = _material.Name
+            MaterialName = _material.Name,
+            IsTemperatureFixed = _isTemperatureFixed,
+            IsGasStateAllowed = _isGasStateAllowed
         }, settings);    
     }
     

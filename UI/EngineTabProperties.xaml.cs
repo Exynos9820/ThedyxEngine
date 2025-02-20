@@ -71,6 +71,8 @@ namespace ThedyxEngine.UI {
             
             cbMaterial.ItemsSource = MaterialManager.GetMaterials();
             cbMaterial.SelectedItem = _selectedObject.Material;
+            FixedTemperatureCheckBox.IsChecked = _selectedObject.IsTemperatureFixed;
+            GasStateAllowed.IsChecked = _selectedObject.IsGasStateAllowed;
         }
         
         /**
@@ -166,6 +168,12 @@ namespace ThedyxEngine.UI {
             OnObjectChange?.Invoke();
         }
     
+        
+        private void OnGasStateAllowedCheckBoxChanged(object sender, EventArgs e) {
+            if (_selectedObject == null) return; 
+            _selectedObject.IsGasStateAllowed = GasStateAllowed.IsChecked;
+            OnObjectChange?.Invoke();
+        }
         
         /**
          * OnXPositionCompleted is called when the user has finished editing the x position.
