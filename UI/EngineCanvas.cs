@@ -111,6 +111,7 @@ namespace ThedyxEngine.UI {
                         y = (rect.Y + rect.Height / 2);
                         // draw the label
                         canvas.FillColor = Colors.Black;
+                        canvas.Alpha = 1;
                         string text = (int)temp + "°";
                         canvas.DrawString(text, (float)x-10, (float)y-10, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
                     }

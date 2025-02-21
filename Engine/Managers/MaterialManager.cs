@@ -66,6 +66,7 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidSpecificHeatCapacity = 385,
                 SolidDensity = 8940,
                 SolidEmissivity = 0.65,
+                SolidThermalConductivity = 401,
                 MaterialColor = Colors.Coral
             };
             Materials.Add(m4);
