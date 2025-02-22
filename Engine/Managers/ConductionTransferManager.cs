@@ -60,6 +60,7 @@ namespace ThedyxEngine.Engine.Managers {
          * \param sq square
          */
         private static void TransferHeatBetweenSquareAndAir(GrainSquare sq) {
+            if(!GlobalVariables.ObjectsLooseHeatToAir) return;
             double temperatureDifference = sq.CurrentTemperature - GlobalVariables.AirTemperature;
             double thermalConductivity1 = sq.Material.SolidThermalConductivity;
             if (sq is StateGrainSquare statesq) {

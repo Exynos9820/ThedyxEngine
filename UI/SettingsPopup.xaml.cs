@@ -40,6 +40,7 @@ public partial class SettingsPopup : Popup {
         EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString();
         UIUpdatesPerSecond.Text     = GlobalVariables.WindowRefreshRate.ToString();
         IsHumanReadable.IsChecked   = GlobalVariables.SaveSimulationHumanReadable;
+        IsObjectLooseHeatToAir.IsChecked = GlobalVariables.ObjectsLooseHeatToAir;
     }
     
     /**
@@ -127,6 +128,22 @@ public partial class SettingsPopup : Popup {
         GlobalVariables.SaveSimulationHumanReadable = IsHumanReadable.IsChecked;
     }
     
+    
+    /**
+     * IsObjectsLooseHeatToAirChanged is called when the user has changed the objects loose heat to air checkbox.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
+    private void IsObjectsLooseHeatToAirChanged(object sender, EventArgs e) {
+        GlobalVariables.ObjectsLooseHeatToAir = IsObjectLooseHeatToAir.IsChecked;
+    }
+    
+    
+    /**
+     * OnWaitToBeInTimeChanged is called when the user has changed the wait to be in time checkbox.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
     private void OnWaitToBeInTimeChanged(object sender, EventArgs e) {
         GlobalVariables.WaitToBeInTime = IsWaitToBeInTime.IsChecked;
     }

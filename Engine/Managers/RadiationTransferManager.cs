@@ -61,6 +61,7 @@ namespace ThedyxEngine.Engine.Managers{
          * \param obj object
          */
         private static void TransferRadiationHeatLooseToAir(EngineObject obj) {
+            if(!GlobalVariables.ObjectsLooseHeatToAir) return;
             var squares = obj.GetSquares();
             foreach(var square in squares) {
                 // calculated by Stefan-Boltzmann law of radiation and multiplied by the engine update interval

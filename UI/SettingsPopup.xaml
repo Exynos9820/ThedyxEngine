@@ -13,6 +13,12 @@
                 <Label VerticalOptions="Center" Text="Room temperature, K°:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <Entry x:Name="RoomTemperature"  TextColor="Black" BackgroundColor="Transparent" Completed="OnTemperatureCompleted"/>
             </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Loose Heat to Air?" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <CheckBox x:Name="IsObjectLooseHeatToAir" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="IsObjectsLooseHeatToAirChanged"/>
+            </HorizontalStackLayout>
+
+            
             <Label Text="Affects performance" FontAttributes="Bold" FontSize="18" TextColor="Red" HorizontalOptions="Start" Padding="0,15,0,0"/>
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Radiation depth calculations:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>

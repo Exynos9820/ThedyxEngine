@@ -23,4 +23,6 @@ public static class GlobalVariables {
     public static bool SaveSimulationHumanReadable = false;
     /** If engine is going to wait to be in time with real time */
     public static bool WaitToBeInTime = false;
+    /** If objects should loose heat to air */
+    public static bool ObjectsLooseHeatToAir = true;
 }
