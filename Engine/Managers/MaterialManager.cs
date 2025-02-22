@@ -139,6 +139,7 @@ namespace ThedyxEngine.Engine.Managers {
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
             double thermalConductivity1 = obj1.Material.SolidThermalConductivity;;
             double thermalConductivity2 = obj2.Material.SolidThermalConductivity;
+            if(thermalConductivity1 == 0 || thermalConductivity2 == 0) return 0;
             if(obj1 is StateGrainSquare state1) {
                 thermalConductivity1 = state1.GetMaterialThermalConductivity();
             }

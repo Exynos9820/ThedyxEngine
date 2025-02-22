@@ -262,5 +262,10 @@ public class EngineStateRectangle : EngineObject {
         foreach (var square in _grainSquares) {
             square.ApplyEnergyDelta();
         }
+        double sum = 0;
+        foreach (var sq in _grainSquares) {
+            sum += sq.CurrentTemperature;
+        }
+        _currentTemperature = sum / _grainSquares.Count;
     }
 }

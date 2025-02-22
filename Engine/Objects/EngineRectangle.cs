@@ -77,6 +77,12 @@ namespace ThedyxEngine.Engine {
             foreach (var sq in _grainSquares) {
                 sq.ApplyEnergyDelta();
             }
+            // set the temperature of the object to the average temperature of all squares
+            double sum = 0;
+            foreach (var sq in _grainSquares) {
+                sum += sq.CurrentTemperature;
+            }
+            _currentTemperature = sum / _grainSquares.Count;
         }
 
         /**

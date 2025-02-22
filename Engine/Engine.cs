@@ -75,9 +75,11 @@ namespace ThedyxEngine.Engine{
             if(_engineLock == null)         throw new InvalidOperationException("Engine lock is not initialized");
             lock (_engineLock) {
                 Log.Info("Engine started");
-                PrepareObjects();
+                if (Mode != EngineMode.Paused) {
+                    PrepareObjects();
+                    _frames = 0;
+                }
                 Mode = EngineMode.Running;
-                _frames = 0;
                 _engineThread = new TempoThread("EngineThread", Run);
                 _engineThread.SetPriority(ThreadPriority.Highest);
                 _engineThread.Start();
