@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" version="26.0.14">
+  <diagram name="Page-1" id="gd7sXjSoCqBydMC9bQIp">
+    <mxGraphModel dx="989" dy="1659" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dcP1tXdiQT54TILF-FWi-2" value="Square1" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=28;" vertex="1" parent="1">
+          <mxGeometry x="80" width="320" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-3" value="&lt;font style=&quot;font-size: 28px;&quot;&gt;Square2&lt;/font&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="400" width="320" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-10" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="130" as="sourcePoint" />
+            <mxPoint x="580" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-11" value="Conduction" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=28;" vertex="1" connectable="0" parent="dcP1tXdiQT54TILF-FWi-10">
+          <mxGeometry x="-0.1756" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-13" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="239.66" y="140.38321659482756" as="sourcePoint" />
+            <mxPoint x="240" y="-180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-14" value="Radiation" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=30;" vertex="1" connectable="0" parent="dcP1tXdiQT54TILF-FWi-13">
+          <mxGeometry x="0.5068" y="-1" relative="1" as="geometry">
+            <mxPoint x="-1" y="31" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-15" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="360" as="sourcePoint" />
+            <mxPoint x="560" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dcP1tXdiQT54TILF-FWi-16" value="Convection" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=28;" vertex="1" connectable="0" parent="dcP1tXdiQT54TILF-FWi-15">
+          <mxGeometry x="-0.2429" y="2" relative="1" as="geometry">
+            <mxPoint x="33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
