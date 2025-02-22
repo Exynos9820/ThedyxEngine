@@ -86,7 +86,7 @@ public class StateGrainSquare : GrainSquare {
         temperatures = [];
         opacities = [];
 
-        var rect = new RectF((float)_position.X, (float)_position.Y, (float)(_cachedPointB.X - _position.X), (float)(_cachedPointB.Y - _position.Y));
+        var rect = new RectF((float)_position.X, (float)_position.Y, 1, 1);
         switch (CurrentMaterialState) {
             case MaterialState.Solid:
                 opacities.Add(1);
