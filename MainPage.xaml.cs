@@ -106,6 +106,7 @@ public partial class MainPage : ContentPage {
             ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
             TabProperties.Update();
             EngineGraphicsView.Invalidate();
+            Engine.Engine.EngineObjectsManager.UpdateSmallestAndBiggestTemperature();
         };
     }
 

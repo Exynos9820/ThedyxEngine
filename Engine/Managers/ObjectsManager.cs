@@ -15,13 +15,30 @@ namespace ThedyxEngine.Engine.Managers{
     public class ObjectsManager{
         private List<EngineObject> _objects = [];
         private object _engineLock;
-        
+        public double SmallestTemperature = -1000;
+        public double LargestTemperature = -1000;
         /**
          * Constructor
          * \param engineLock Lock object
          */
         public ObjectsManager(object engineLock) {
             _engineLock = engineLock;
+        }
+        
+        /**
+         * Update the smallest and biggest temperature of the objects
+         */
+        public void UpdateSmallestAndBiggestTemperature() {
+            foreach (var o in _objects) {
+                foreach(var sq in o.GetSquares()) {
+                    if (sq.SimulationTemperature < SmallestTemperature) {
+                        SmallestTemperature = sq.SimulationTemperature;
+                    }
+                    if (sq.SimulationTemperature > LargestTemperature) {
+                        LargestTemperature = sq.SimulationTemperature;
+                    }
+                }
+            } 
         }
 
 

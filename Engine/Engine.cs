@@ -85,6 +85,8 @@ namespace ThedyxEngine.Engine{
                 _engineThread.Start();
             }
         }
+        
+        
 
 
         /**
@@ -164,6 +166,7 @@ namespace ThedyxEngine.Engine{
                     }
                     // wait for all tasks to finish
                     Task.WaitAll(tasks.ToArray());
+                    EngineObjectsManager.UpdateSmallestAndBiggestTemperature();
                 }
                 catch (Exception e) {
                     ShowErrorMessage?.Invoke($"Engine failed to run with {e.Message}. Check the parameters of the materials and objects");
