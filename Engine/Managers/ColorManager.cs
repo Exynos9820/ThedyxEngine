@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
+using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine.Managers {
     /**
@@ -35,8 +37,14 @@ namespace ThedyxEngine.Engine.Managers {
             
             // Define temperature thresholds
             // get minimum and maximum temperatures
-            double min = 290;
-            double max = 400;
+            double min = GlobalVariables.MinTemperatureColor;
+            double max = GlobalVariables.MaxTemperatureColor;
+            
+            if (temperature < min)
+                return colors[0]; // Return violet for 0-130 K
+            
+            if (temperature > max)
+                return colors[^1]; // Return red for 800+ K
             
             // make threadsholds from min to max, divide by 6
             var thresholds = new[] { min, min + (max - min) / 6, min + 2 * (max - min) / 6, min + 3 * (max - min) / 6, min + 4 * (max - min) / 6, min + 5 * (max - min) / 6 };

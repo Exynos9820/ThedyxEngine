@@ -25,4 +25,8 @@ public static class GlobalVariables {
     public static bool WaitToBeInTime = false;
     /** If objects should loose heat to air */
     public static bool ObjectsLooseHeatToAir = true;
+    /** The lower limit of the temperature color scale */
+    public static int MinTemperatureColor = 290;
+    /** The upper limit of the temperature color scale */
+    public static int MaxTemperatureColor = 400;
 }

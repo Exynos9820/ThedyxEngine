@@ -41,6 +41,9 @@ public partial class SettingsPopup : Popup {
         UIUpdatesPerSecond.Text     = GlobalVariables.WindowRefreshRate.ToString();
         IsHumanReadable.IsChecked   = GlobalVariables.SaveSimulationHumanReadable;
         IsObjectLooseHeatToAir.IsChecked = GlobalVariables.ObjectsLooseHeatToAir;
+        IsWaitToBeInTime.IsChecked = GlobalVariables.WaitToBeInTime;
+        MinTemperatureColor.Text = GlobalVariables.MinTemperatureColor.ToString();
+        MaxTemperatureColor.Text = GlobalVariables.MaxTemperatureColor.ToString();
     }
     
     /**
@@ -127,8 +130,44 @@ public partial class SettingsPopup : Popup {
     private void OnFileCheckBoxChanged(object sender, EventArgs e) {
         GlobalVariables.SaveSimulationHumanReadable = IsHumanReadable.IsChecked;
     }
+
     
+    /**
+     * OnMinTemperatureColorChanged is called when the user has finished editing the min temperature color.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
+    private void OnMinTemperatureColorChanged(object sender, EventArgs e) {
+        if (int.TryParse(MinTemperatureColor.Text, out var minTemp)) {
+            if (minTemp >= 0 && minTemp < GlobalVariables.MaxTemperatureColor) {
+                GlobalVariables.MinTemperatureColor = minTemp;
+            }
+            else {
+                ShowErrorMessageBox(
+                    "Min temperature color must be between 0 and " + GlobalVariables.MaxTemperatureColor);
+            }
+        }
+    }
     
+    /**
+     * OnMaxTemperatureColorChanged is called when the user has finished editing the max temperature color.
+     * \param sender The object that sent the event.
+     * \param e The event arguments.
+     */
+    private void OnMaxTemperatureColorChanged(object sender, EventArgs e) {
+        if (int.TryParse(MaxTemperatureColor.Text, out var maxTemp)) {
+            if (maxTemp > GlobalVariables.MinTemperatureColor && maxTemp < 1000) {
+                GlobalVariables.MaxTemperatureColor = maxTemp;
+            }
+            else {
+                ShowErrorMessageBox(
+                    "Max temperature color must be between " + GlobalVariables.MinTemperatureColor + " and 1000");
+            }
+        }
+    }
+
+
+
     /**
      * IsObjectsLooseHeatToAirChanged is called when the user has changed the objects loose heat to air checkbox.
      * \param sender The object that sent the event.

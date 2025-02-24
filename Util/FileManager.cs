@@ -46,6 +46,10 @@ namespace ThedyxEngine.Util
             public required string Time { get; set; }
             /** Platform of the simulation */
             public required string Platform { get; set; }
+            /** Min temperature color */
+            public required int MinTemperatureColor { get; set; }
+            /** Max temperature color */
+            public required int MaxTemperatureColor { get; set; }
         }
         
         /** Logger */
@@ -59,7 +63,9 @@ namespace ThedyxEngine.Util
                     Version = "0.1",
                     Date = DateTime.Now.ToString("yyyy-MM-dd"),
                     Time = DateTime.Now.ToString("HH:mm:ss"),
-                    Platform = Environment.OSVersion.Platform.ToString()
+                    Platform = Environment.OSVersion.Platform.ToString(),
+                    MinTemperatureColor = GlobalVariables.MinTemperatureColor,
+                    MaxTemperatureColor = GlobalVariables.MaxTemperatureColor
                 },
                 Materials = MaterialManager.Materials
                     .Select(material => JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(material)))

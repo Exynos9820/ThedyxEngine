@@ -17,12 +17,20 @@
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Loose Heat to Air?" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                 <CheckBox x:Name="IsObjectLooseHeatToAir" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="IsObjectsLooseHeatToAirChanged"/>
             </HorizontalStackLayout>
-
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Min temperature for scale" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Entry x:Name="MinTemperatureColor" TextColor="Black" BackgroundColor="Transparent" Completed="OnMinTemperatureColorChanged"/>
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout>
+                <Label VerticalOptions="Center" WidthRequest="-1" Text="Max temperature for scale" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                <Entry x:Name="MaxTemperatureColor" TextColor="Black" BackgroundColor="Transparent" Completed="OnMinTemperatureColorChanged"/>
+            </HorizontalStackLayout>
             
             <Label Text="Affects performance" FontAttributes="Bold" FontSize="18" TextColor="Red" HorizontalOptions="Start" Padding="0,15,0,0"/>
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Radiation depth calculations:" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
-                <Entry x:Name="RadiationDepth" TextColor="Black" BackgroundColor="Transparent" Completed="OnRadiationCompleted"/>
+                <Entry x:Name="RadiationDepth" TextColor="Black" BackgroundColor="Transparent" Completed="OnMaxTemperatureColorChanged"/>
             </HorizontalStackLayout>
             
             <HorizontalStackLayout>
