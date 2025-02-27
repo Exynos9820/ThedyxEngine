@@ -109,6 +109,8 @@ namespace ThedyxEngine.Util
                     byte[] jsonBytes = Convert.FromBase64String(inputString);
                     string jsonOutput = Encoding.UTF8.GetString(jsonBytes);
                     simulationData = JsonConvert.DeserializeObject<SimulationData>(jsonOutput);
+                    GlobalVariables.MinTemperatureColor = simulationData.Metadata.MinTemperatureColor;
+                    GlobalVariables.MaxTemperatureColor = simulationData.Metadata.MaxTemperatureColor;
                 }
                 catch (Exception e) {
                     simulationData = JsonConvert.DeserializeObject<SimulationData>(inputString);
