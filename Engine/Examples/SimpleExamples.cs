@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.Engine.Examples {
-    public static class SimpleExamples {
+    public static class SimpleExamples
+    {
         public static void SetThreesquares() {
             // add 3 objects to the engine
             GrainSquare obj1 = new GrainSquare("Square", new Point(0, 0));
@@ -20,7 +21,19 @@ namespace ThedyxEngine.Engine.Examples {
             Engine.EngineObjectsManager.AddObject(obj3);
         }
 
-        public static void TwoEngineRectangles() {
+        public static void SetManyRectangles(int numberHeight, int numberWidth, int height, int width) {
+            // add 3 objects to the engine
+            for (int i = 0; i < numberHeight; i++) {
+                for (int j = 0; j < numberWidth; j++) {
+                    EngineRectangle obj = new EngineRectangle($"Rectangle {i} {j}", height, width);
+                    obj.Position = new Point(i * height, j * width);
+                    obj.SimulationTemperature = 200;
+                    Engine.EngineObjectsManager.AddObject(obj);
+                }
+            }
+        }
+
+    public static void TwoEngineRectangles() {
             EngineRectangle e1 = new EngineRectangle("Rectangle1", 30, 30);
             e1.Position = new Point(0, 0);
             Engine.EngineObjectsManager.AddObject(e1);

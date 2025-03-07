@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,7 @@ namespace ThedyxEngine.Engine{
         /** Manager for the engine objects */
         public static ObjectsManager? EngineObjectsManager;
         /** Main window */
-        private static MainPage? _mainWindow;
+        public static MainPage? _mainWindow;
         /** Engine thread */
         private static TempoThread? _engineThread;
         /** Frames counter */
@@ -52,6 +53,8 @@ namespace ThedyxEngine.Engine{
         private static bool _optimize = true;
         /** Current Engine mode */
         public static EngineMode Mode { get; private set; } = EngineMode.Stopped; // engine mode
+        /** Variable to store the biggest results of tasks */
+        public static ConcurrentDictionary<int, int> TasksResults = new();
 
         /**
          * \brief Initialize the engine
@@ -62,7 +65,8 @@ namespace ThedyxEngine.Engine{
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
             //SimpleExamples.RectangleWithTempDifference(15, 15);
-            SimpleExamples.RectangleWithTempDifference(30,30);
+            //SimpleExamples.RectangleWithTempDifference(30,30);
+            SimpleExamples.SetManyRectangles(20,20,10,10 );
             _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
             Log.Info("Engine initialized");
         }
@@ -93,15 +97,32 @@ namespace ThedyxEngine.Engine{
          * \brief Prepare objects for the simulation before starting it
          */
         private static void PrepareObjects() {
-            if(_engineLock == null)         throw new InvalidOperationException("Engine lock is not initialized");
+            if(_engineLock == null) 
+                throw new InvalidOperationException("Engine lock is not initialized");
+
+            int threads = Math.Max(Environment.ProcessorCount - 2, 1);
+            // zero the results with the number of threads
+            TasksResults = new ConcurrentDictionary<int, int>();
+            for (int i = 0; i < threads; i++) {
+                TasksResults[i] = 0;
+            }
+            
+            // Show progress bar before starting
+            MainThread.BeginInvokeOnMainThread(() => _mainWindow.LoadingProgressBar.IsVisible = false);
+
 
             lock (_engineLock) {
                 EngineObjectsManager.ResetObjectsTemperature();
                 if (_optimize) {
-                    ObjectsOptimizationManager.Optimize(EngineObjectsManager.GetObjects());
+                    ObjectsOptimizationManager.Optimize(EngineObjectsManager.GetObjects(),
+                        threads);
                 }
             }
+            
+            
+            Log.Info("Preparation done");
         }
+
 
         /**
          * 

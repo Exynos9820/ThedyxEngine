@@ -95,15 +95,23 @@ public static class RadiationOptimization{
     *
     * \param objects A list of engine objects containing grain squares.
     */
-    public static void Optimize(List<EngineObject> objects) {
+    public static void Optimize(List<EngineObject> objects, int startPosition, int endPosition) {
         // Create a list of all grain squares
         List<GrainSquare> grainSquares = [];
         foreach (var obj in objects) {
             grainSquares.AddRange(obj.GetExternalSquares());
         }
-
-        foreach (var grainSquare in grainSquares) {
-            RetraceSquares(grainSquare, grainSquares, GlobalVariables.RadiationDepth);
+        
+        
+        List<GrainSquare> runSquares = [];
+        // get the grain squares from the objects from the start position to the end position
+        for (int i = startPosition; i < endPosition; i++) {
+            runSquares.AddRange(objects[i].GetExternalSquares());
+        }
+        
+        // Retrace squares for each grain square
+        foreach (var square in runSquares) {
+            RetraceSquares(square, grainSquares, GlobalVariables.RadiationDepth);
         }
     }
 }
