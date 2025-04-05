@@ -81,18 +81,19 @@ namespace ThedyxEngine.UI {
                     }
                     double temp = temperatures[j];
                     float opacity = opacities[j];
+                    Color fillColor = Colors.Black;
                     if (!Engine.Engine.ShowColor) {
-                        canvas.FillColor = ColorManager.GetColorFromTemperature(temp);
-                        canvas.StrokeColor = ColorManager.GetColorFromTemperature(temp);
+                        fillColor = ColorManager.GetColorFromTemperature(temp);
                         canvas.StrokeSize = 2;
                         canvas.Alpha = opacity;
                     }
                     else {
-                        canvas.FillColor = obj.Material.MaterialColor;
-                        canvas.StrokeColor = obj.Material.MaterialColor;
+                        fillColor = obj.Material.MaterialColor;
                         canvas.StrokeSize = 2;
                         canvas.Alpha = opacity;
                     }
+                    canvas.FillColor = fillColor;
+                    canvas.StrokeColor = fillColor;
                     
                     // create new rectangle from converted points and draw it
                     RectF rect = new RectF((float)startPoint.X, (float)startPoint.Y, (float)(endPoint.X - startPoint.X), (float)(endPoint.Y - startPoint.Y));
@@ -109,7 +110,9 @@ namespace ThedyxEngine.UI {
                         x = (rect.X + rect.Width / 2);
                         y = (rect.Y + rect.Height / 2);
                         // draw the label
-                        canvas.FillColor = Colors.Black;
+                        //  check if color is too dart, set color of text to white
+                        double brightness = 0.299 * fillColor.Red + 0.587 * fillColor.Green + 0.114 * fillColor.Blue;
+                        canvas.FontColor = brightness < 0.5 ? Colors.White : Colors.Black;
                         canvas.Alpha = 1;
                         string text = (int)temp + "°";
                         canvas.DrawString(text, (float)x-10, (float)y-10, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
