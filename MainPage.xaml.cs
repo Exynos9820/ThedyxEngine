@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Diagnostics;
+using System.Timers;
 using log4net;
 using LukeMauiFilePicker;
 using ThedyxEngine.Engine;
@@ -16,6 +17,8 @@ public partial class MainPage : ContentPage {
     public readonly IFilePickerService picker;
     private static readonly ILog log = LogManager.GetLogger(typeof(MainPage)); // Logger
     private string _currentError = "";
+    private PointF _lastTouchPoint = new PointF(-1, -1);
+    public bool IsDrawing { get; set; } = false;
     public MainPage(IFilePickerService picker) {
         InitializeComponent();
         log4net.Config.XmlConfigurator.Configure();
@@ -40,6 +43,7 @@ public partial class MainPage : ContentPage {
         ObjectsList.OnZoomToObject = ZoomToObject;
         ControlPanel.EngineModeChanged = EngineModeChanged;
         ControlPanel.UpdateUI = UpdateAll;
+        ControlPanel.ZoomChanged = d => _engineCanvas.Zoom(d);
         _engineCanvas = new EngineCanvas(this);
         EngineGraphicsView.Drawable = _engineCanvas;
         EngineGraphicsView.BackgroundColor = Colors.White;
@@ -53,7 +57,7 @@ public partial class MainPage : ContentPage {
         // Set up pinch gesture for zooming
         var pinchGesture = new PinchGestureRecognizer();
         pinchGesture.PinchUpdated += (s, e) => {
-            if (e.Status == GestureStatus.Running)
+            if (e.Status == GestureStatus.Running && !IsDrawing)
             {
                 _engineCanvas.Zoom(e.Scale);
                 // if engine is not running, update the view
@@ -65,7 +69,7 @@ public partial class MainPage : ContentPage {
         // Set up pan gesture for panning
         var panGesture = new PanGestureRecognizer();
         panGesture.PanUpdated += (s, e) => {
-            if (e.StatusType == GestureStatus.Running) {
+            if (e.StatusType == GestureStatus.Running && !IsDrawing) {
                 _engineCanvas.Move(e);
                 if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
                     EngineGraphicsView.Invalidate();
@@ -73,7 +77,59 @@ public partial class MainPage : ContentPage {
         };
         EngineGraphicsView.GestureRecognizers.Add(pinchGesture);
         EngineGraphicsView.GestureRecognizers.Add(panGesture);
+        EngineGraphicsView.StartInteraction += OnStartInteraction;
     }
+    
+    void OnStartInteraction(object? Sender, TouchEventArgs evt) {
+        // if not drawing, return
+        if (!IsDrawing) return;
+        // if engine is running, return
+        if (Engine.Engine.Mode == Engine.Engine.EngineMode.Running) return;
+        
+        // check if last touch point is valid
+        if (_lastTouchPoint.X == -1 && _lastTouchPoint.Y == -1) {
+            _lastTouchPoint = evt.Touches.FirstOrDefault();
+            return;
+        }
+        
+        // if it's valid
+        var start = _engineCanvas.ConvertToCanvasCoordinates(_lastTouchPoint);
+        var end = _engineCanvas.ConvertToCanvasCoordinates(evt.Touches.FirstOrDefault());
+        
+        int width = Math.Abs((int)(end.X - start.X));
+        int height = Math.Abs((int)(end.Y - start.Y));
+        
+        if (width < 1 || height < 1) {
+            _lastTouchPoint = new PointF(-1, -1);
+            return;
+        }
+        
+        EngineStateRectangle rect = new EngineStateRectangle(Engine.Engine.EngineObjectsManager.GenerateUniqueName(), width, height);
+        
+        // Check which point is the top left
+        if (start.X < end.X && start.Y < end.Y) {
+            rect.Position = new Point((int)start.X, (int)start.Y);
+        } else if (start.X > end.X && start.Y > end.Y) {
+            rect.Position = new Point((int)end.X, (int)end.Y);
+        } else if (start.X < end.X && start.Y > end.Y) {
+            rect.Position = new Point((int)start.X, (int)end.Y);
+        } else {
+            rect.Position = new Point((int)end.X, (int)start.Y);
+        }
+        
+        // Position can only be integer
+        rect.Position = new Point((int)rect.Position.X, (int)rect.Position.Y);
+
+        rect.CurrentTemperature = 373;
+        Engine.Engine.EngineObjectsManager.AddObject(rect);
+        
+        _lastTouchPoint = evt.Touches.FirstOrDefault();
+        _lastTouchPoint = new PointF(-1, -1);
+        IsDrawing = false;
+        UpdateAll();
+    }
+
+
     
     private void UpdateTimer_Elapsed(object sender, ElapsedEventArgs e) {
         // Dispatch to the main thread for UI updates
@@ -119,6 +175,7 @@ public partial class MainPage : ContentPage {
         ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
         TabProperties.Update();
         EngineGraphicsView.Invalidate();
+        ControlPanel.Update();
     }
     
 

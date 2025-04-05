@@ -24,7 +24,13 @@
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
         <!-- Add Button with Options -->
@@ -77,5 +83,14 @@
         
         <ImageButton Grid.Column="19" Padding="0,1,0, 1" Source="settings_button.png" BackgroundColor="Transparent" 
                      Clicked="OnSettingsButtonClicked" x:Name="SettingsButton"/>
+        
+        <Button Grid.Column="21"  Margin="0,4,0, 4" Text="+" Width="50" FontSize="20" BackgroundColor="Salmon" 
+                Clicked="OnZoomInButtonClicked" x:Name="HelpButton"/>
+        
+        <Button Grid.Column="23" Margin="0,4,0, 4" Text="-" Width="50" FontSize="20" BackgroundColor="Tan" 
+                Clicked="OnZoomOutButtonClicked" x:Name="ZoomOutButton"/>
+        
+        <Button Grid.Column="25" Margin="0,4,0, 4" Text="Draw" Width="70" BackgroundColor="LightSlateGrey" 
+                Clicked="OnDrawCheckBoxClicked" x:Name="DrawCheckBox"/>
     </Grid>
 </ContentView>

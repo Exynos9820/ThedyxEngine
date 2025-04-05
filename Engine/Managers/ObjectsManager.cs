@@ -71,6 +71,21 @@ namespace ThedyxEngine.Engine.Managers{
             }
         }
 
+        
+        /**
+         * Generate a unique name for the object
+         * \return Unique name
+         */
+        public string GenerateUniqueName() {
+            string name = "Object";
+            int i = 1;
+            while (!IsNameAvailable(name)) {
+                name = "Object" + i;
+                i++;
+            }
+            return name;
+        }
+
         /**
          * Check if the position is available for the object
          * \param obj EngineObject that need to be checked

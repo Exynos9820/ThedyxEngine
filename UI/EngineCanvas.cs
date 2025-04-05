@@ -23,6 +23,8 @@ namespace ThedyxEngine.UI {
         private static readonly ILog log = LogManager.GetLogger(typeof(EngineCanvas));
         /** The main page of the whole program*/
         private MainPage _mainPage;
+        /** Last dirty rectangle */
+        private RectF _lastDirtyRect;
         /**
          * Constructor for the EngineCanvas class.
          * \param mainPage The main page of the program.
@@ -31,13 +33,9 @@ namespace ThedyxEngine.UI {
             _canvasManager = new CanvasManager();
             _gridDrawer = new GridDrawer();
             _mainPage = mainPage;
-            var graphicsView = new GraphicsView
-            {
-                WidthRequest = 800,
-                HeightRequest = 600,
-                BackgroundColor = Colors.White
-            };
         }
+        
+
         
         /**
          * Draw draws the simulation on the canvas.
@@ -47,6 +45,7 @@ namespace ThedyxEngine.UI {
          * \param dirtyRect The dirty rectangle.
          */
         public void Draw(ICanvas canvas, RectF dirtyRect) {
+            _lastDirtyRect = dirtyRect;
             canvas.StrokeColor = Colors.Black;
             canvas.StrokeSize = 2;
             canvas.FillColor = Colors.LightBlue;
@@ -183,6 +182,26 @@ namespace ThedyxEngine.UI {
             // convert point to screen coordinates
             double x = (point.X - leftX) * width / (rightX - leftX);
             double y = height - (point.Y - bottomY) * height / (topY - bottomY);
+            return new Point(x, y);
+        }
+
+        /**
+         * ConvertToCanvasCoordinates converts a point in screen coordinates to simulation coordinates.
+         * \param point The point to convert.
+         * \return The point in simulation coordinates.
+         */
+        public Point ConvertToCanvasCoordinates(PointF point) {
+            // get ActualWidth and Height
+            double width = _lastDirtyRect.Width;
+            double height = _lastDirtyRect.Height;
+            // get manager indexes
+            int leftX = _canvasManager.CurrentLeftXIndex;
+            int rightX = _canvasManager.CurrentRightXIndex;
+            int topY = _canvasManager.CurrentTopYIndex;
+            int bottomY = _canvasManager.CurrentBottomYIndex;
+            // convert point to screen coordinates
+            double x = leftX + point.X * (rightX - leftX) / width;
+            double y = bottomY + (height - point.Y) * (topY - bottomY) / height;
             return new Point(x, y);
         }
     }

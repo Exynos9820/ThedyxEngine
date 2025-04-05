@@ -36,10 +36,24 @@ namespace ThedyxEngine.Engine.Managers {
             var m1 = new Material {
                 Name = "Aluminium",
                 SolidSpecificHeatCapacity = 887,
+                LiquidSpecificHeatCapacity = 1170,
+                GasSpecificHeatCapacity = 0.9,
                 SolidDensity = 2700,
+                LiquidDensity = 2385,
+                GasDensity = 1.29,
                 SolidEmissivity = 0.2,
-                MaterialColor = Colors.Gray,
-                SolidThermalConductivity = 205
+                LiquidEmissivity = 0.35,
+                GasEmissivity = 0.01,
+                MeltingTemperature = 933.47,
+                BoilingTemperature = 2792,
+                MeltingEnergy = 397000,
+                BoilingEnergy = 10500000,
+                SolidThermalConductivity = 205,
+                LiquidThermalConductivity = 80,
+                GasThermalConductivity = 0.03,
+                GasConvectiveHeatTransferCoefficient = 10000,
+                LiquidConvectiveHeatTransferCoefficient = 3000,
+                MaterialColor = Colors.Gray
             };
             Materials.Add(m1);
             var m2 = new Material {

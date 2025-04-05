@@ -1,6 +1,6 @@
-# ThempoEngine Documentation
+# ThedyxEngine Documentation
 
-Welcome to the documentation of ThempoEngine, a 2D physics engine designed to simulate heat transfer across different materials using a visually intuitive approach.
+Welcome to the documentation of ThedyxEngine, a 2D physics engine designed to simulate heat transfer across different materials using a visually intuitive approach.
 
 ## Overview
 
@@ -30,7 +30,7 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 - **Dynamic Simulation**: Real-time simulation of heat transfer.
 - **Customizable Materials**: Users can define the thermal properties of materials.
 - **Interactive Visuals**: Real-time graphical representation of temperature changes.
-\
+
 
 ## Installation MacOS
 1) Clone the repository

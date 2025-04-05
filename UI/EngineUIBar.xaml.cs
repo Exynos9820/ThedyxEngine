@@ -25,6 +25,8 @@ namespace ThedyxEngine.UI {
         public Action? EngineModeChanged;
         /** The main page of the app. */
         public MainPage? MainPage;
+        /** The event that is called when the zoom level is changed. */
+        public Action<double>? ZoomChanged;
         
         /**
          * Constructor for the EngineUIBar class.
@@ -74,6 +76,7 @@ namespace ThedyxEngine.UI {
                 // Less than one hour: show minutes, seconds, and centiseconds
                 TimeLabel.Text = time.ToString(@"mm\:ss\:ff");
             }
+            DrawCheckBox.BackgroundColor = MainPage.IsDrawing ? Colors.Salmon : Colors.LightSlateGrey;
         }
 
         /**
@@ -338,6 +341,46 @@ namespace ThedyxEngine.UI {
             }
             UpdateUI?.Invoke();
         }
+        
+        /**
+         * OnZoomOutButtonClicked is called when the user clicks the zoom out button.
+         * Zooms out the simulation.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
+        private void OnZoomOutButtonClicked(object sender, EventArgs e) {
+            ZoomChanged?.Invoke(0.8);
+            UpdateUI?.Invoke();
+        }
+        
+        /**
+         * OnDrawCheckBoxClicked is called when the user clicks the draw checkbox.
+         * Toggles the draw mode on and off.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
+        private void OnDrawCheckBoxClicked(object sender, EventArgs e) { 
+            MainPage.IsDrawing = !MainPage.IsDrawing;
+            if (MainPage.IsDrawing) {
+                DrawCheckBox.BackgroundColor = Colors.Salmon;
+            } else {
+                DrawCheckBox.BackgroundColor = Colors.LightSlateGrey;
+            }
+            UpdateUI?.Invoke();
+        }
+        
+        /**
+         * OnZoomInButtonClicked is called when the user clicks the zoom in button.
+         * Zooms in the simulation.
+         * \param sender The object that sent the event.
+         * \param e The event arguments.
+         */
+        private void OnZoomInButtonClicked(object sender, EventArgs e) {
+            ZoomChanged?.Invoke(1.2);
+            UpdateUI?.Invoke();
+        }
+        
+        
         
         /**
          * OnResetButtonClicked is called when the user clicks the reset button.
