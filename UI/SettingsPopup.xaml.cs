@@ -91,11 +91,11 @@ public partial class SettingsPopup : Popup {
      */
     private void OnEngineUpdatesCompleted(object sender, EventArgs e) {
         if (int.TryParse(EngineUpdatesPerSecond.Text, out var updates)) {
-            if (updates >= 15 && updates < 240) {
+            if (updates >= 15 && updates <= 1200) {
                 GlobalVariables.EngineIntervalUpdatePerSecond = updates;
             }
             else {
-                ShowErrorMessageBox("Engine updates per second must be between 15 and 240");
+                ShowErrorMessageBox("Engine updates per second must be between 15 and 1200");
             }
         }else {
             ShowErrorMessageBox("Engine updates per second must be a number");   

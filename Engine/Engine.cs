@@ -65,7 +65,7 @@ namespace ThedyxEngine.Engine{
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
             // load kettle copper example
-            try {
+            /*try {
                 using var stream = File.OpenRead("../../../../../Examples/liveDemo.tdx");
                 using var reader = new StreamReader(stream);
                 string fileContent = reader.ReadToEnd(); // Sync version
@@ -73,7 +73,7 @@ namespace ThedyxEngine.Engine{
             }
             catch (Exception ex) {
                 Log.Error("Problem with loading file: " + ex.Message);
-            }
+            }*/
 
             
             

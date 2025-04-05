@@ -90,3 +90,16 @@ You can control objects in the scene by selecting them in the left tab. When you
 Most of the properties are self-explanatory, but there are some properties that need to be explained:
 1) Fixed temperature - if this property is checked, the object will not change its temperature during the simulation. This property is useful for objects that are not affected by the simulation, like walls or ground.
 2) Gas State Allowed - if this property is checked, the object can change its state to gas during the simulation. This property is useful for objects that can evaporate or boil, like water or ice.
+
+## Important settings
+There is a settings menu that can be opened by clicking on the **Settings** button in the top bar. In this menu, you can change the following settings:
+1) Room temperature - this is the temperature of the room in which the simulation is running. This temperature is used to calculate the heat transfer between the objects and the room.
+2) Loose heat to air checkbox - if this property is checked, the objects will lose heat to the air during the simulation. This property is useful for objects that are in contact with the air, like walls or ground.
+3) Min temperature for scale - minimum temperature for colorized temperature scale.
+4) Max temperature for scale - maximum temperature for colorized temperature scale.
+5) Radiation depth calculations - how deep are we going with ray tracing to calculate radiation.
+6) Engine updates per second - very important, affects precision of simulation. The more updates per second, the more precise simulation is, but it takes more time to calculate it. The default value is 60 updates per second.
+7) UI updates per second - how often the UI is updated. The default value is 120 updates per second.
+8) Save as human readable - if this property is checked, the simulation file will be saved in a human readable format. This property is useful for debugging and testing purposes.
+
+![img.png](imgs/settingMenu.png)
