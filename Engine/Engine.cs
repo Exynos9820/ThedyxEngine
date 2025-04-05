@@ -64,9 +64,19 @@ namespace ThedyxEngine.Engine{
             _mainWindow = window;
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
-            //SimpleExamples.RectangleWithTempDifference(15, 15);
-            //SimpleExamples.RectangleWithTempDifference(30,30);
-            SimpleExamples.SetManyRectangles(20,20,10,10 );
+            // load kettle copper example
+            try {
+                using var stream = File.OpenRead("../../../../../Examples/liveDemo.tdx");
+                using var reader = new StreamReader(stream);
+                string fileContent = reader.ReadToEnd(); // Sync version
+                FileManager.LoadFromContent(fileContent);
+            }
+            catch (Exception ex) {
+                Log.Error("Problem with loading file: " + ex.Message);
+            }
+
+            
+            
             _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
             Log.Info("Engine initialized");
         }

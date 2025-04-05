@@ -76,7 +76,8 @@ namespace ThedyxEngine.UI {
                 // Less than one hour: show minutes, seconds, and centiseconds
                 TimeLabel.Text = time.ToString(@"mm\:ss\:ff");
             }
-            DrawCheckBox.BackgroundColor = MainPage.IsDrawing ? Colors.Salmon : Colors.LightSlateGrey;
+            if (MainPage != null) 
+                DrawCheckBox.BackgroundColor = MainPage.IsDrawing ? Colors.Salmon : Colors.LightSlateGrey;
         }
 
         /**
