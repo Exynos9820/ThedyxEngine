@@ -4,7 +4,7 @@ Welcome to the documentation of ThedyxEngine, a 2D physics engine designed to si
 
 ## Overview
 
-TempoEngine is a 2D physics engine designed to simulate heat transfer across different materials using a visually intuitive approach. 
+ThedyxEngine is a 2D physics engine designed to simulate heat transfer across different materials using a visually intuitive approach. 
 The engine supports various forms of heat transfer mechanisms including conduction, convection, and radiation, 
 presenting them in a visually engaging manner that changes color based on the temperature of the objects.
 
