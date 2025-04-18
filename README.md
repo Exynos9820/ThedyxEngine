@@ -35,9 +35,13 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 ## Installation MacOS
 1) Clone the repository
 2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
-3) dotnet workload install MAUI in the terminal
-4) dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0 (sometimes)
-5) dotnet build ThedyxEngine.sln
+3) sudo dotnet workload install maui in the terminal
+4) sudo dotnet workload restore
+5) xcode-select --install
+6) sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+7) sudo xcodebuild -license
+8) dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0 (sometimes)
+9) dotnet build ThedyxEngine.sln
 
 ## Installation Windows
 1) Clone the repository
