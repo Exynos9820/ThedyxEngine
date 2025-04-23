@@ -145,15 +145,17 @@ namespace ThedyxEngine.Engine{
             int coresToUse = Environment.ProcessorCount - 2 > 0 ? Environment.ProcessorCount - 2 : 1;
             // now we need to divide all the work between the cores
             // by dividing all the objects between the cores
+            // Create a list for each core
             List<List<EngineObject>> objectsToProcess = new List<List<EngineObject>>();
-            int objectsPerCore = Math.Max(EngineObjectsManager.GetObjects().Count / coresToUse, 1);
             for (int i = 0; i < coresToUse; i++) {
                 objectsToProcess.Add(new List<EngineObject>());
-                // add objects to the list
-                // we need to ensure that we will add all objects
-                for (int j = i * objectsPerCore; j < (i + 1) * objectsPerCore && j < EngineObjectsManager.GetObjects().Count; j++) {
-                    objectsToProcess[i].Add(EngineObjectsManager.GetObjects()[j]);
-                }
+            }
+
+            // Distribute objects round-robin style
+            List<EngineObject> allObjects = EngineObjectsManager.GetObjects();
+            for (int i = 0; i < allObjects.Count; i++) {
+                int coreIndex = i % coresToUse;
+                objectsToProcess[coreIndex].Add(allObjects[i]);
             }
                 
             // each task will process it's own list of objects
