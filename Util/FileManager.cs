@@ -60,7 +60,7 @@ namespace ThedyxEngine.Util
         public static byte[] GetSimulationRepresentation() {
             var simulationData = new FileManager.SimulationData {
                 Metadata = new FileManager.Metadata {
-                    Version = "0.1",
+                    Version = GlobalVariables.MajorVersion + "." + GlobalVariables.MinorVersion,
                     Date = DateTime.Now.ToString("yyyy-MM-dd"),
                     Time = DateTime.Now.ToString("HH:mm:ss"),
                     Platform = Environment.OSVersion.Platform.ToString(),
@@ -121,10 +121,6 @@ namespace ThedyxEngine.Util
                     return;
                 }
                 
-                if (simulationData.Metadata.Version != "0.1") {
-                    Log.Error("Only version 0.1 is supported.");
-                    return;
-                }
 
                 // Load Materials
                 foreach (var material in simulationData.Materials) {

@@ -16,9 +16,9 @@ public static class GlobalVariables {
     /** Interval between UI updates */
     public static int WindowRefreshRate = 60;
     /** Program major version */
-    public static readonly int MajorVersion = 0;
+    public static readonly int MajorVersion = 1;
     /** Program minor version */
-    public static readonly int MinorVersion = 1;
+    public static readonly int MinorVersion = 0;
     /** Program patch version */
     public static bool SaveSimulationHumanReadable = false;
     /** If engine is going to wait to be in time with real time */
