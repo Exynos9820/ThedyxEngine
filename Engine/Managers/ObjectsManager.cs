@@ -13,9 +13,21 @@ namespace ThedyxEngine.Engine.Managers{
      * The ObjectsManager class provides methods for managing the objects in the simulation.
      */
     public class ObjectsManager{
+        /**
+         * List of all objects
+         */
         private List<EngineObject> _objects = [];
+        /**
+         * engine lock for object manager
+         */
         private object _engineLock;
+        /**
+         * Smallest temperature for a color scale
+         */
         public double SmallestTemperature = -1000;
+        /**
+         * Biggest temperature for a color scale
+         */
         public double LargestTemperature = -1000;
         /**
          * Constructor
