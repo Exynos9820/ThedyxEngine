@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ThedyxEngine.Engine {
+﻿namespace ThedyxEngine.Engine {
     /**
      * \brief Represents a line segment in 2D space.
      * Used for calculating the overlap between two line segments.
@@ -51,18 +45,18 @@ namespace ThedyxEngine.Engine {
                 return 0;
 
             // Sort points to make comparison easier
-            Point l1p1 = l1.Start.X < l1.End.X ? l1.Start : l1.End;
-            Point l1p2 = l1.Start.X < l1.End.X ? l1.End : l1.Start;
-            Point l2p1 = l2.Start.X < l2.End.X ? l2.Start : l2.End;
-            Point l2p2 = l2.Start.X < l2.End.X ? l2.End : l2.Start;
+            Point l1P1 = l1.Start.X < l1.End.X ? l1.Start : l1.End;
+            Point l1P2 = l1.Start.X < l1.End.X ? l1.End : l1.Start;
+            Point l2P1 = l2.Start.X < l2.End.X ? l2.Start : l2.End;
+            Point l2P2 = l2.Start.X < l2.End.X ? l2.End : l2.Start;
 
             // Check for overlap
-            if (l1p2.X < l2p1.X || l2p2.X < l1p1.X)
+            if (l1P2.X < l2P1.X || l2P2.X < l1P1.X)
                 return 0;  // No overlap
 
             // Calculate overlapxxscd   4           QWERTYU'H
-            double start = Math.Max(l1p1.X, l2p1.X);
-            double end = Math.Min(l1p2.X, l2p2.X);
+            double start = Math.Max(l1P1.X, l2P1.X);
+            double end = Math.Min(l1P2.X, l2P2.X);
             return end - start;
         }
     }

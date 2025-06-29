@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ThedyxEngine.Util {
+﻿namespace ThedyxEngine.Util {
     public static class Parsers {
         /** 
          * Parses a string representation of a point to a Point object.

@@ -1,6 +1,3 @@
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
 using ThedyxEngine.Engine;
 
 namespace ThedyxEngine.UI {
@@ -9,7 +6,7 @@ namespace ThedyxEngine.UI {
      */
     public partial class EngineObjectsList : ContentView {
         /** The currently selected object. */
-        private EngineObject? _currentSelectedEngineObject;
+        private EngineObject _currentSelectedEngineObject;
         /** The event that is called when the selected object changes. */
         public Action<EngineObject>? OnSelectedObjectChanged;
         /** The event that is called when the user wants to zoom to an object. */

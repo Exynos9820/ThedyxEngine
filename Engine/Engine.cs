@@ -1,14 +1,7 @@
 ﻿using log4net;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 using ThedyxEngine.Engine.Managers;
-using ThedyxEngine.Engine.Examples;
 using System.Diagnostics;
 
 namespace ThedyxEngine.Engine{

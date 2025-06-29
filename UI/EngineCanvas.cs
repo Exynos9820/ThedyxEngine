@@ -1,11 +1,6 @@
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
-using System.Text;
 using log4net;
-using Microsoft.Maui.Controls.Shapes;
 using TempoEngine.UI;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;

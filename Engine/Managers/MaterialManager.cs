@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ThedyxEngine.Engine.Managers {
+﻿namespace ThedyxEngine.Engine.Managers {
     /** 
      * \class MaterialManager
      * \brief Manages the materials in the simulation.

@@ -1,15 +1,7 @@
-using Microsoft.Maui.Controls;
-using System;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Util;
 using CommunityToolkit.Maui.Views;
-using ThedyxEngine.Engine.Managers;
 using CommunityToolkit.Maui.Storage;
-using LukeMauiFilePicker;
-using Newtonsoft.Json;
 
 namespace ThedyxEngine.UI {
     /**

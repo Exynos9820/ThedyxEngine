@@ -1,6 +1,4 @@
-using Microsoft.Maui.Controls.Shapes;
 using Newtonsoft.Json;
-using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
@@ -37,7 +35,7 @@ public class StateGrainSquare : GrainSquare {
      * \param position The position of the square.
      * \param material The material of the square.
      */
-    public StateGrainSquare(string name, Point position, Material material) : base(name, position) {
+    public StateGrainSquare(string? name, Point position, Material material) : base(name, position) {
         Material = material;
         SetStateFromTemperature();
         SetCachedPoints();

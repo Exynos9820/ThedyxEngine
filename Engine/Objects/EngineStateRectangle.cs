@@ -1,7 +1,5 @@
 using System.Numerics;
-using Microsoft.Maui.Controls.Shapes;
 using Newtonsoft.Json;
-using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
@@ -26,7 +24,7 @@ public class EngineStateRectangle : EngineObject {
      * \param width The width of the rectangle.
      * \param height The height of the rectangle.
      */
-    public EngineStateRectangle(string name, int width, int height) : base(name) {
+    public EngineStateRectangle(string? name, int width, int height) : base(name) {
         _size = new(width, height);
         SetSquaresForShape();
         SetTemperatureForAllSquares();

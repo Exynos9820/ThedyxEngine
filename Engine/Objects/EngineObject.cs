@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls.Shapes;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 
@@ -45,7 +39,7 @@ namespace ThedyxEngine.Engine {
         protected double _currentTemperature = 200;
 
         /// Name of the object.
-        private string _name;
+        private string? _name;
 
         /// Size of the object.
         protected Point _size = new(1, 1);
@@ -66,7 +60,7 @@ namespace ThedyxEngine.Engine {
          * Constructor for creating a new EngineObject.
          * \param name The name of the engine object.
          */
-        public EngineObject(string name) {
+        public EngineObject(string? name) {
             Name = name;
             Material = MaterialManager.GetBaseMaterial();
         }
@@ -89,7 +83,7 @@ namespace ThedyxEngine.Engine {
          * Returns the name of the object as its string representation.
          * \return The name of the object.
          */
-        public override string ToString() {
+        public override string? ToString() {
             return Name;
         }
 
@@ -150,7 +144,7 @@ namespace ThedyxEngine.Engine {
 
 
         /// Gets or sets the name of the object.
-        public string Name {
+        public string? Name {
             get => _name;
             set {
                 if (_name != value) {

@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Maui.Views;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
@@ -87,7 +82,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnNameCompleted(object sender, EventArgs e) {
+    private void OnNameCompleted(object? sender, EventArgs? e) {
         if (_object.Name != NameEntry.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(NameEntry.Text)) {
             ShowErrorMessageBox("Name is not available");
             NameEntry.BackgroundColor = Colors.Red;
@@ -103,7 +98,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnTemperatureCompleted(object sender, EventArgs e) {
+    private void OnTemperatureCompleted(object? sender, EventArgs? e) {
         if (double.TryParse(Temperature.Text, out double temperature)) {
             _object.SimulationTemperature = temperature;
             Temperature.BackgroundColor = Colors.White;
@@ -139,7 +134,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnXPositionCompleted(object sender, EventArgs e) {
+    private void OnXPositionCompleted(object? sender, EventArgs? e) {
         if (double.TryParse(XPosition.Text, out double x)) {
             _object.Position = new Microsoft.Maui.Graphics.Point(x, _object.Position.Y);
         }
@@ -150,7 +145,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnYPositionCompleted(object sender, EventArgs e) {
+    private void OnYPositionCompleted(object? sender, EventArgs? e) {
         if (double.TryParse(YPosition.Text, out double y)) {
             _object.Position = new Microsoft.Maui.Graphics.Point(_object.Position.X, y);
         }
@@ -161,7 +156,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnHeightCompleted(object sender, EventArgs e) {
+    private void OnHeightCompleted(object? sender, EventArgs? e) {
         if (_object.GetObjectType() == ObjectType.GrainSquare) {
             Height.Text = "1";
         }
@@ -176,7 +171,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnWidthCompleted(object sender, EventArgs e) {
+    private void OnWidthCompleted(object? sender, EventArgs? e) {
         if (_object.GetObjectType() == ObjectType.GrainSquare) {
             Height.Text = "1";
         }
@@ -191,7 +186,7 @@ public partial class CreateObjectPopup : Popup {
      * \param sender The object that sent the event.
      * \param e The event arguments.
      */
-    private void OnMaterialChanged(object sender, EventArgs e) {
+    private void OnMaterialChanged(object? sender, EventArgs? e) {
         if (_object == null) return;
         if (Material.SelectedItem != null)
             _object.Material = (Material)Material.SelectedItem;

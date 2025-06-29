@@ -1,14 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.Maui.Controls.Shapes;
-using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
@@ -33,7 +24,7 @@ namespace ThedyxEngine.Engine {
          * \param width The width of the rectangle.
          * \param height The height of the rectangle.
          */
-        public EngineRectangle(string name, int width, int height) : base(name) {
+        public EngineRectangle(string? name, int width, int height) : base(name) {
             _size = new(width, height);
             SetSquaresForShape();
             SetTemperatureForAllSquares();

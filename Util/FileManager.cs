@@ -1,13 +1,7 @@
 ﻿using log4net;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 using System.Text;
-using System.Threading.Tasks;
 using ThedyxEngine.Engine;
-using LukeMauiFilePicker;
 using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.Util
@@ -30,7 +24,7 @@ namespace ThedyxEngine.Util
             /** List of materials */
             public required List<dynamic?> Materials { get; set; }
             /** List of objects */
-            public required List<dynamic?> Objects { get; set; }
+            public required List<dynamic?>? Objects { get; set; }
         }
         
         /**
@@ -58,8 +52,8 @@ namespace ThedyxEngine.Util
         * Save to file
         */
         public static byte[] GetSimulationRepresentation() {
-            var simulationData = new FileManager.SimulationData {
-                Metadata = new FileManager.Metadata {
+            var simulationData = new SimulationData {
+                Metadata = new Metadata {
                     Version = GlobalVariables.MajorVersion + "." + GlobalVariables.MinorVersion,
                     Date = DateTime.Now.ToString("yyyy-MM-dd"),
                     Time = DateTime.Now.ToString("HH:mm:ss"),
@@ -71,7 +65,7 @@ namespace ThedyxEngine.Util
                     .Select(material => JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(material)))
                     .ToList(),
 
-                Objects = Engine.Engine.EngineObjectsManager.GetObjects()
+                Objects = Engine.Engine.EngineObjectsManager?.GetObjects()
                     .Select(obj => JsonConvert.DeserializeObject<dynamic>(
                         obj.GetJsonRepresentation()
                     )).ToList()

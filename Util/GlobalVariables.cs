@@ -8,7 +8,7 @@ public static class GlobalVariables {
     /** Air temperature in Kelvin*/
     public static double AirTemperature = 293;
     /** Air thermal conductivity */
-    public static double AirThermalConductivity = 0.025;
+    public static readonly double AirThermalConductivity = 0.025;
     /** Stefan-Boltzmann constant */
     public static readonly double StefanBoltzmannConst = 5.67 * Math.Pow(10, -8);
     /** Engine update interval */
@@ -23,7 +23,7 @@ public static class GlobalVariables {
     public static bool SaveSimulationHumanReadable = false;
     /** If engine is going to wait to be in time with real time */
     public static bool WaitToBeInTime = false;
-    /** If objects should loose heat to air */
+    /** If objects should lose heat to air */
     public static bool ObjectsLooseHeatToAir = true;
     /** The lower limit of the temperature color scale */
     public static int MinTemperatureColor = 290;

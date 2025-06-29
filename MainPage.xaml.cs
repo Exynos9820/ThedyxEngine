@@ -1,5 +1,4 @@
 ﻿using System.Timers;
-using LukeMauiFilePicker;
 using ThedyxEngine.Engine;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
@@ -7,23 +6,22 @@ using Timer = System.Timers.Timer;
 
 namespace ThedyxEngine;
 
-public partial class MainPage : ContentPage {
-    int count = 0;
+public partial class MainPage {
     private readonly Timer _updateTimer;
-    private bool _objectsChanged = false;
+    private bool _objectsChanged;
     private readonly EngineCanvas _engineCanvas;
 
     private string _currentError = "";
     private PointF _lastTouchPoint = new PointF(-1, -1);
     public bool IsDrawing { get; set; }
-    public MainPage(IFilePickerService picker) {
+    public MainPage() {
         InitializeComponent();
         log4net.Config.XmlConfigurator.Configure();
 
         // init engine(proccessor of the app with entity of main window)
         Engine.Engine.Init(this);
 
-        GlobalVariables.WindowRefreshRate = Util.SystemInfo.GetRefreshRate();
+        GlobalVariables.WindowRefreshRate = SystemInfo.GetRefreshRate();
         _updateTimer = new Timer
         {
             Interval = 1000.0 / GlobalVariables.WindowRefreshRate // Interval in milliseconds
@@ -53,7 +51,7 @@ public partial class MainPage : ContentPage {
         
         // Set up pinch gesture for zooming
         var pinchGesture = new PinchGestureRecognizer();
-        pinchGesture.PinchUpdated += (s, e) => {
+        pinchGesture.PinchUpdated += (_, e) => {
             if (e.Status == GestureStatus.Running && !IsDrawing)
             {
                 _engineCanvas.Zoom(e.Scale);
@@ -76,7 +74,7 @@ public partial class MainPage : ContentPage {
         EngineGraphicsView.StartInteraction += OnStartInteraction;
     }
     
-    void OnStartInteraction(object? Sender, TouchEventArgs evt) {
+    void OnStartInteraction(object? sender, TouchEventArgs evt) {
         // if not drawing, return
         if (!IsDrawing) return;
         // if engine is running, return
@@ -100,7 +98,7 @@ public partial class MainPage : ContentPage {
             return;
         }
         
-        EngineStateRectangle rect = new EngineStateRectangle(Engine.Engine.EngineObjectsManager.GenerateUniqueName(), width, height);
+        var rect = new EngineStateRectangle(Engine.Engine.EngineObjectsManager?.GenerateUniqueName(), width, height);
         
         // Check which point is the top left
         if (start.X < end.X && start.Y < end.Y) {
@@ -117,7 +115,7 @@ public partial class MainPage : ContentPage {
         rect.Position = new Point((int)rect.Position.X, (int)rect.Position.Y);
 
         rect.CurrentTemperature = 373;
-        Engine.Engine.EngineObjectsManager.AddObject(rect);
+        Engine.Engine.EngineObjectsManager?.AddObject(rect);
         
         _lastTouchPoint = evt.Touches.FirstOrDefault();
         _lastTouchPoint = new PointF(-1, -1);
@@ -127,7 +125,7 @@ public partial class MainPage : ContentPage {
 
 
     
-    private void UpdateTimer_Elapsed(object sender, ElapsedEventArgs e) {
+    private void UpdateTimer_Elapsed(object? sender, ElapsedEventArgs e) {
         // Dispatch to the main thread for UI updates
         MainThread.BeginInvokeOnMainThread(Update);
     }
@@ -147,18 +145,18 @@ public partial class MainPage : ContentPage {
     }
     
 
-    private void SelectedObjectChanged(EngineObject obj) {
+    private void SelectedObjectChanged(EngineObject? obj) {
         // Implement the logic to handle the selection change
         EngineGraphicsView.Invalidate();
         TabProperties.SetObject(obj);
 
-        if(obj == null) {  ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects()); return; }
+        if(obj == null) {  ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects()); return; }
 
-        obj.PropertyChanged += (sender, args) => {
-            ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+        obj.PropertyChanged += (_, _) => {
+            ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects());
             TabProperties.Update();
             EngineGraphicsView.Invalidate();
-            Engine.Engine.EngineObjectsManager.UpdateSmallestAndBiggestTemperature();
+            Engine.Engine.EngineObjectsManager?.UpdateSmallestAndBiggestTemperature();
         };
     }
 
@@ -168,7 +166,7 @@ public partial class MainPage : ContentPage {
     }
 
     public void UpdateAll() {
-        ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+        ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects());
         TabProperties.Update();
         EngineGraphicsView.Invalidate();
         ControlPanel.Update();
@@ -191,7 +189,7 @@ public partial class MainPage : ContentPage {
         if(_objectsChanged) _objectsChanged = false;
 
         if(Engine.Engine.Mode != Engine.Engine.EngineMode.Running) 
-            ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
+            ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects());
         ControlPanel.Update();
         TabProperties.Update();
         EngineGraphicsView.Invalidate();

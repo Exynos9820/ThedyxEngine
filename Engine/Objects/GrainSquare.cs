@@ -1,15 +1,7 @@
 ﻿using log4net;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Microsoft.Maui.Controls.Shapes;
-using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
@@ -43,7 +35,7 @@ namespace ThedyxEngine.Engine {
          * \param p_b Vertex B of the square.
          * \param p_c Vertex C of the square.
          */
-        public GrainSquare(string name, Point position) : base(name) {
+        public GrainSquare(string? name, Point position) : base(name) {
             _position = position;
             SetCachedPoints();
             Material = MaterialManager.GetBaseMaterial();

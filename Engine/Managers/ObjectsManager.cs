@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ThedyxEngine.UI;
+﻿using ThedyxEngine.UI;
 
 namespace ThedyxEngine.Engine.Managers{
     /** 
@@ -67,7 +62,7 @@ namespace ThedyxEngine.Engine.Managers{
          * \param name Name of the object that need to be checked
          * \return True if name is unique
          */
-        public bool IsNameAvailable(string name) {
+        public bool IsNameAvailable(string? name) {
             return !_objects.Any(obj => obj.Name == name);
         }
 
@@ -88,8 +83,8 @@ namespace ThedyxEngine.Engine.Managers{
          * Generate a unique name for the object
          * \return Unique name
          */
-        public string GenerateUniqueName() {
-            string name = "Object";
+        public string? GenerateUniqueName() {
+            string? name = "Object";
             int i = 1;
             while (!IsNameAvailable(name)) {
                 name = "Object" + i;

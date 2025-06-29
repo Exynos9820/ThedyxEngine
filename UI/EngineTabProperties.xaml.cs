@@ -76,7 +76,7 @@ namespace ThedyxEngine.UI {
          * SetObject sets the selected object.
          * \param obj The object to set.
          */
-        public void SetObject(EngineObject obj) {
+        public void SetObject(EngineObject? obj) {
             ClearFields();
             _selectedObject = obj;
             Update();

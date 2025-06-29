@@ -29,7 +29,7 @@ public static class JsonConverters {
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
 
-        string name = jObject.Name;
+        string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
@@ -60,7 +60,7 @@ public static class JsonConverters {
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
 
-        string name = jObject.Name;
+        string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
         Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
@@ -92,7 +92,7 @@ public static class JsonConverters {
         if(type != ObjectType.Rectangle.ToString()) {
             throw new ArgumentException("JSON is not of type Rectangle");
         }
-        string name = jObject.Name;
+        string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
@@ -126,7 +126,7 @@ public static class JsonConverters {
         if(type != ObjectType.StateRectangle.ToString()) {
             throw new ArgumentException("JSON is not of type Rectangle");
         }
-        string name = jObject.Name;
+        string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
         Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
         Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());

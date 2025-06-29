@@ -10,7 +10,7 @@ namespace ThedyxEngine.Util {
     internal class TempoThread {
         private readonly Thread _thread;  /// Thread
         public readonly string Name;      /// Name of the thread
-        private static readonly ILog log = LogManager.GetLogger(typeof(TempoThread)); /// Logger
+        private static readonly ILog Log = LogManager.GetLogger(typeof(TempoThread)); /// Logger
 
         /**
          * \brief Initializes a new instance of the TempoThread class.
@@ -29,7 +29,7 @@ namespace ThedyxEngine.Util {
          */
         public void Start() {
             _thread.Start();
-            log.Info("Thread " + Name + " started");
+            Log.Info("Thread " + Name + " started");
         }
 
         /**
@@ -37,7 +37,7 @@ namespace ThedyxEngine.Util {
          */
         public void Join() {
             _thread.Join();
-            log.Info("Thread " + Name + " joined");
+            Log.Info("Thread " + Name + " joined");
         }
 
         /**
@@ -51,6 +51,7 @@ namespace ThedyxEngine.Util {
          * \brief ABort Thread
          * Doesn
          */
+        [Obsolete("Obsolete")]
         public void Abort() {
             _thread.Abort();
         }
