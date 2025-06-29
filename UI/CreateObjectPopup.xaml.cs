@@ -9,12 +9,10 @@ namespace ThedyxEngine.UI;
  * CreateObjectPopup is a popup that allows the user to create an object.
  */
 public partial class CreateObjectPopup : Popup {
-    /** The object type. */
-    private ObjectType _objectType;
     /** The object being created. */
-    private EngineObject _object;
+    private readonly EngineObject _object;
     /** The event that is called when the object is created. */
-    public Action OnObjectCreated;
+    public Action? OnObjectCreated;
     
     /**
      * Constructor for the CreateObjectPopup class.
@@ -22,7 +20,6 @@ public partial class CreateObjectPopup : Popup {
      */
     public CreateObjectPopup(ObjectType objectType) {
         InitializeComponent();
-        _objectType = objectType;
         MakeEntriesWhite();
         switch (objectType) {
             case ObjectType.Rectangle:
@@ -37,19 +34,19 @@ public partial class CreateObjectPopup : Popup {
                 TitleLabel.Text = "Create State Change Rectangle";
                 _object = new EngineStateRectangle("", 10, 10);
                 break;
+            case ObjectType.StateGrainSquare:
             default:
                 Debug.Assert(false, "Invalid object type");
                 throw new Exception("Invalid object type");
-                break;
         }
 
         _object.Material = MaterialManager.GetBaseMaterial();
         Material.ItemsSource = MaterialManager.GetMaterials();
         Material.SelectedItem = _object.Material;
-        _object.Position = new Microsoft.Maui.Graphics.Point(0, 0);
+        _object.Position = new Point(0, 0);
         XPosition.Text = "0";
         YPosition.Text = "0";
-        _object.Size = new Microsoft.Maui.Graphics.Point(1, 1);
+        _object.Size = new Point(1, 1);
         Width.Text = "1";
         Height.Text = "1";
         _object.SimulationTemperature = 200;
@@ -59,8 +56,9 @@ public partial class CreateObjectPopup : Popup {
     /**
      * Close closes the popup.
      */
+    [Obsolete("Obsolete")]
     private async void ShowErrorMessageBox(string text) {
-        await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
+        await Application.Current.MainPage?.DisplayAlert("Error", text, "OK");
     }
     
     /**
@@ -83,7 +81,8 @@ public partial class CreateObjectPopup : Popup {
      * \param e The event arguments.
      */
     private void OnNameCompleted(object? sender, EventArgs? e) {
-        if (_object.Name != NameEntry.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(NameEntry.Text)) {
+        if (_object.Name != NameEntry.Text && Engine.Engine.EngineObjectsManager != null && 
+                !Engine.Engine.EngineObjectsManager.IsNameAvailable(NameEntry.Text)) {
             ShowErrorMessageBox("Name is not available");
             NameEntry.BackgroundColor = Colors.Red;
             return;
@@ -114,7 +113,6 @@ public partial class CreateObjectPopup : Popup {
      * \param e The event arguments.
      */
     private void OnFixedTemperatureCheckBoxChanged(object sender, EventArgs e) {
-        if (_object == null) return; 
         _object.IsTemperatureFixed = FixedTemperatureCheckBox.IsChecked;
     }
     
@@ -124,7 +122,6 @@ public partial class CreateObjectPopup : Popup {
      * \param e The event arguments.
      */
     private void OnGasStateAllowedCheckBoxChanged(object sender, EventArgs e) {
-        if (_object == null) return; 
         _object.IsGasStateAllowed = GasAllowedCheckBox.IsChecked;
     }
 
@@ -136,7 +133,7 @@ public partial class CreateObjectPopup : Popup {
      */
     private void OnXPositionCompleted(object? sender, EventArgs? e) {
         if (double.TryParse(XPosition.Text, out double x)) {
-            _object.Position = new Microsoft.Maui.Graphics.Point(x, _object.Position.Y);
+            _object.Position = new Point(x, _object.Position.Y);
         }
     }
     
@@ -147,7 +144,7 @@ public partial class CreateObjectPopup : Popup {
      */
     private void OnYPositionCompleted(object? sender, EventArgs? e) {
         if (double.TryParse(YPosition.Text, out double y)) {
-            _object.Position = new Microsoft.Maui.Graphics.Point(_object.Position.X, y);
+            _object.Position = new Point(_object.Position.X, y);
         }
     }
     
@@ -162,7 +159,7 @@ public partial class CreateObjectPopup : Popup {
         }
 
         if (double.TryParse(Height.Text, out double height)) {
-            _object.Size = new Microsoft.Maui.Graphics.Point(_object.Size.X, height);
+            _object.Size = new Point(_object.Size.X, height);
         }
     }
     
@@ -177,7 +174,7 @@ public partial class CreateObjectPopup : Popup {
         }
 
         if (double.TryParse(Width.Text, out double width)) {
-            _object.Size = new Microsoft.Maui.Graphics.Point(width, _object.Size.Y);
+            _object.Size = new Point(width, _object.Size.Y);
         }
     }
     
@@ -187,7 +184,6 @@ public partial class CreateObjectPopup : Popup {
      * \param e The event arguments.
      */
     private void OnMaterialChanged(object? sender, EventArgs? e) {
-        if (_object == null) return;
         if (Material.SelectedItem != null)
             _object.Material = (Material)Material.SelectedItem;
     }

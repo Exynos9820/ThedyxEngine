@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using System.Diagnostics;
+using log4net;
 using Newtonsoft.Json;
 using System.Text;
 using ThedyxEngine.Engine;
@@ -103,10 +104,11 @@ namespace ThedyxEngine.Util
                     byte[] jsonBytes = Convert.FromBase64String(inputString);
                     string jsonOutput = Encoding.UTF8.GetString(jsonBytes);
                     simulationData = JsonConvert.DeserializeObject<SimulationData>(jsonOutput);
+                    Debug.Assert(simulationData != null, nameof(simulationData) + " != null");
                     GlobalVariables.MinTemperatureColor = simulationData.Metadata.MinTemperatureColor;
                     GlobalVariables.MaxTemperatureColor = simulationData.Metadata.MaxTemperatureColor;
                 }
-                catch (Exception e) {
+                catch (Exception _) {
                     simulationData = JsonConvert.DeserializeObject<SimulationData>(inputString);
                 }
                 

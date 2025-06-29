@@ -14,7 +14,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Optimize objects
          * \param objects list of objects
          */
-    public static  void Optimize(List<EngineObject> objects, int threads) {
+    public static  void Optimize(List<EngineObject>? objects, int threads) {
         List<Task> tasks = new List<Task>();
         threads = 1;
         for (int i = 0; i < Math.Min(threads, objects.Count); i++) {
@@ -38,8 +38,8 @@ namespace ThedyxEngine.Engine.Managers {
         }
 
         // Show progress bar before starting
-        Engine._mainWindow.LoadingProgressBar.IsVisible = true;
-        Engine._mainWindow.LoadingProgressBar.Progress = 0;
+        Engine.MainWindow.LoadingProgressBar.IsVisible = true;
+        Engine.MainWindow.LoadingProgressBar.Progress = 0;
 
         // While there are tasks running, update the progress bar
         while (tasks.Count > 0) {
@@ -51,7 +51,7 @@ namespace ThedyxEngine.Engine.Managers {
             float progressValue = (float)sum / (threads/ 100.0f);
 
             // Update the progress bar on UI thread
-            Engine._mainWindow.LoadingProgressBar.Progress = progressValue;
+            Engine.MainWindow.LoadingProgressBar.Progress = progressValue;
 
             // Remove completed tasks
             tasks.RemoveAll(t => t.IsCompleted);
@@ -59,8 +59,8 @@ namespace ThedyxEngine.Engine.Managers {
 
         // Ensure progress bar is fully completed before hiding
         MainThread.BeginInvokeOnMainThread(() => {
-            Engine._mainWindow.LoadingProgressBar.Progress = 1.0;
-            Engine._mainWindow.LoadingProgressBar.IsVisible = false;
+            Engine.MainWindow.LoadingProgressBar.Progress = 1.0;
+            Engine.MainWindow.LoadingProgressBar.IsVisible = false;
         });
     }
 
@@ -88,7 +88,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Optimize touching objects, by setting adjacent squares for every square of an object
          * \param objects list of objects
          */
-        private static void OptimizeTouching(List<EngineObject> objects, int startPosition, int endPosition) {
+        private static void OptimizeTouching(List<EngineObject>? objects, int startPosition, int endPosition) {
             for (int i = startPosition; i < endPosition; i++) {
                 List<GrainSquare> firstExternal = objects[i].GetExternalSquares();
                 FillAdjacentSquares(objects[i].GetSquares(), objects[i].GetSquares());
@@ -105,7 +105,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Clear optimization
          * \param objects list of objects
          */
-        private static void ClearOptimization(List<EngineObject> objects, int startPosition, int endPosition) {
+        private static void ClearOptimization(List<EngineObject>? objects, int startPosition, int endPosition) {
             for (int i = startPosition; i < endPosition; i++) {
                 List<GrainSquare> squares = objects[i].GetSquares();
                 foreach (var square in squares) {

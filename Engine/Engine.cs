@@ -30,18 +30,18 @@ namespace ThedyxEngine.Engine{
         /** Manager for the engine objects */
         public static ObjectsManager? EngineObjectsManager;
         /** Main window */
-        public static MainPage? _mainWindow;
+        public static MainPage? MainWindow;
         /** Engine thread */
         private static TempoThread? _engineThread;
         /** Frames counter */
-        private static int _frames = 0;
+        private static int _frames;
         /** Simulation refresh rate, per second */
         private static int _simulationRefreshRate = 60;
         /** Action to Show an error message */
         public static Action<string>? ShowErrorMessage;
 
         /** Time of the simulation in microseconds */
-        private static long _simulationTime = 0;
+        private static long _simulationTime;
         /** Should we optimize the engine by setting adjacent squares to be touching */
         private static bool _optimize = true;
         /** Current Engine mode */
@@ -54,7 +54,7 @@ namespace ThedyxEngine.Engine{
          */
         public static void Init(MainPage window){
             _engineLock = new object();
-            _mainWindow = window;
+            MainWindow = window;
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
             // load kettle copper example
@@ -109,12 +109,10 @@ namespace ThedyxEngine.Engine{
             for (int i = 0; i < threads; i++) {
                 TasksResults[i] = 0;
             }
-            
-            // Show progress bar before starting
-            MainThread.BeginInvokeOnMainThread(() => _mainWindow.LoadingProgressBar.IsVisible = false);
 
 
             lock (_engineLock) {
+                Debug.Assert(EngineObjectsManager != null, nameof(EngineObjectsManager) + " != null");
                 EngineObjectsManager.ResetObjectsTemperature();
                 if (_optimize) {
                     ObjectsOptimizationManager.Optimize(EngineObjectsManager.GetObjects(),
@@ -145,6 +143,7 @@ namespace ThedyxEngine.Engine{
             }
 
             // Distribute objects round-robin style
+            Debug.Assert(EngineObjectsManager != null, nameof(EngineObjectsManager) + " != null");
             List<EngineObject> allObjects = EngineObjectsManager.GetObjects();
             for (int i = 0; i < allObjects.Count; i++) {
                 int coreIndex = i % coresToUse;
@@ -160,7 +159,7 @@ namespace ThedyxEngine.Engine{
 
             while (true) {
                 stopwatch.Restart();
-                double msPerFrame = 1000.0 / (double)_simulationRefreshRate;  // milliseconds per frame
+                double msPerFrame = 1000.0 / _simulationRefreshRate;  // milliseconds per frame
 
                 lock (_engineLock) {
                     if (Mode != EngineMode.Running) break;
@@ -277,10 +276,10 @@ namespace ThedyxEngine.Engine{
         public static void ResetSimulation() {
             if (Mode == EngineMode.Running) throw new InvalidOperationException("Cannot reset simulation while running");
 
-            EngineObjectsManager.ResetObjectsTemperature();
+            EngineObjectsManager?.ResetObjectsTemperature();
             _simulationTime = 0;
             Log.Info("Simulation reset");
-            _mainWindow.UpdateAll();
+            MainWindow?.UpdateAll();
         }
 
         /**
@@ -289,11 +288,13 @@ namespace ThedyxEngine.Engine{
         public static void ClearSimulation() {
             if (_engineLock == null)        throw new InvalidOperationException("Engine lock is not initialized");
 
-            lock (_engineLock) {
+            lock (_engineLock)
+            {
+                Debug.Assert(EngineObjectsManager != null, nameof(EngineObjectsManager) + " != null");
                 EngineObjectsManager.ClearObjects();
             }
             Log.Info("All objects cleared");
-            _mainWindow.UpdateAll();
+            MainWindow?.UpdateAll();
         }
 
     }

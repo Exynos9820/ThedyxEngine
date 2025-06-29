@@ -24,20 +24,20 @@ public static class JsonConverters {
 
         var jObject = JsonConvert.DeserializeObject<dynamic>(json, settings);
 
-        string type = jObject.Type;
+        string type = jObject?.Type;
         if (type != ObjectType.GrainSquare.ToString())
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
-        Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
 
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
+        Material material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
         bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
-        return new GrainSquare(name, Position) {
+        return new GrainSquare(name, position) {
             SimulationTemperature = simulationTemperature,
             CurrentTemperature = simulationTemperature,
-            Material = Material,
+            Material = material,
             IsTemperatureFixed = isTemperatureFixed,
             IsGasStateAllowed = isGasStateAllowed
         };
@@ -58,17 +58,17 @@ public static class JsonConverters {
         string type = jObject.Type;
         if (type != ObjectType.StateGrainSquare.ToString())
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
-        Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
 
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
+        Material material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
         bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
-        return new StateGrainSquare(name, Position, Material) {
+        return new StateGrainSquare(name, position, material) {
             SimulationTemperature = simulationTemperature,
             CurrentTemperature = simulationTemperature,
-            Material = Material,
+            Material = material,
             IsTemperatureFixed = isTemperatureFixed,
             IsGasStateAllowed = isGasStateAllowed
         };
@@ -94,16 +94,16 @@ public static class JsonConverters {
         }
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-        Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
-        Material Material = MaterialManager.GetMaterialByName((string)jObject.Material);
+        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+        Point size = Util.Parsers.ParsePoint(jObject.Size.ToString());
+        Material material = MaterialManager.GetMaterialByName((string)jObject.Material);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
         bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
-        return new EngineRectangle(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
+        return new EngineRectangle(name, (int)(position.X + size.X), (int)(position.Y + size.Y)) {
             SimulationTemperature = simulationTemperature,
-            Position = Position,
-            Size = Size,
-            Material = Material,
+            Position = position,
+            Size = size,
+            Material = material,
             IsTemperatureFixed = isTemperatureFixed,
             IsGasStateAllowed = isGasStateAllowed
         };
@@ -128,17 +128,17 @@ public static class JsonConverters {
         }
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Point Position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-        Point Size = Util.Parsers.ParsePoint(jObject.Size.ToString());
-        Material Material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
+        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+        Point size = Util.Parsers.ParsePoint(jObject.Size.ToString());
+        Material material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
         bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
 
-        return new EngineStateRectangle(name, (int)(Position.X + Size.X), (int)(Position.Y + Size.Y)) {
+        return new EngineStateRectangle(name, (int)(position.X + size.X), (int)(position.Y + size.Y)) {
             SimulationTemperature = simulationTemperature,
-            Position = Position,
-            Size = Size,
-            Material = Material,
+            Position = position,
+            Size = size,
+            Material = material,
             IsTemperatureFixed = isTemperatureFixed,
             IsGasStateAllowed = isGasStateAllowed
         };

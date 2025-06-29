@@ -52,7 +52,7 @@ namespace ThedyxEngine.Engine.Managers{
         /** 
          * Get all visible objects on the current Canvas
          * \param manager The canvas manager provides the current view context
-         * \return List<EngineObject> of the visivle objects
+         * \return List<EngineObject> of the visible objects
          */
         public List<EngineObject> GetVisibleObjects(CanvasManager manager) {
             return _objects.Where(obj => obj.IsVisible(manager)).ToList();
@@ -63,7 +63,7 @@ namespace ThedyxEngine.Engine.Managers{
          * \return True if name is unique
          */
         public bool IsNameAvailable(string? name) {
-            return !_objects.Any(obj => obj.Name == name);
+            return _objects.All(obj => obj.Name != name);
         }
 
 
@@ -83,8 +83,8 @@ namespace ThedyxEngine.Engine.Managers{
          * Generate a unique name for the object
          * \return Unique name
          */
-        public string? GenerateUniqueName() {
-            string? name = "Object";
+        public string GenerateUniqueName() {
+            string name = "Object";
             int i = 1;
             while (!IsNameAvailable(name)) {
                 name = "Object" + i;
