@@ -1,5 +1,5 @@
 ﻿using System.Timers;
-using ThedyxEngine.Engine;
+using ThedyxEngine.Engine.Objects;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 using Timer = System.Timers.Timer;
@@ -32,12 +32,12 @@ public partial class MainPage {
 
         ObjectsList.OnSelectedObjectChanged = SelectedObjectChanged;
         ControlPanel.DeleteSelected = SelectedObjectChanged;
-        ControlPanel.UpdateUI = UpdateAll;
+        ControlPanel.UpdateUi = UpdateAll;
         ControlPanel.MainPage = this;
         ObjectsList.OnDeleteObject = UpdateAllAfterChangeProperties;
         ObjectsList.OnZoomToObject = ZoomToObject;
         ControlPanel.EngineModeChanged = EngineModeChanged;
-        ControlPanel.UpdateUI = UpdateAll;
+        ControlPanel.UpdateUi = UpdateAll;
         _engineCanvas = new EngineCanvas(this);
         ControlPanel.ZoomChanged = d => _engineCanvas.Zoom(d);
         EngineGraphicsView.Drawable = _engineCanvas;
@@ -81,7 +81,7 @@ public partial class MainPage {
         if (Engine.Engine.Mode == Engine.Engine.EngineMode.Running) return;
         
         // check if last touch point is valid
-        if (_lastTouchPoint.X == -1 && _lastTouchPoint.Y == -1) {
+        if (Math.Abs(_lastTouchPoint.X - (-1)) < 1e-6 && Math.Abs(_lastTouchPoint.Y - (-1)) < 1e-6) {
             _lastTouchPoint = evt.Touches.FirstOrDefault();
             return;
         }

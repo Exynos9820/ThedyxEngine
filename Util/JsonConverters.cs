@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Util;
 
@@ -27,7 +28,7 @@ public static class JsonConverters {
         string type = jObject?.Type;
         if (type != ObjectType.GrainSquare.ToString())
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
-        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+        Point position = Parsers.ParsePoint(jObject.Position.ToString());
 
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
@@ -58,7 +59,7 @@ public static class JsonConverters {
         string type = jObject.Type;
         if (type != ObjectType.StateGrainSquare.ToString())
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
-        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
+        Point position = Parsers.ParsePoint(jObject.Position.ToString());
 
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
@@ -94,8 +95,8 @@ public static class JsonConverters {
         }
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-        Point size = Util.Parsers.ParsePoint(jObject.Size.ToString());
+        Point position = Parsers.ParsePoint(jObject.Position.ToString());
+        Point size = Parsers.ParsePoint(jObject.Size.ToString());
         Material material = MaterialManager.GetMaterialByName((string)jObject.Material);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
         bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;
@@ -128,8 +129,8 @@ public static class JsonConverters {
         }
         string? name = jObject.Name;
         double simulationTemperature = (double)jObject.SimulationTemperature;
-        Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());
-        Point size = Util.Parsers.ParsePoint(jObject.Size.ToString());
+        Point position = Parsers.ParsePoint(jObject.Position.ToString());
+        Point size = Parsers.ParsePoint(jObject.Size.ToString());
         Material material = MaterialManager.GetMaterialByName((string)jObject.MaterialName);
         bool isTemperatureFixed = (bool)jObject.IsTemperatureFixed;
         bool isGasStateAllowed = (bool)jObject.IsGasStateAllowed;

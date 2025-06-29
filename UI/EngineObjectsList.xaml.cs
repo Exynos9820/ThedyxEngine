@@ -1,10 +1,10 @@
-using ThedyxEngine.Engine;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.UI {
     /**
      * EngineObjectsList is a list of engine objects that the user can select from.
      */
-    public partial class EngineObjectsList : ContentView {
+    public partial class EngineObjectsList {
         /** The currently selected object. */
         private EngineObject _currentSelectedEngineObject;
         /** The event that is called when the selected object changes. */

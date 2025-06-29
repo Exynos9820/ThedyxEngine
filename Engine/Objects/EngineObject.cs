@@ -3,7 +3,7 @@ using System.Numerics;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 
-namespace ThedyxEngine.Engine {
+namespace ThedyxEngine.Engine.Objects {
     
     /**
      * \enum ObjectType
@@ -45,16 +45,16 @@ namespace ThedyxEngine.Engine {
         protected Point _size = new(1, 1);
 
         /// Selection state of the object.
-        private bool _isSelected = false;
+        private bool _isSelected;
 
         /// Material of the object.
         protected Material _material;
         
         /// Is temperature of the object is fixed
-        protected bool _isTemperatureFixed = false;
+        protected bool _isTemperatureFixed;
         
         /// Is Gas State of the object is allowed
-        protected bool _isGasStateAllowed = false;
+        protected bool _isGasStateAllowed;
 
         /**
          * Constructor for creating a new EngineObject.
@@ -121,7 +121,7 @@ namespace ThedyxEngine.Engine {
         public double CurrentTemperature {
             get => _currentTemperature;
             set {
-                if (_currentTemperature != value) {
+                if (Math.Abs(_currentTemperature - value) > 1e-9) {
                     _currentTemperature = value;
                     if (Engine.GetMode() == Engine.EngineMode.Running) {
                         OnPropertyChanged(nameof(CurrentTemperature));
@@ -134,7 +134,7 @@ namespace ThedyxEngine.Engine {
         public double SimulationTemperature {
             get => _simulationTemperature;
             set {
-                if (_simulationTemperature != value) {
+                if (Math.Abs(_simulationTemperature - value) > 1e-9) {
                     _simulationTemperature = value;
                     _currentTemperature = value;
                     OnPropertyChanged(nameof(SimulationTemperature));

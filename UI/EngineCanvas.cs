@@ -1,9 +1,8 @@
 using System.Diagnostics;
 using System.Numerics;
 using log4net;
-using TempoEngine.UI;
-using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.UI {
     /**
@@ -15,7 +14,7 @@ namespace ThedyxEngine.UI {
         /** The grid drawer. It draws the grid */
         private readonly GridDrawer _gridDrawer;
         /** The logger */
-        private static readonly ILog log = LogManager.GetLogger(typeof(EngineCanvas));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(EngineCanvas));
         /** The main page of the whole program*/
         private MainPage _mainPage;
         /** Last dirty rectangle */
@@ -24,7 +23,7 @@ namespace ThedyxEngine.UI {
          * Constructor for the EngineCanvas class.
          * \param mainPage The main page of the program.
          */
-        public EngineCanvas(MainPage mainPage) : base() {
+        public EngineCanvas(MainPage mainPage) {
             _canvasManager = new CanvasManager();
             _gridDrawer = new GridDrawer();
             _mainPage = mainPage;
@@ -53,12 +52,12 @@ namespace ThedyxEngine.UI {
 
             // log time
             stopwatch.Stop();
-            log.Info("Time to clear canvas: " + stopwatch.ElapsedMilliseconds + " ms");
+            Log.Info("Time to clear canvas: " + stopwatch.ElapsedMilliseconds + " ms");
             stopwatch.Restart();
 
             List<EngineObject> objects = Engine.Engine.EngineObjectsManager.GetVisibleObjects(_canvasManager);
             stopwatch.Stop();
-            log.Info("Time to get visible objects: " + stopwatch.ElapsedMilliseconds + " ms");
+            Log.Info("Time to get visible objects: " + stopwatch.ElapsedMilliseconds + " ms");
             stopwatch.Restart();
             
 
@@ -76,7 +75,7 @@ namespace ThedyxEngine.UI {
                     }
                     double temp = temperatures[j];
                     float opacity = opacities[j];
-                    Color fillColor = Colors.Black;
+                    Color fillColor;
                     if (!Engine.Engine.ShowColor) {
                         fillColor = ColorManager.GetColorFromTemperature(temp);
                         canvas.StrokeSize = 2;
@@ -99,8 +98,8 @@ namespace ThedyxEngine.UI {
                     // if we need to show temperature, draw a label in the center of the polygon
                     if (Engine.Engine.ShowTemperature) {
                         // get the center of the polygon
-                        double x = 0;
-                        double y = 0;
+                        double x;
+                        double y;
 
                         x = (rect.X + rect.Width / 2);
                         y = (rect.Y + rect.Height / 2);
@@ -116,14 +115,14 @@ namespace ThedyxEngine.UI {
             }
             
             stopwatch.Stop();
-            log.Info("Time to draw polygons: " + stopwatch.ElapsedMilliseconds + " ms");
+            Log.Info("Time to draw polygons: " + stopwatch.ElapsedMilliseconds + " ms");
             stopwatch.Restart();
             
             if (Engine.Engine.ShowGrid) {
                 canvas.Alpha = 1;
                 _gridDrawer.DrawGrid(canvas, _canvasManager, dirtyRect);
                 stopwatch.Stop();
-                log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
+                Log.Info("Time to draw grid: " + stopwatch.ElapsedMilliseconds + " ms");
                 stopwatch.Restart();
             }
             

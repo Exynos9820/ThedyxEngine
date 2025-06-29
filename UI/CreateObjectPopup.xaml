@@ -43,12 +43,12 @@
             
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Fixed Temperature" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
-                <CheckBox Grid.Column="1" x:Name="FixedTemperatureCheckBox" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnFixedTemperatureCheckBoxChanged"/>
+                <CheckBox x:Name="FixedTemperatureCheckBox" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnFixedTemperatureCheckBoxChanged"/>
             </HorizontalStackLayout>
             
             <HorizontalStackLayout>
                 <Label VerticalOptions="Center" WidthRequest="-1" Text="Gas State Allowed" HorizontalOptions="Start" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
-                <CheckBox Grid.Column="1" x:Name="GasAllowedCheckBox" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnGasStateAllowedCheckBoxChanged"/>
+                <CheckBox x:Name="GasAllowedCheckBox" Color="Peru" Height="20 "  IsChecked="False" CheckedChanged="OnGasStateAllowedCheckBoxChanged"/>
             </HorizontalStackLayout>
 
             

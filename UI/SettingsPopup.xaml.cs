@@ -1,3 +1,4 @@
+using System.Globalization;
 using CommunityToolkit.Maui.Views;
 using ThedyxEngine.Util;
 
@@ -27,9 +28,9 @@ public partial class SettingsPopup : Popup {
      * FillEntriesValues fills the entries with the current values of the settings.
      */
     private void FillEntriesValues() {
-        RoomTemperature.Text        = GlobalVariables.AirTemperature.ToString();
+        RoomTemperature.Text        = GlobalVariables.AirTemperature.ToString(CultureInfo.InvariantCulture);
         RadiationDepth.Text         = GlobalVariables.RadiationDepth.ToString();
-        EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString();
+        EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString(CultureInfo.InvariantCulture);
         UIUpdatesPerSecond.Text     = GlobalVariables.WindowRefreshRate.ToString();
         IsHumanReadable.IsChecked   = GlobalVariables.SaveSimulationHumanReadable;
         IsObjectLooseHeatToAir.IsChecked = GlobalVariables.ObjectsLooseHeatToAir;
@@ -92,7 +93,7 @@ public partial class SettingsPopup : Popup {
         }else {
             ShowErrorMessageBox("Engine updates per second must be a number");   
         }
-        EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString();
+        EngineUpdatesPerSecond.Text = GlobalVariables.EngineIntervalUpdatePerSecond.ToString(CultureInfo.InvariantCulture);
     }
     
     /**

@@ -31,9 +31,14 @@
          * \return True if the two line segments are collinear, false otherwise.
          */
         public static bool AreCollinear(Line l1, Line l2) {
-            // Check if the two lines are collinear by cross product being zero
-            return (l1.End.X - l1.Start.X) * (l2.End.Y - l2.Start.Y) ==
-                   (l2.End.X - l2.Start.X) * (l1.End.Y - l1.Start.Y);
+            double dx1 = l1.End.X - l1.Start.X;
+            double dy1 = l1.End.Y - l1.Start.Y;
+            double dx2 = l2.End.X - l2.Start.X;
+            double dy2 = l2.End.Y - l2.Start.Y;
+
+            double cross = dx1 * dy2 - dx2 * dy1;
+
+            return Math.Abs(cross) < 1e-9;
         }
 
         /**
