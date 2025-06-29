@@ -21,7 +21,7 @@ public static class MauiProgram
         builder.Services
             .AddFilePicker()
             .AddSingleton<MainPage>() 
-            .AddSingleton<IFileSaver>(FileSaver.Default)
+            .AddSingleton(FileSaver.Default)
             .AddSingleton<MainPage>();
         
 #if DEBUG

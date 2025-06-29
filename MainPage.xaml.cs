@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Timers;
-using log4net;
+﻿using System.Timers;
 using LukeMauiFilePicker;
 using ThedyxEngine.Engine;
 using ThedyxEngine.UI;
@@ -11,14 +9,13 @@ namespace ThedyxEngine;
 
 public partial class MainPage : ContentPage {
     int count = 0;
-    private readonly Timer updateTimer;
+    private readonly Timer _updateTimer;
     private bool _objectsChanged = false;
-    private EngineCanvas _engineCanvas;
-    public readonly IFilePickerService picker;
-    private static readonly ILog log = LogManager.GetLogger(typeof(MainPage)); // Logger
+    private readonly EngineCanvas _engineCanvas;
+
     private string _currentError = "";
     private PointF _lastTouchPoint = new PointF(-1, -1);
-    public bool IsDrawing { get; set; } = false;
+    public bool IsDrawing { get; set; }
     public MainPage(IFilePickerService picker) {
         InitializeComponent();
         log4net.Config.XmlConfigurator.Configure();
@@ -27,12 +24,12 @@ public partial class MainPage : ContentPage {
         Engine.Engine.Init(this);
 
         GlobalVariables.WindowRefreshRate = Util.SystemInfo.GetRefreshRate();
-        updateTimer = new Timer
+        _updateTimer = new Timer
         {
             Interval = 1000.0 / GlobalVariables.WindowRefreshRate // Interval in milliseconds
         };
-        updateTimer.Elapsed += UpdateTimer_Elapsed;
-        updateTimer.Start();
+        _updateTimer.Elapsed += UpdateTimer_Elapsed;
+        _updateTimer.Start();
         ObjectsChanged();
 
         ObjectsList.OnSelectedObjectChanged = SelectedObjectChanged;
@@ -43,8 +40,8 @@ public partial class MainPage : ContentPage {
         ObjectsList.OnZoomToObject = ZoomToObject;
         ControlPanel.EngineModeChanged = EngineModeChanged;
         ControlPanel.UpdateUI = UpdateAll;
-        ControlPanel.ZoomChanged = d => _engineCanvas.Zoom(d);
         _engineCanvas = new EngineCanvas(this);
+        ControlPanel.ZoomChanged = d => _engineCanvas.Zoom(d);
         EngineGraphicsView.Drawable = _engineCanvas;
         EngineGraphicsView.BackgroundColor = Colors.White;
         TabProperties.OnObjectChange = UpdateAll;
@@ -68,12 +65,11 @@ public partial class MainPage : ContentPage {
 
         // Set up pan gesture for panning
         var panGesture = new PanGestureRecognizer();
-        panGesture.PanUpdated += (s, e) => {
-            if (e.StatusType == GestureStatus.Running && !IsDrawing) {
-                _engineCanvas.Move(e);
-                if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
-                    EngineGraphicsView.Invalidate();
-            }
+        panGesture.PanUpdated += (_, e) => {
+            if (e.StatusType != GestureStatus.Running || IsDrawing) return;
+            _engineCanvas.Move(e);
+            if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
+                EngineGraphicsView.Invalidate();
         };
         EngineGraphicsView.GestureRecognizers.Add(pinchGesture);
         EngineGraphicsView.GestureRecognizers.Add(panGesture);

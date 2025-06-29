@@ -73,11 +73,21 @@ end
 % Time vector for plotting
 time = (0:steps-1) * dt;
 
-% Plot results
+
+
 figure;
-plot(time, T1_avg_array, 'r-', time, T2_avg_array, 'b-');
-xlabel('Time [s]');
-ylabel('Temperature [°C]');
-legend('Cube A (hot)', 'Cube B (cold)');
-title('Heat exchange between two aluminum cubes (with non-uniform temperature)');
+
+plot(time, T1_avg_array, "r-", time, T2_avg_array, "b-");
+
+big = 18;                      % twice the usual size
+
+xlabel("Time [s]",           "FontSize", big);
+ylabel("Temperature [°C]",   "FontSize", big);
+title("Heat exchange between two aluminum cubes", "FontSize", big);
+
+lgd = legend("Cube A (hot)", "Cube B (cold)");
+set(lgd, "FontSize", big);
+
+set(gca, "FontSize", big);    % tick labels & axes numbers
+
 grid on;

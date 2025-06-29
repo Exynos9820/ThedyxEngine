@@ -1,6 +1,3 @@
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 
@@ -12,7 +9,7 @@ namespace ThedyxEngine.UI {
         /** The currently selected object. */
         private EngineObject? _selectedObject;
         /** Whether the tab is enabled. */
-        private bool isEnabled = true;
+        private bool _isEnabled = true;
         /** The event that is called when the object changes. */
         public Action OnObjectChange;
         
@@ -37,7 +34,7 @@ namespace ThedyxEngine.UI {
             DeleteButton.IsEnabled = true;
 
             ClearFields();
-            if (isEnabled)
+            if (_isEnabled)
                 SetFieldsEnabled(true);
 
             SetObjectParameters();
@@ -47,9 +44,9 @@ namespace ThedyxEngine.UI {
          * Enable enables or disables the tab.
          * \param IsEnabled Whether the tab is enabled.
          */
-        public void Enable(bool IsEnabled) {
-            isEnabled = IsEnabled;
-            if (!isEnabled) {
+        public void Enable(bool isEnabled) {
+            _isEnabled = isEnabled;
+            if (!_isEnabled) {
                 SetFieldsEnabled(false);
             }
         }
@@ -182,7 +179,7 @@ namespace ThedyxEngine.UI {
          */
         private void OnXPositionCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
-            if (double.TryParse(tbXPosition.Text, out double x)) {
+            if (double.TryParse(tbXPosition.Text, out var x)) {
                 _selectedObject.Position = new Microsoft.Maui.Graphics.Point(x, _selectedObject.Position.Y);
             }
             OnObjectChange?.Invoke();
