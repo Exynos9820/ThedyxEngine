@@ -10,7 +10,7 @@
 
                 <!-- Left Sidebar: Objects List -->
             <VerticalStackLayout BackgroundColor="White">
-            <ui:MaterialsList x:Name="ListMaterials"
+            <ui:MaterialsList x:Name="ListMaterials" Grid.Column="0"
                               HorizontalOptions="FillAndExpand"
                               VerticalOptions="FillAndExpand"
                               WidthRequest="150" HeightRequest="610" BackgroundColor="White"/>

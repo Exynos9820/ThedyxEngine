@@ -1,11 +1,12 @@
-﻿using System.ComponentModel;
-using System.Numerics;
+﻿using log4net;
 using Newtonsoft.Json;
+using System.ComponentModel;
+using System.Numerics;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine.Objects {
+namespace ThedyxEngine.Engine {
     /**
      * \class GrainSquare
      * \brief Represents a square grain object within the simulation engine.
@@ -18,12 +19,14 @@ namespace ThedyxEngine.Engine.Objects {
      * \see CanvasManager
      */
     public class GrainSquare : EngineObject {
-        protected double EnergyDelta; // current energy delta
+        protected double EnergyDelta = 0; // current energy delta
         public event PropertyChangedEventHandler? PositionChanged; // event triggered when position changes
         private List<GrainSquare> _adjacentSquares = []; // list of adjacent squares
         private HashSet<GrainSquare> _radiationExchangeSquares = [];
         // lock for applying energy delta
         protected readonly object EnergyLock = new();
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(GrainSquare));
 
         /**
          * Constructs a Grainsquare with specified vertices and name.
@@ -40,9 +43,9 @@ namespace ThedyxEngine.Engine.Objects {
 
 
         // Cached points of square to not to allocate anything during the runtime
-        protected Point CachedPointB = new(0, 0); // right top corner
-        protected Point CachedPointC = new(0, 0); // left bottom corner
-        protected Point CachedPointD = new (0, 0); // right bottom corner
+        protected Point _cachedPointB = new(0, 0); // right top corner
+        protected Point _cachedPointC = new(0, 0); // left bottom corner
+        protected Point _cachedPointD = new(0, 0); // right bottom corner
 
         /**
          * Generates the polygons that visually represent the square.
@@ -64,9 +67,9 @@ namespace ThedyxEngine.Engine.Objects {
          * \brief Sets caeched point of the GrainSquare
          */
         protected void SetCachedPoints() {
-            CachedPointB = new(Position.X + 1, Position.Y);
-            CachedPointC = new(Position.X, Position.Y - 1);
-            CachedPointD = new(Position.X + 1, Position.Y - 1);
+            _cachedPointB = new(Position.X + 1, Position.Y);
+            _cachedPointC = new(Position.X, Position.Y - 1);
+            _cachedPointD = new(Position.X + 1, Position.Y - 1);
         }
         
         /**
@@ -105,7 +108,7 @@ namespace ThedyxEngine.Engine.Objects {
          */
         public override void GetObjectVisibleArea(out Vector2 topLeft, out Vector2 bottomRight) {
             topLeft = new Vector2((float)_position.X, (float)_position.Y);
-            bottomRight = new Vector2((float)CachedPointD.X, (float)CachedPointD.Y);
+            bottomRight = new Vector2((float)_cachedPointD.X, (float)_cachedPointD.Y);
         }
 
         /**
@@ -200,12 +203,12 @@ namespace ThedyxEngine.Engine.Objects {
          */
         public bool AreTouching(GrainSquare other) {
             // Check the object is not null and that the two squares are not the same
-            if (Name == other.Name) {
+            if (other == null || this.Name == other.Name) {
                 return false;
             }
 
-            bool xTouch = Math.Abs(Math.Abs(this.Position.X - other.Position.X) - 1) < 1e-6 && Math.Abs(this.Position.Y - other.Position.Y) < 1e-6;
-            bool yTouch = Math.Abs(Math.Abs(this.Position.Y - other.Position.Y) - 1) < 1e-6 && Math.Abs(this.Position.X - other.Position.X) < 1e-6;
+            bool xTouch = Math.Abs(this.Position.X - other.Position.X) == 1 && this.Position.Y == other.Position.Y;
+            bool yTouch = Math.Abs(this.Position.Y - other.Position.Y) == 1 && this.Position.X == other.Position.X;
 
             // Ensure that they are not touching at the corners
             return (xTouch || yTouch) && Math.Abs(this.Position.X - other.Position.X) < 2 && Math.Abs(this.Position.Y - other.Position.Y) < 2;

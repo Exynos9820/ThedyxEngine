@@ -1,4 +1,6 @@
-namespace ThedyxEngine.UI {
+using ThedyxEngine.UI;
+
+namespace TempoEngine.UI {
     /**
      * GridDrawer is a class that draws a grid on the canvas.
      */
@@ -16,7 +18,7 @@ namespace ThedyxEngine.UI {
             canvas.FontColor = Colors.Black;
             canvas.FontSize = 13;
 
-            int step;
+            int step = 1;
             int deltaX = manager.CurrentRightXIndex - manager.CurrentLeftXIndex;
 
             if (deltaX > 1000) step = 100;

@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System.Text;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
-using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Util
 {
@@ -109,7 +108,7 @@ namespace ThedyxEngine.Util
                     GlobalVariables.MinTemperatureColor = simulationData.Metadata.MinTemperatureColor;
                     GlobalVariables.MaxTemperatureColor = simulationData.Metadata.MaxTemperatureColor;
                 }
-                catch (Exception) {
+                catch (Exception _) {
                     simulationData = JsonConvert.DeserializeObject<SimulationData>(inputString);
                 }
                 

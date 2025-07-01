@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using ThedyxEngine.Util;
 using ThedyxEngine.Engine.Managers;
 using System.Diagnostics;
-using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Engine{
     static class Engine{
@@ -71,7 +70,7 @@ namespace ThedyxEngine.Engine{
 
             
             
-            _simulationRefreshRate = SystemInfo.GetRefreshRate();
+            _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
             Log.Info("Engine initialized");
         }
 

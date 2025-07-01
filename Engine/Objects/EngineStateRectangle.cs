@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine.Objects;
+namespace ThedyxEngine.Engine;
 
 /**
  * \class EngineStateRectangle
@@ -44,7 +44,7 @@ public class EngineStateRectangle : EngineObject {
                 square.SimulationTemperature = _simulationTemperature;
                 square.Material = _material;
                 _grainSquares.Add(square);
-                if (i == 0 || j == 0 || Math.Abs(i - (Size.X - 1)) < 1e-6 || Math.Abs(j - (Size.Y - 1)) < 1e-6) {
+                if (i == 0 || j == 0 || i == Size.X - 1 || j == Size.Y - 1) {
                     _externalSquares.Add(square);
                 }
             }
@@ -69,6 +69,7 @@ public class EngineStateRectangle : EngineObject {
      * \brief Sets the material properties of the object.
      */
     protected override void SetMaterialProperties() {
+        if (_grainSquares == null) return;
         foreach (var square in _grainSquares) {
             square.Material = _material;
         }
@@ -132,6 +133,7 @@ public class EngineStateRectangle : EngineObject {
             for(var i = 0; i < Size.X; i+= groupBy) {
                 for(var j = 0; j < Size.Y; j+= groupBy) {
                     // iterate through all squares in this group, take average temperature and create polygon
+                    var points = new PointCollection();
                     var temperature = 0.0;
                     float opacity = 0.0f;
                     // then we take the position of the first square and create a polygon

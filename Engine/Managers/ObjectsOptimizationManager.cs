@@ -1,5 +1,4 @@
 ﻿using log4net;
-using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Engine.Managers {
     /**
@@ -15,10 +14,9 @@ namespace ThedyxEngine.Engine.Managers {
          * Optimize objects
          * \param objects list of objects
          */
-    public static void Optimize(List<EngineObject>? objects, int threads) {
-        if (objects == null) return;    
+    public static  void Optimize(List<EngineObject>? objects, int threads) {
         List<Task> tasks = new List<Task>();
-
+        threads = 1;
         for (int i = 0; i < Math.Min(threads, objects.Count); i++) {
             int startPosition = i * objects.Count / threads;
             int endPosition = (i + 1) * objects.Count / threads;
@@ -50,7 +48,7 @@ namespace ThedyxEngine.Engine.Managers {
             foreach (var task in tasks) {
                 sum += Engine.TasksResults[tasks.IndexOf(task)];
             }
-            float progressValue = sum / (threads/ 100.0f);
+            float progressValue = (float)sum / (threads/ 100.0f);
 
             // Update the progress bar on UI thread
             Engine.MainWindow.LoadingProgressBar.Progress = progressValue;
@@ -108,7 +106,6 @@ namespace ThedyxEngine.Engine.Managers {
          * \param objects list of objects
          */
         private static void ClearOptimization(List<EngineObject>? objects, int startPosition, int endPosition) {
-            if(objects == null) return;
             for (int i = startPosition; i < endPosition; i++) {
                 List<GrainSquare> squares = objects[i].GetSquares();
                 foreach (var square in squares) {

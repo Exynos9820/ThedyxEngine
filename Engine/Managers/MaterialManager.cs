@@ -1,6 +1,4 @@
-﻿using ThedyxEngine.Engine.Objects;
-
-namespace ThedyxEngine.Engine.Managers {
+﻿namespace ThedyxEngine.Engine.Managers {
     /** 
      * \class MaterialManager
      * \brief Manages the materials in the simulation.
@@ -15,7 +13,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Initialize the materials
          */
         public static void Init() {
-            PopulateWithBaseMaterials();
+            populateWithBaseMaterials();
         }
 
         /**
@@ -28,7 +26,7 @@ namespace ThedyxEngine.Engine.Managers {
         for thermal conductivity
         https://www.engineeringtoolbox.com/
         */
-        private static void PopulateWithBaseMaterials() {
+        private static void populateWithBaseMaterials() {
             var m1 = new Material {
                 Name = "Aluminium",
                 SolidSpecificHeatCapacity = 887,
@@ -147,7 +145,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Get the coefficient between two objects
          */
         public static double GetCoeficientFromMaterial(GrainSquare obj1, GrainSquare obj2) {
-            double thermalConductivity1 = obj1.Material.SolidThermalConductivity;
+            double thermalConductivity1 = obj1.Material.SolidThermalConductivity;;
             double thermalConductivity2 = obj2.Material.SolidThermalConductivity;
             if(thermalConductivity1 == 0 || thermalConductivity2 == 0) return 0;
             if(obj1 is StateGrainSquare state1) {

@@ -1,9 +1,9 @@
-﻿using System.Numerics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Numerics;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine.Objects {
+namespace ThedyxEngine.Engine {
     /**
      * \class EngineRectangle
      * \brief Object of the engine that represents rectangle
@@ -44,7 +44,7 @@ namespace ThedyxEngine.Engine.Objects {
                     square.SimulationTemperature = _simulationTemperature;
                     square.Material = _material;
                     _grainSquares.Add(square);
-                    if (i == 0 || j == 0 || Math.Abs(i - (Size.X - 1)) < 1e-6 || Math.Abs(j - (Size.Y - 1)) < 1e-6) {
+                    if (i == 0 || j == 0 || i == Size.X - 1 || j == Size.Y - 1) {
                         _externalSquares.Add(square);
                     }
                 }
@@ -195,6 +195,7 @@ namespace ThedyxEngine.Engine.Objects {
             for(var i = 0; i < Size.X; i+= groupBy) {
                 for(var j = 0; j < Size.Y; j+= groupBy) {
                     // iterate through all squares in this group, take average temperature and create polygon
+                    var points = new PointCollection();
                     var temperature = 0.0;
                     // then we take the position of the first square and create a polygon
                     for(var x = i; x < i + groupBy && x < Size.X; x++) {

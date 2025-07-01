@@ -1,5 +1,4 @@
 ﻿using ThedyxEngine.Engine.Managers;
-using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Engine.Examples {
     public static class SimpleExamples

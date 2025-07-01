@@ -61,7 +61,7 @@ public class CanvasManager{
     public void Move(PanUpdatedEventArgs args) {
         int width = CurrentRightXIndex - CurrentLeftXIndex;
         int height = CurrentTopYIndex - CurrentBottomYIndex;
-
+        int step = getStep();
         CurrentLeftXIndex += (int)args.TotalX / 100;
         CurrentRightXIndex += (int)args.TotalX / 100;
         CurrentTopYIndex += (int)args.TotalY / 100;
@@ -160,7 +160,7 @@ public class CanvasManager{
             // then make it 10 and adjust indexes
             xZoomDelta = 3;
             // adjust y zoom delta to keep aspect ratio
-            yZoomDelta = xZoomDelta * (CurrentTopYIndex - CurrentBottomYIndex) / (CurrentRightXIndex - CurrentLeftXIndex);
+            yZoomDelta = (int)(xZoomDelta * (CurrentTopYIndex - CurrentBottomYIndex) / (CurrentRightXIndex - CurrentLeftXIndex));
         }
         CurrentRightXIndex = Math.Min(CurrentRightXIndex + xZoomDelta, CanvasHelper.MaxRightXIndex);
         CurrentLeftXIndex = Math.Max(CurrentLeftXIndex - xZoomDelta, CanvasHelper.MinLeftXIndex);

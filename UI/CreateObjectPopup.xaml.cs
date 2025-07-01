@@ -2,14 +2,13 @@ using System.Diagnostics;
 using CommunityToolkit.Maui.Views;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
-using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.UI;
 
 /**
  * CreateObjectPopup is a popup that allows the user to create an object.
  */
-public partial class CreateObjectPopup {
+public partial class CreateObjectPopup : Popup {
     /** The object being created. */
     private readonly EngineObject _object;
     /** The event that is called when the object is created. */
@@ -203,7 +202,7 @@ public partial class CreateObjectPopup {
      */
     private void OnCreateButtonClicked(object sender, EventArgs e) {
         // make checks for object name
-        Debug.Assert(Engine.Engine.EngineObjectsManager != null);
+        Debug.Assert(Engine.Engine.EngineObjectsManager != null, "Engine.Engine.EngineObjectsManager != null");
         if (string.IsNullOrWhiteSpace(NameEntry.Text) || !Engine.Engine.EngineObjectsManager.IsNameAvailable(NameEntry.Text)) {
             // make entry red
             NameEntry.BackgroundColor = Colors.Red;

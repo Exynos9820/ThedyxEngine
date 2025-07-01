@@ -9,7 +9,7 @@ namespace ThedyxEngine.UI;
 /**
  * MaterialsPopup is a popup that allows the user to change the properties of the materials.
  */
-public partial class MaterialsPopup {
+public partial class MaterialsPopup : Popup {
     /** Current selected material */
     private Material? _currentSelectedMaterial;
     /** Callback to reopen the material popup, because MAUI is awful */

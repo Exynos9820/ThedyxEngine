@@ -2,7 +2,6 @@ using ThedyxEngine.Engine;
 using ThedyxEngine.Util;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Maui.Storage;
-using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.UI {
     /**
@@ -11,7 +10,7 @@ namespace ThedyxEngine.UI {
      */
     public partial class EngineUIBar : ContentView {
         /** The event that is called when the UI needs to be updated. */
-        public Action? UpdateUi;
+        public Action? UpdateUI;
         /** The event that is called when the selected object is deleted. */
         public Action<EngineObject>? DeleteSelected;
         /** The event that is called when the engine mode is changed. */
@@ -26,7 +25,7 @@ namespace ThedyxEngine.UI {
          */
         public EngineUIBar() {
             InitializeComponent();
-            Loaded += (_, _) => {
+            Loaded += (sender, args) => {
                 SetStoppedMode();
             };
         }
@@ -118,7 +117,7 @@ namespace ThedyxEngine.UI {
          */
         private async void OnSaveButtonClicked(object sender, EventArgs e) {
             using var memoryStream = new MemoryStream(FileManager.GetSimulationRepresentation());
-            await FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
+            var result = await FileSaver.Default.SaveAsync("simulation.tdx", memoryStream);
         }
 
 
@@ -197,7 +196,7 @@ namespace ThedyxEngine.UI {
         private void AddObject(ObjectType objectType) {
             var createPopup = new CreateObjectPopup(objectType);
             this.MainPage?.ShowPopup(createPopup);
-            if (UpdateUi != null) createPopup.OnObjectCreated += UpdateAll;
+            if (UpdateUI != null) createPopup.OnObjectCreated += UpdateAll;
         }
         
         /**
@@ -206,7 +205,7 @@ namespace ThedyxEngine.UI {
          * \param e The event arguments.
          */
         private void UpdateAll() {
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
 
         /**
@@ -256,7 +255,7 @@ namespace ThedyxEngine.UI {
             } else {
                 ModeButton.BackgroundColor = Colors.DarkGray;
             }
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         /**
@@ -270,7 +269,7 @@ namespace ThedyxEngine.UI {
             this.MainPage?.ShowPopup(materialsPopup);
             // use action to reopen the popup
             materialsPopup.ReopenMaterialPopup = OnMaterialsButtonClicked;
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
     
         /**
@@ -286,7 +285,7 @@ namespace ThedyxEngine.UI {
             materialsPopup.SelectMaterial(obj);
             // use action to reopen the popup
             materialsPopup.ReopenMaterialPopup = OnMaterialsButtonClicked;
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
 
         /**
@@ -298,7 +297,7 @@ namespace ThedyxEngine.UI {
         private void OnSettingsButtonClicked(object sender, EventArgs e) {
             var settingsPopup = new SettingsPopup();
             this.MainPage?.ShowPopup(settingsPopup);
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         /**
@@ -315,7 +314,7 @@ namespace ThedyxEngine.UI {
             } else {
                 GridButton.BackgroundColor = Colors.DarkGray;
             }
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         /**
@@ -333,7 +332,7 @@ namespace ThedyxEngine.UI {
                 ColorModeButton.BackgroundColor = Colors.DarkGray;
                 ColorModeButton.Text = "Temp";
             }
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         /**
@@ -344,7 +343,7 @@ namespace ThedyxEngine.UI {
          */
         private void OnZoomOutButtonClicked(object sender, EventArgs e) {
             ZoomChanged?.Invoke(0.8);
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         /**
@@ -360,7 +359,7 @@ namespace ThedyxEngine.UI {
             } else {
                 DrawCheckBox.BackgroundColor = Colors.LightSlateGrey;
             }
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         /**
@@ -371,7 +370,7 @@ namespace ThedyxEngine.UI {
          */
         private void OnZoomInButtonClicked(object sender, EventArgs e) {
             ZoomChanged?.Invoke(1.2);
-            UpdateUi?.Invoke();
+            UpdateUI?.Invoke();
         }
         
         

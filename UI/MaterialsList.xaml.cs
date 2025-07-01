@@ -6,7 +6,7 @@ namespace ThedyxEngine.UI;
 /**
  * MaterialsList is a list of materials that the user can select from.
  */
-public partial class MaterialsList {
+public partial class MaterialsList : ContentView {
     /** The currently selected material. */
     private Material? _currentSelectedMaterial;
     /** The event that is called when the selected material changes. */
