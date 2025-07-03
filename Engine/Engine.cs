@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using ThedyxEngine.Util;
 using ThedyxEngine.Engine.Managers;
 using System.Diagnostics;
+using ThedyxEngine.Engine.Examples;
 
 namespace ThedyxEngine.Engine{
     static class Engine{
@@ -57,18 +58,6 @@ namespace ThedyxEngine.Engine{
             MainWindow = window;
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
-            // load kettle copper example
-            /*try {
-                using var stream = File.OpenRead("../../../../../Examples/liveDemo.tdx");
-                using var reader = new StreamReader(stream);
-                string fileContent = reader.ReadToEnd(); // Sync version
-                FileManager.LoadFromContent(fileContent);
-            }
-            catch (Exception ex) {
-                Log.Error("Problem with loading file: " + ex.Message);
-            }*/
-
-            
             
             _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
             Log.Info("Engine initialized");
@@ -156,6 +145,8 @@ namespace ThedyxEngine.Engine{
             // wait for all tasls to apply energy delta
             // then start the next frame
             Stopwatch stopwatch = new Stopwatch();
+            Stopwatch simulationTime = new Stopwatch();
+            simulationTime.Start();
 
             while (true) {
                 stopwatch.Restart();
@@ -197,13 +188,6 @@ namespace ThedyxEngine.Engine{
                     ShowErrorMessage?.Invoke($"Engine failed to run with {e.Message}. Check the parameters of the materials and objects");
                     break;
                 }
-
-
-                double elapsedTimeMs = stopwatch.ElapsedMilliseconds;
-                if (msPerFrame - elapsedTimeMs < 0) {
-                    Log.Info($"Simulation is too slow, time is {elapsedTimeMs - msPerFrame} ms");
-                }
-                
 
                 while (GlobalVariables.WaitToBeInTime && stopwatch.ElapsedMilliseconds < 1000 / GlobalVariables.EngineIntervalUpdatePerSecond) { }
                 stopwatch.Stop();
