@@ -1,9 +1,0 @@
-EXTRACT_ALL            = YES  # Ensures all functions and classes are documented
-EXTRACT_PRIVATE        = YES  # Includes private members
-EXTRACT_STATIC         = YES  # Includes static members
-GENERATE_HTML          = YES  # Generates HTML documentation
-GENERATE_LATEX         = NO   # Optional, set to NO if you don’t need LaTeX docs
-GENERATE_XML           = YES  # Generates XML for further processing
-INPUT                  = .    # Set to the folder containing your C# files
-FILE_PATTERNS          = *.cs # Ensures C# files are processed
-RECURSIVE 	       = YES
