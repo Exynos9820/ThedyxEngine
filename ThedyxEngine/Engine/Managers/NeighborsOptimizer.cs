@@ -12,7 +12,7 @@ public class NeighborsOptimizer : IOptimizer {
      * \param squares1 first list of squares
      * \param squares2 second list of squares
      */
-    private static void FillAdjacentSquares(List<GrainSquare> squares1, List<GrainSquare> squares2) {
+    private static void FindNeighbors(List<GrainSquare> squares1, List<GrainSquare> squares2) {
         foreach(var square1 in squares1) {
             foreach(var square2 in squares2) {
                 if (square1.AreTouching(square2)) {
@@ -32,12 +32,12 @@ public class NeighborsOptimizer : IOptimizer {
     public void Optimize(List<EngineObject> objects, int startPosition, int endPosition) {
         for (int i = startPosition; i < endPosition; i++) {
             List<GrainSquare> firstExternal = objects[i].GetExternalSquares();
-            FillAdjacentSquares(objects[i].GetSquares(), objects[i].GetSquares());
+            FindNeighbors(objects[i].GetSquares(), objects[i].GetSquares());
 
             for (int j = 0; j < objects.Count; j++) {
                 if (i == j) continue;
                 List<GrainSquare> secondExternal = objects[j].GetExternalSquares();
-                FillAdjacentSquares(firstExternal, secondExternal);
+                FindNeighbors(firstExternal, secondExternal);
             }
         }
     }

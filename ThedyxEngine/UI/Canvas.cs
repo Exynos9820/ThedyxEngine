@@ -7,24 +7,24 @@ using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI {
     /**
-     * EngineCanvas is a canvas that displays the simulation.
+     * Canvas is a canvas that displays the simulation.
      */
-    public class EngineCanvas : IDrawable {
+    public class Canvas : IDrawable {
         /** The canvas manager. It makes some math */
         private readonly CanvasManager _canvasManager;
         /** The grid drawer. It draws the grid */
         private readonly GridDrawer _gridDrawer;
         /** The logger */
-        private static readonly ILog log = LogManager.GetLogger(typeof(EngineCanvas));
+        private static readonly ILog log = LogManager.GetLogger(typeof(Canvas));
         /** The main page of the whole program*/
         private MainPage _mainPage;
         /** Last dirty rectangle */
         private RectF _lastDirtyRect;
         /**
-         * Constructor for the EngineCanvas class.
+         * Constructor for the Canvas class.
          * \param mainPage The main page of the program.
          */
-        public EngineCanvas(MainPage mainPage) : base() {
+        public Canvas(MainPage mainPage) : base() {
             _canvasManager = new CanvasManager();
             _gridDrawer = new GridDrawer();
             _mainPage = mainPage;

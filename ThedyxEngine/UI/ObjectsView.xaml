@@ -1,6 +1,6 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ThedyxEngine.UI.EngineObjectsList"
+             x:Class="ThedyxEngine.UI.ObjectsView"
              xmlns:local="clr-namespace:ThedyxEngine.UI"
              BackgroundColor="White">
 

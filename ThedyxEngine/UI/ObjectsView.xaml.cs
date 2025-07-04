@@ -2,9 +2,9 @@ using ThedyxEngine.Engine;
 
 namespace ThedyxEngine.UI {
     /**
-     * EngineObjectsList is a list of engine objects that the user can select from.
+     * ObjectsView is a list of engine objects that the user can select from.
      */
-    public partial class EngineObjectsList : ContentView {
+    public partial class ObjectsView : ContentView {
         /** The currently selected object. */
         private EngineObject _currentSelectedEngineObject;
         /** The event that is called when the selected object changes. */
@@ -15,9 +15,9 @@ namespace ThedyxEngine.UI {
         public Action? OnDeleteObject;
 
         /**
-         * Constructor for the EngineObjectsList class.
+         * Constructor for the ObjectsView class.
          */
-        public EngineObjectsList() {
+        public ObjectsView() {
             InitializeComponent();
         }
 

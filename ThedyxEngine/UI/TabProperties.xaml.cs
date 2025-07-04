@@ -3,9 +3,9 @@ using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI {
     /**
-     * EngineTabProperties is a tab that displays the properties of the selected object.
+     * TabProperties is a tab that displays the properties of the selected object.
      */
-    public partial class EngineTabProperties : ContentView {
+    public partial class TabProperties : ContentView {
         /** The currently selected object. */
         private EngineObject? _selectedObject;
         /** Whether the tab is enabled. */
@@ -14,9 +14,9 @@ namespace ThedyxEngine.UI {
         public Action OnObjectChange;
         
         /**
-         * Constructor for the EngineTabProperties class.
+         * Constructor for the TabProperties class.
          */
-        public EngineTabProperties() {
+        public TabProperties() {
             InitializeComponent();
             // On Loaded event, we need to update the properties tab
             this.Loaded += (sender, args) => Update();

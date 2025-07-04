@@ -5,10 +5,10 @@ using CommunityToolkit.Maui.Storage;
 
 namespace ThedyxEngine.UI {
     /**
-     * EngineUIBar is a class that represents the UI bar at the top of the screen.
+     * UIBar is a class that represents the UI bar at the top of the screen.
      * It contains buttons for starting, stopping, and pausing the simulation, as well as buttons for adding, saving, and opening objects.
      */
-    public partial class EngineUIBar : ContentView {
+    public partial class UIBar : ContentView {
         /** The event that is called when the UI needs to be updated. */
         public Action? UpdateUI;
         /** The event that is called when the selected object is deleted. */
@@ -21,9 +21,9 @@ namespace ThedyxEngine.UI {
         public Action<double>? ZoomChanged;
         
         /**
-         * Constructor for the EngineUIBar class.
+         * Constructor for the UIBar class.
          */
-        public EngineUIBar() {
+        public UIBar() {
             InitializeComponent();
             Loaded += (sender, args) => {
                 SetStoppedMode();

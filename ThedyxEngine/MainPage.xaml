@@ -16,7 +16,7 @@
           MinimumHeightRequest="400">
 
         <!-- Top Control Panel -->
-        <ui:EngineUIBar Grid.Row="0" x:Name="ControlPanel" Grid.ColumnSpan="3"
+        <ui:UIBar Grid.Row="0" x:Name="ControlPanel" Grid.ColumnSpan="3"
                         BackgroundColor="LightGray"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand" />
@@ -29,7 +29,7 @@
               VerticalOptions="FillAndExpand">
 
             <!-- Left Sidebar -->
-            <ui:EngineObjectsList x:Name="ObjectsList" Grid.Column="0"
+            <ui:ObjectsView x:Name="ObjectsList" Grid.Column="0"
                                   HorizontalOptions="FillAndExpand"
                                   VerticalOptions="FillAndExpand"
                                   WidthRequest="200" />
@@ -38,7 +38,7 @@
             <GraphicsView x:Name="EngineGraphicsView" Grid.Column="1"/>
 
             <!-- Right Sidebar -->
-            <ui:EngineTabProperties x:Name="TabProperties" Grid.Column="2"
+            <ui:TabProperties x:Name="TabProperties" Grid.Column="2"
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="FillAndExpand"
                                     WidthRequest="250" />

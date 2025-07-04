@@ -9,7 +9,7 @@ namespace ThedyxEngine;
 public partial class MainPage {
     private readonly Timer _updateTimer;
     private bool _objectsChanged;
-    private readonly EngineCanvas _engineCanvas;
+    private readonly Canvas _canvas;
 
     private string _currentError = "";
     private PointF _lastTouchPoint = new PointF(-1, -1);
@@ -38,9 +38,9 @@ public partial class MainPage {
         ObjectsList.OnZoomToObject = ZoomToObject;
         ControlPanel.EngineModeChanged = EngineModeChanged;
         ControlPanel.UpdateUI = UpdateAll;
-        _engineCanvas = new EngineCanvas(this);
-        ControlPanel.ZoomChanged = d => _engineCanvas.Zoom(d);
-        EngineGraphicsView.Drawable = _engineCanvas;
+        _canvas = new Canvas(this);
+        ControlPanel.ZoomChanged = d => _canvas.Zoom(d);
+        EngineGraphicsView.Drawable = _canvas;
         EngineGraphicsView.BackgroundColor = Colors.White;
         TabProperties.OnObjectChange = UpdateAll;
         Engine.Engine.ResetSimulation();
@@ -54,7 +54,7 @@ public partial class MainPage {
         pinchGesture.PinchUpdated += (_, e) => {
             if (e.Status == GestureStatus.Running && !IsDrawing)
             {
-                _engineCanvas.Zoom(e.Scale);
+                _canvas.Zoom(e.Scale);
                 // if engine is not running, update the view
                 if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
                     EngineGraphicsView.Invalidate();
@@ -65,7 +65,7 @@ public partial class MainPage {
         var panGesture = new PanGestureRecognizer();
         panGesture.PanUpdated += (_, e) => {
             if (e.StatusType != GestureStatus.Running || IsDrawing) return;
-            _engineCanvas.Move(e);
+            _canvas.Move(e);
             if (Engine.Engine.Mode != Engine.Engine.EngineMode.Running)
                 EngineGraphicsView.Invalidate();
         };
@@ -87,8 +87,8 @@ public partial class MainPage {
         }
         
         // if it's valid
-        var start = _engineCanvas.ConvertToCanvasCoordinates(_lastTouchPoint);
-        var end = _engineCanvas.ConvertToCanvasCoordinates(evt.Touches.FirstOrDefault());
+        var start = _canvas.ConvertToCanvasCoordinates(_lastTouchPoint);
+        var end = _canvas.ConvertToCanvasCoordinates(evt.Touches.FirstOrDefault());
         
         int width = Math.Abs((int)(end.X - start.X));
         int height = Math.Abs((int)(end.Y - start.Y));
@@ -131,7 +131,7 @@ public partial class MainPage {
     }
 
     private void ZoomToObject(EngineObject obj) {
-        _engineCanvas.ZoomToObject(obj);
+        _canvas.ZoomToObject(obj);
     }
 
     private void EngineModeChanged() {
