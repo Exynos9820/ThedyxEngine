@@ -33,22 +33,56 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 
 
 ## Installation MacOS
-1) Clone the repository
-2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
-3) sudo dotnet workload install maui in the terminal
-4) sudo dotnet workload restore
-5) xcode-select --install
-6) sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-7) sudo xcodebuild -license
-8) dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0 (sometimes) in ThedyxEngine directory
-9) dotnet build ThedyxEngine.sln
+### 1. Clone the repository 
+```bash
+    git clone https://github.com/Exynos9820/ThedyxEngine
+    cd ThedyxEngine 
+```
+### 2. .NET 9.0
+Download and install the latest stable .NET 9.0 SDK & Runtime:  
+- https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
+### 3. Install MAUI Workload
+```bash
+sudo dotnet workload install maui
+sudo dotnet workload restore
+```
+### 4 OS Setup
+#### 4.1 macOS Setup
+1) Install Xcode Command-Line Tools 
+```bash
+xcode-select --install
+```
+2) Set Xcode Developer Path
+```bash
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+```
+3) Accept Xcode License
+```bash
+sudo xcodebuild -license
+```
+4) Optional: Windows Interop Package If you encounter missing interop errors, add:
+```bash
+cd ThedyxEngine
+dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0
+cd ..
+```
+#### 4.2 Windows Setup
+1) Download and install the desktop runtime:
+- https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-9.0.2-windows-x64-installer
+2) Install Windows SDK
+```bash
+ winget install --id=Microsoft.WindowsSDK.10.0.19041 -e
+```
+3) Install Windows App SDK: 
+- https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads
+4) Add CsWinRT package:
+```bash
+cd ThedyxEngine
+dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0
+cd ..
+```
 
-## Installation Windows
-1) Clone the repository
-2) Download and install Dotnet9 https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
-3) https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-9.0.2-windows-x64-installer
-4) winget install --id=Microsoft.WindowsSDK.10.0.19041 -e
-5) dotnet workload install maui in the terminal
-6) Download and install https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads
-7) dotnet add package Microsoft.Windows.CsWinRT --version 2.2.0 in ThedyxEngine directory
-8) dotnet build ThedyxEngine.sln in main directory
+### 5. Build Project
+```bash
+dotnet build ThedyxEngine.sln
+```
