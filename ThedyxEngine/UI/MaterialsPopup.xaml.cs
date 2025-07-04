@@ -137,28 +137,33 @@ public partial class MaterialsPopup : Popup {
      * \param sender The object that sent the event
      * \param e The event arguments
      */
-    private void OnDeleteButtonClicked(object sender, EventArgs e) {
-        // if the material is null, we don't need to delete
+    private async void OnDeleteButtonClicked(object sender, EventArgs e)
+    {
         if (_currentSelectedMaterial == null) return;
-        // show a confirmation message
-        Application.Current.MainPage?.DisplayAlert("Delete", "Are you sure you want to delete this material?", "Yes", "No").ContinueWith(task => {
-            if (task.Result) {
-                // remove the material from the list
-                MaterialManager.Materials.Remove(_currentSelectedMaterial);
-                // select the first material
-                _currentSelectedMaterial = null;
-                ListMaterials.Update();
-                if (MaterialManager.Materials.Count > 0)
-                    ListMaterials.SelectMaterial(MaterialManager.Materials[0]);
-                // update the list
-                Update();
-            }
-        });
+
+        bool confirm = await Shell.Current.DisplayAlert(
+            "Delete",
+            "Are you sure you want to delete this material?",
+            "Yes",
+            "No");
+
+        if (confirm) {
+            MaterialManager.Materials.Remove(_currentSelectedMaterial);
+            _currentSelectedMaterial = null;
+            ListMaterials.Update();
+
+            if (MaterialManager.Materials.Count > 0)
+                ListMaterials.SelectMaterial(MaterialManager.Materials[0]);
+
+            Update();
+        }
+
         if (MaterialManager.Materials.Count == 0)
             ReOpenMaterialPopup(null);
         else
             ReOpenMaterialPopup(MaterialManager.Materials[0]);
     }
+
 
     /**
      * This method is called when the user finishes editing the solid specific heat capacity
