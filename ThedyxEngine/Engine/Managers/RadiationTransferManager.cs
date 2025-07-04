@@ -10,7 +10,7 @@ namespace ThedyxEngine.Engine.Managers{
      * radiation heat between objects in the simulation. It includes methods for transferring
      * radiation heat between two objects and radiation heat loss to air.
      */
-    public static class RadiationTransferManager {
+    public class RadiationTransferManager : IHeatTransferManager {
 
         /**
          * Transfer radiation heat between two objects
@@ -18,7 +18,7 @@ namespace ThedyxEngine.Engine.Managers{
          * \param square1 First square.
          * \param square2 Second square.
          */
-        private static void TransferRadiationBetweenTwoSquares(GrainSquare square1, GrainSquare square2) {
+        private void TransferRadiationBetweenTwoSquares(GrainSquare square1, GrainSquare square2) {
             // check if any of squares is state grain square
             double emiss1 = square1.Material.SolidEmissivity;   
             if (square1 is StateGrainSquare statesq1) {
@@ -55,7 +55,7 @@ namespace ThedyxEngine.Engine.Managers{
          * Q = σ*A*e`*(T1^4 - T2^4)*t.
          * \param obj object
          */
-        private static void TransferRadiationHeatLooseToAir(EngineObject obj) {
+        private void TransferRadiationHeatLooseToAir(EngineObject obj) {
             if(!GlobalVariables.ObjectsLooseHeatToAir) return;
             var squares = obj.GetSquares();
             foreach(var square in squares) {
@@ -79,7 +79,7 @@ namespace ThedyxEngine.Engine.Managers{
          * Simplified logic for now, details are in the documentation
          * \param objects list of objects
          */
-        public static void TransferRadiationHeat(List<EngineObject> objects){
+        public void TransferHeat(List<EngineObject> objects){
             foreach(var obj in objects){
                 TransferRadiationHeatLooseToAir(obj);
             }

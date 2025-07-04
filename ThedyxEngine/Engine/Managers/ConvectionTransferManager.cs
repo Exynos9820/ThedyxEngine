@@ -10,12 +10,12 @@ namespace ThedyxEngine.Engine.Managers;
 * The ConvectionTransferManager class provides methods for calculating and transferring
 * convection heat between objects in the simulation. 
 */
-public class ConvectionTransferManager {
+public class ConvectionTransferManager : IHeatTransferManager{
     /**
      * Transfer convection heat for specified objects
      * \param objects List of objects
      */
-    public static void TransferConvectionHeat(List<EngineObject> objects) {
+    public void TransferHeat(List<EngineObject> objects) {
         foreach (var obj in objects) {
             TransferHeatForObject(obj);
         }
@@ -25,7 +25,7 @@ public class ConvectionTransferManager {
      * Transfer heat for every GrainSquare with its adjacent squares
      * \param obj object
      */
-    private static void TransferHeatForObject(EngineObject obj) {
+    private void TransferHeatForObject(EngineObject obj) {
         List<GrainSquare> objsquares = obj.GetSquares();
         for (int i = 0; i < objsquares.Count; i++) {
             List<GrainSquare> adjSquares = objsquares[i].GetAdjacentSquares();
@@ -42,7 +42,7 @@ public class ConvectionTransferManager {
      * Link
      * https://www.engineeringtoolbox.com/convective-heat-transfer-d_430.html
      */
-    private static void TranferHeatBetweenTwoSquares(GrainSquare sq1, GrainSquare sq2) {
+    private void TranferHeatBetweenTwoSquares(GrainSquare sq1, GrainSquare sq2) {
         // First we need to check that both squared are StateGrainSquare
         if (!(sq1 is StateGrainSquare statesq1) || !(sq2 is StateGrainSquare statesq2)) {
             return;

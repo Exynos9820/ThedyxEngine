@@ -104,8 +104,8 @@ namespace ThedyxEngine.Engine{
                 Debug.Assert(EngineObjectsManager != null, nameof(EngineObjectsManager) + " != null");
                 EngineObjectsManager.ResetObjectsTemperature();
                 if (_optimize) {
-                    ObjectsOptimizationManager.Optimize(EngineObjectsManager.GetObjects(),
-                        threads);
+                    ObjectsOptimizer.Optimize(EngineObjectsManager.GetObjects(),
+                        1);
                 }
             }
             
@@ -130,6 +130,11 @@ namespace ThedyxEngine.Engine{
             for (int i = 0; i < coresToUse; i++) {
                 objectsToProcess.Add(new List<EngineObject>());
             }
+            
+            List<IHeatTransferManager> heatTransferManagers = new List<IHeatTransferManager>();
+            heatTransferManagers.Add(new ConductionTransferManager());
+            heatTransferManagers.Add(new ConvectionTransferManager());
+            heatTransferManagers.Add(new RadiationTransferManager());
 
             // Distribute objects round-robin style
             Debug.Assert(EngineObjectsManager != null, nameof(EngineObjectsManager) + " != null");
@@ -163,9 +168,9 @@ namespace ThedyxEngine.Engine{
                         var i1 = i;
                         tasks.Add(Task.Run(() => {
                             if (i1 < objectsToProcess.Count) {
-                                RadiationTransferManager.TransferRadiationHeat(objectsToProcess[i1]);
-                                ConductionTransferManager.TransferConductionHeat(objectsToProcess[i1]);
-                                ConvectionTransferManager.TransferConvectionHeat(objectsToProcess[i1]);
+                                foreach(IHeatTransferManager manager in heatTransferManagers) {
+                                    manager.TransferHeat(objectsToProcess[i1]);
+                                }
                             }
                         }));
                     }

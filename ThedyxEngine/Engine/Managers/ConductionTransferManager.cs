@@ -9,13 +9,13 @@ namespace ThedyxEngine.Engine.Managers {
      * The ConductionTransferManager class provides methods for calculating and transferring
      * conduction heat between objects in the simulation. 
      */
-    public class ConductionTransferManager {
+    public class ConductionTransferManager : IHeatTransferManager {
 
         /**
          * Transfer conduction heat for specified objects
          * \param objects List of objects
          */
-        public static void TransferConductionHeat(List<EngineObject> objects) {
+        public void TransferHeat(List<EngineObject> objects) {
             foreach (var obj in objects) {
                 TransferHeatForObject(obj);
             }
@@ -25,7 +25,7 @@ namespace ThedyxEngine.Engine.Managers {
         * Transfer heat for every GrainSquare with its adjacent squares
         * \param obj object
         */
-        private static void TransferHeatForObject(EngineObject obj) {
+        private void TransferHeatForObject(EngineObject obj) {
             List<GrainSquare> objsquares = obj.GetSquares();
             for (int i = 0; i < objsquares.Count; i++) {
                 List<GrainSquare> adjSquares = objsquares[i].GetAdjacentSquares();
@@ -41,7 +41,7 @@ namespace ThedyxEngine.Engine.Managers {
          * \param sq1 first square
          * \param sq2 second square
          */
-        private static void TranferHeatBetweenTwoSquares(GrainSquare sq1, GrainSquare sq2) {
+        private void TranferHeatBetweenTwoSquares(GrainSquare sq1, GrainSquare sq2) {
             double temperatureDifference = sq1.CurrentTemperature - sq2.CurrentTemperature;
             double coeficient = MaterialManager.GetCoeficientFromMaterial(sq1, sq2);
             double timeTransfer = 1 / GlobalVariables.EngineIntervalUpdatePerSecond;
@@ -54,7 +54,7 @@ namespace ThedyxEngine.Engine.Managers {
          * Transfer heat between square and air
          * \param sq square
          */
-        private static void TransferHeatBetweenSquareAndAir(GrainSquare sq) {
+        private void TransferHeatBetweenSquareAndAir(GrainSquare sq) {
             if(!GlobalVariables.ObjectsLooseHeatToAir) return;
             double temperatureDifference = sq.CurrentTemperature - GlobalVariables.AirTemperature;
             double thermalConductivity1 = sq.Material.SolidThermalConductivity;
