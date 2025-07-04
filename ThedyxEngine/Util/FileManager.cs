@@ -108,7 +108,7 @@ namespace ThedyxEngine.Util
                     GlobalVariables.MinTemperatureColor = simulationData.Metadata.MinTemperatureColor;
                     GlobalVariables.MaxTemperatureColor = simulationData.Metadata.MaxTemperatureColor;
                 }
-                catch (Exception _) {
+                catch (Exception) {
                     simulationData = JsonConvert.DeserializeObject<SimulationData>(inputString);
                 }
                 

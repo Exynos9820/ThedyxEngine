@@ -26,6 +26,8 @@ public class EngineStateRectangle : EngineObject {
      */
     public EngineStateRectangle(string? name, int width, int height) : base(name) {
         _size = new(width, height);
+        _externalSquares = new List<StateGrainSquare>();
+        _grainSquares = new List<StateGrainSquare>();
         SetSquaresForShape();
         SetTemperatureForAllSquares();
     }
@@ -127,7 +129,7 @@ public class EngineStateRectangle : EngineObject {
             //  understand how far are we from canvas
             // we will check it by width
             var canvasWidth = canvasManager.CurrentRightXIndex - canvasManager.CurrentLeftXIndex;
-            var groupBy = CanvasHelper.GetGroubByValue(canvasWidth, Size);
+            var groupBy = CanvasHelper.GetGroupByValue(canvasWidth, Size);
 
 
             for(var i = 0; i < Size.X; i+= groupBy) {

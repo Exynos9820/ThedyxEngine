@@ -190,7 +190,7 @@ namespace ThedyxEngine.Engine {
             //  understand how far are we from canvas
             // we will check it by width
             var canvasWidth = canvasManager.CurrentRightXIndex - canvasManager.CurrentLeftXIndex;
-            var groupBy = CanvasHelper.GetGroubByValue(canvasWidth, Size);
+            var groupBy = CanvasHelper.GetGroupByValue(canvasWidth, Size);
             
             for(var i = 0; i < Size.X; i+= groupBy) {
                 for(var j = 0; j < Size.Y; j+= groupBy) {
