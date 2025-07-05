@@ -1,5 +1,5 @@
 PROJECT_NAME           = "ThedyxEngine" 
-PROJECT_BRIEF          = "Interactive 2-D heat-transfer simulator"
+PROJECT_BRIEF          = "Interactive 2D heat-transfer simulator"
 PROJECT_NUMBER         = 1.0.0
 HTML_TITLE             = "$(PROJECT_NAME) docs"
 EXTRACT_ALL            = YES
