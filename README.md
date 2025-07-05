@@ -42,6 +42,7 @@ Temperatures of individual squares are updated based on net heat gain or loss, i
 Download and install the latest stable .NET 9.0 SDK & Runtime:  
 - https://github.com/dotnet/core/blob/main/release-notes/9.0/9.0.1/9.0.1.md
 ### 3. Install MAUI Workload
+Sudo is not required on Windows
 ```bash
 sudo dotnet workload install maui
 sudo dotnet workload restore
@@ -84,7 +85,7 @@ cd ..
 
 ### 5. Build Project
 ```bash
-dotnet build ThedyxEngine.sln
+dotnet build ThedyxEngine.sln -c Release
 ```
 
 

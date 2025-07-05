@@ -66,8 +66,6 @@ namespace ThedyxEngine.Engine{
             MainWindow = window;
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
-            SimpleExamples.IceMeltingFromHotAluminium();
-            
             _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
             Log.Info("Engine initialized");
         }
