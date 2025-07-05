@@ -1,9 +1,11 @@
-﻿namespace ThedyxEngine.Util{
+﻿/**
+ * \namespace ThedyxEngine.Util
+ * \brief Different utilities for application
+ */
+namespace ThedyxEngine.Util{
     /**
-     * \class CanvasData
-     * \brief Provides data for the canvas.
-     * 
-     * The CanvasData class provides data for the canvas.
+     * \class CanvasHelper
+     * \brief Provides data for the canvas like grouping
      */
     static class CanvasHelper {
         // X > 0 parameters

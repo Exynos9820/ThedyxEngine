@@ -3,7 +3,8 @@ using ThedyxEngine.Engine.Managers;
 
 namespace ThedyxEngine.UI {
     /**
-     * TabProperties is a tab that displays the properties of the selected object.
+     * \class TabProperties
+     * \brief A tab that displays the properties of the selected EngineObject.
      */
     public partial class TabProperties : ContentView {
         /** The currently selected object. */

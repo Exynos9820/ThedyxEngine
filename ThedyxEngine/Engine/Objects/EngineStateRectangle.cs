@@ -7,7 +7,7 @@ namespace ThedyxEngine.Engine;
 
 /**
  * \class EngineStateRectangle
- * \brief Represents a rectangle of state squares in the simulation.
+ * \brief Represents a rectangle made of StateGrainSquare in the simulation.
  *
  * The EngineStateRectangle class represents a rectangle of state squares in the simulation.
  * The difference with EngineRectangle that the aggregate state of the squares can be changed.

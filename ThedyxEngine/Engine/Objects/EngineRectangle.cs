@@ -6,7 +6,7 @@ using ThedyxEngine.Util;
 namespace ThedyxEngine.Engine {
     /**
      * \class EngineRectangle
-     * \brief Object of the engine that represents rectangle
+     * \brief Object of the engine that represents rectangle from made from GrainSquare
      * 
      * 
      * Manages itself and makes it easier to calculate transfers

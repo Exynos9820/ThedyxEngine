@@ -6,6 +6,10 @@ using Timer = System.Timers.Timer;
 
 namespace ThedyxEngine;
 
+/**
+ * \class MainPage
+ * \brief Main page of the app, that manages all ui components
+ */
 public partial class MainPage {
     private readonly Timer _updateTimer;
     private bool _objectsChanged;

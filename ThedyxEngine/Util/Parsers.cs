@@ -1,4 +1,8 @@
 ﻿namespace ThedyxEngine.Util {
+    /**
+     * \class Parsers
+     * \brief Provides custom parsers
+     */
     public static class Parsers {
         /** 
          * Parses a string representation of a point to a Point object.

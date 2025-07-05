@@ -1,13 +1,17 @@
 using System.Diagnostics;
 using System.Numerics;
 using log4net;
-using TempoEngine.UI;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 
+/**
+ * \namespace ThedyxEngine.UI
+ * \brief Contains different UI elements
+ */
 namespace ThedyxEngine.UI {
     /**
-     * Canvas is a canvas that displays the simulation.
+     * \class Canvas
+     * \brief A canvas that displays the simulation.
      */
     public class Canvas : IDrawable {
         /** The canvas manager. It makes some math */

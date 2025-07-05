@@ -86,3 +86,27 @@ cd ..
 ```bash
 dotnet build ThedyxEngine.sln
 ```
+
+
+# Documentation
+
+ThedyxEngine uses **Doxygen** to generate API reference from the source code
+comments. You only need the *Doxyfile* in the repository root; everything else
+is produced automatically.
+
+## OS Setup
+### Windows 
+Download the doxygen-*.exe installer and (optionally) graphviz-*.exe from their official sites, then run them.
+- https://www.doxygen.nl/download.html
+
+### MacOS
+Install Doxygen with brew
+```bash
+brew install doxygen graphviz
+```
+
+## Run doxygen
+In a root directory, that contains Doxyfile, run command
+```bash
+doxygen
+```

@@ -4,7 +4,7 @@
 namespace ThedyxEngine.Engine.Managers{
     /**
      * \class RadiationTransferManager
-     * \brief Manages the transfer of radiation heat between objects in the simulation.
+     * \brief Manages the transfer of radiation heat between EngineObject in the simulation.
      *
      * The RadiationTransferManager class provides methods for calculating and transferring
      * radiation heat between objects in the simulation. It includes methods for transferring

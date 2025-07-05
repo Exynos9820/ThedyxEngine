@@ -3,7 +3,7 @@
 namespace ThedyxEngine.Engine.Managers {
     /**
     * \class ColorManager
-    * \brief Manager used to work with color
+    * \brief Manager to create brushes
     */
     public static class ColorManager {
         /**

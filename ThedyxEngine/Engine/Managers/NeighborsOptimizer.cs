@@ -3,7 +3,7 @@ namespace ThedyxEngine.Engine.Managers;
 
 /**
  * \class NeighborsOptimizer
- * \brief Builds a map of neighbors for objects
+ * \brief Builds a map of neighbors for objects for ConvectionTransferManager and ConductionTransferManager
  */
 public class NeighborsOptimizer : IOptimizer {
     

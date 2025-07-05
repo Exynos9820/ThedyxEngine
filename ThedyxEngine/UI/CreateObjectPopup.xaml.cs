@@ -6,7 +6,8 @@ using ThedyxEngine.Engine.Managers;
 namespace ThedyxEngine.UI;
 
 /**
- * CreateObjectPopup is a popup that allows the user to create an object.
+ * \class
+ * \brief A popup that allows the user to create an EngineObject.
  */
 public partial class CreateObjectPopup : Popup {
     /** The object being created. */

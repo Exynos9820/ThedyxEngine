@@ -7,7 +7,8 @@ using ThedyxEngine.Engine.Managers;
 namespace ThedyxEngine.UI;
 
 /**
- * MaterialsPopup is a popup that allows the user to change the properties of the materials.
+ * \class MaterialsPopup
+ * \brief A popup that allows the user to change the properties of the materials.
  */
 public partial class MaterialsPopup : Popup {
     /** Current selected material */

@@ -1,5 +1,9 @@
 namespace ThedyxEngine.Util;
 
+/**
+ * \class GlobalVariables
+ * \brief Contains global variables for the simulation
+ */
 public static class GlobalVariables {
     /** Grid step in meters*/
     public static double GridStep = 0.01;

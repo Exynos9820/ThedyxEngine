@@ -2,6 +2,10 @@ using ThedyxEngine.Engine;
 
 namespace ThedyxEngine.UI;
 
+/**
+ * \class EngineObjectTemplateSelector
+ * \brief Template to display list of the objects used by ObjectsList
+ */
 public class EngineObjectTemplateSelector : DataTemplateSelector {
     public DataTemplate? ObjectTemplate { get; set; }
     public DataTemplate? LiquidObjectTemplate { get; set; }

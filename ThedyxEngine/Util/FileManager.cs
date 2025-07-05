@@ -17,7 +17,7 @@ namespace ThedyxEngine.Util
         
         /**
          * \class SimulationData
-         * Structure of the simulation data
+         * \brief Structure of the simulation data
          */
         public class SimulationData {
             /** Metadata */

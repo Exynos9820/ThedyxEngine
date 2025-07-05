@@ -1,8 +1,9 @@
 using ThedyxEngine.UI;
 
-namespace TempoEngine.UI {
+namespace ThedyxEngine.UI {
     /**
-     * GridDrawer is a class that draws a grid on the canvas.
+     * \class GridDrawer
+     * \brief Draws a grid on the Canvas.
      */
     public class GridDrawer {
         /**

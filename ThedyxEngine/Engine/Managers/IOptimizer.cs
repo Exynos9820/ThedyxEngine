@@ -1,3 +1,7 @@
+/**
+ * \namespace ThedyxEngine.Engine.Managers
+ * \brief Contains managers for energy transfers and optimization
+ */
 namespace ThedyxEngine.Engine.Managers;
 
 /**

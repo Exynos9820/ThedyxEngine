@@ -3,9 +3,17 @@ using System.Collections.Concurrent;
 using ThedyxEngine.Util;
 using ThedyxEngine.Engine.Managers;
 using System.Diagnostics;
-using ThedyxEngine.Engine.Examples;
+using ThedyxEngine.Engine.Dev;
 
+/**
+ * \namespace ThedyxEngine.Engine
+ * \brief Contains core of the simulation and managers
+ */
 namespace ThedyxEngine.Engine{
+    /**
+     * \class Engine
+     * \brief Core of the simulation
+     */
     static class Engine{
         /**
         * \enum EngineMode
@@ -58,6 +66,7 @@ namespace ThedyxEngine.Engine{
             MainWindow = window;
             EngineObjectsManager = new ObjectsManager(_engineLock);
             MaterialManager.Init();
+            SimpleExamples.IceMeltingFromHotAluminium();
             
             _simulationRefreshRate = Util.SystemInfo.GetRefreshRate();
             Log.Info("Engine initialized");

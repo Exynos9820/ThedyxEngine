@@ -4,7 +4,8 @@ using ThedyxEngine.Util;
 namespace ThedyxEngine.UI;
 
 /**
- * SettingsPopup is a popup that allows the user to change the settings of the simulation.
+ * \class SettingsPopup
+ * \brief A popup that allows the user to change the settings of the simulation.
  */
 public partial class SettingsPopup : Popup {
     /**

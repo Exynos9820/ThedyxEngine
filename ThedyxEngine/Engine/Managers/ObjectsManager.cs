@@ -3,7 +3,7 @@
 namespace ThedyxEngine.Engine.Managers{
     /** 
      * \class ObjectsManager
-     * \brief Manages the objects in the simulation.
+     * \brief Manages EngineObjects in the simulation.
      * 
      * The ObjectsManager class provides methods for managing the objects in the simulation.
      */

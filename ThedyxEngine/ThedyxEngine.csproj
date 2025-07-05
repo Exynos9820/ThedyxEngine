@@ -107,4 +107,8 @@
       <MauiPlatformSpecificFolder Remove="Platforms\iOS\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Engine\Examples\" />
+    </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ namespace ThedyxEngine.Engine.Managers;
 
 /**
  * \class RadiationOptimizer
- * \brief Builds a visibility map for radiation
+ * \brief Builds a visibility map for RadiationTransferManager
  */
 public class RadiationOptimizer : IOptimizer{
     // List of all possible directions for line of sight

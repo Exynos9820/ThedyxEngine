@@ -1,9 +1,11 @@
 ﻿namespace ThedyxEngine;
 
-public partial class AppShell : Shell
-{
-    public AppShell()
-    {
+/**
+ * \class AppShell
+ * \brief Shell initialization
+ */
+public partial class AppShell : Shell {
+    public AppShell() {
         InitializeComponent();
     }
 }

@@ -5,8 +5,7 @@ namespace ThedyxEngine.UI;
 
 /**
  * \class CanvasManager
- * \brief CanvasManager class
- * Manages the canvas
+ * \brief Manages the Canvas
  */
 public class CanvasManager{
     /** Gets the current left X index. */

@@ -4,7 +4,8 @@ using ThedyxEngine.Engine.Managers;
 namespace ThedyxEngine.UI;
 
 /**
- * MaterialsList is a list of materials that the user can select from.
+ * \class MaterialsList
+ * \brief A list of materials that the user can select from.
  */
 public partial class MaterialsList : ContentView {
     /** The currently selected material. */

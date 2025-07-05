@@ -1,6 +1,14 @@
 ﻿using ThedyxEngine.Engine.Managers;
 
-namespace ThedyxEngine.Engine.Examples {
+/**
+ * \namespace ThedyxEngine.Engine.Dev
+ * \brief Contains developer tools
+ */
+namespace ThedyxEngine.Engine.Dev {
+    /**
+     * \class SimpleExamples
+     * \brief Allows to test different scenarios
+     */
     public static class SimpleExamples
     {
         public static void SetThreesquares() {
@@ -18,42 +26,49 @@ namespace ThedyxEngine.Engine.Examples {
             Engine.EngineObjectsManager?.AddObject(obj3);
         }
         
-        public static void CreateGridOf10x10Rectangles(int rectanglesInRow, int rectanglesInColumn)
-        {
-            const int rectangleWidth = 10;
-            const int rectangleHeight = 10;
 
-            for (int row = 0; row < rectanglesInColumn; row++)
+
+        public static void CreateGridOf10x10Rectangles(int columns, int rows) {
+            const int w = 10, h = 10;
+
+            // 1) grid dimensions in world coordinates
+            int gridWidth  = columns * w;
+            int gridHeight = rows    * h;
+
+            // 2) find the geometric centre
+            var centre = new Point(gridWidth / 2.0, gridHeight / 2.0);
+
+            // 3) choose a temperature profile
+            const double Tmin = 100;   // edge temperature
+            const double Tmax = 500;   // exact centre
+            double maxRadius  = Math.Sqrt(centre.X * centre.X + centre.Y * centre.Y);
+
+            for (int r = 0; r < rows; r++)
             {
-                for (int col = 0; col < rectanglesInRow; col++)
+                for (int c = 0; c < columns; c++)
                 {
-                    var name = $"Rect_{row}_{col}";
-                    var position = new Point(col * rectangleWidth, row * rectangleHeight);
+                    var rectName = $"Rect_{r}_{c}";
+                    var position = new Point(c * w, r * h);
 
-                    var rectangle = new EngineRectangle(name, rectangleWidth, rectangleHeight)
+                    // Euclidean distance from the rectangle’s centre to grid centre
+                    double dx   = position.X + w / 2.0 - centre.X;
+                    double dy   = position.Y + h / 2.0 - centre.Y;
+                    double dist = Math.Sqrt(dx * dx + dy * dy);
+
+                    // 4) map distance to temperature (linear fall-off)
+                    double t = Tmax - (Tmax - Tmin) * (dist / maxRadius);
+
+                    var rect = new EngineRectangle(rectName, w, h)
                     {
-                        Position = position,
-                        SimulationTemperature = 300 // or any default temperature
+                        Position            = position,
+                        SimulationTemperature = t
                     };
 
-                    Engine.EngineObjectsManager?.AddObject(rectangle);
+                    Engine.EngineObjectsManager?.AddObject(rect);
                 }
             }
         }
 
-
-        public static void SetManyRectangles(int numberHeight, int numberWidth, int height, int width) {
-            // add 3 objects to the engine
-            for (int i = 0; i < numberHeight; i++) {
-                for (int j = 0; j < numberWidth; j++) {
-                    var obj = new EngineRectangle($"Rectangle {i} {j}", height, width) {
-                        Position = new Point(i * height, j * width),
-                        SimulationTemperature = 200
-                    };
-                    Engine.EngineObjectsManager?.AddObject(obj);
-                }
-            }
-        }
 
     public static void TwoEngineRectangles() {
             var e1 = new EngineRectangle("Rectangle1", 30, 30) {

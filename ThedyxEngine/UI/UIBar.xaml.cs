@@ -5,7 +5,8 @@ using CommunityToolkit.Maui.Storage;
 
 namespace ThedyxEngine.UI {
     /**
-     * UIBar is a class that represents the UI bar at the top of the screen.
+     * \class UIBar
+     * \brief UIBar is a class that represents the UI bar at the top of the screen.
      * It contains buttons for starting, stopping, and pausing the simulation, as well as buttons for adding, saving, and opening objects.
      */
     public partial class UIBar : ContentView {

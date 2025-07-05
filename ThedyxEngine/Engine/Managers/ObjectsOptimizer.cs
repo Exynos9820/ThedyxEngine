@@ -3,7 +3,7 @@
 namespace ThedyxEngine.Engine.Managers {
     /**
      * \class ObjectsOptimizer
-     * \brief Manages the optimization of the engine
+     * \brief Manages the optimization of the Engine
      *
      * The ObjectsOptimizer class provides methods for optimizing the engine by setting adjacent sq quares to be touching
      */

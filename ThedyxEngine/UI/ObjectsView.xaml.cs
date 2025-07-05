@@ -2,7 +2,8 @@ using ThedyxEngine.Engine;
 
 namespace ThedyxEngine.UI {
     /**
-     * ObjectsView is a list of engine objects that the user can select from.
+     * \class ObjectsView
+     * \brief A list of EngineObject that the user can select from.
      */
     public partial class ObjectsView : ContentView {
         /** The currently selected object. */
