@@ -4,7 +4,9 @@
              x:Class="ThedyxEngine.UI.MaterialsList">
     <CollectionView x:Name="MatCollectionView"
                     SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged">
+                    SelectionChanged="OnSelectionChanged"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <StackLayout Padding="5">

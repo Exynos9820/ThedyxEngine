@@ -24,8 +24,8 @@ public partial class MaterialsPopup : Popup {
         // we need to update the list of materials
         ListMaterials.OnSelectedMaterialChanged += OnSelectedMaterialChanged;
         // select the first material if there is any
-        if(MaterialManager.Materials.Count > 0)
-            ListMaterials.SelectMaterial(MaterialManager.Materials[0]);
+        if(MaterialManager.GetMaterials().Count > 0)
+            ListMaterials.SelectMaterial(MaterialManager.GetMaterials()[0]);
     }
     
     /**
@@ -66,7 +66,7 @@ public partial class MaterialsPopup : Popup {
      * Or when we add a new material
      */
     private void Update() {
-        ListMaterials.Update();
+        //ListMaterials.Update();
     }
     
     /**
@@ -86,13 +86,10 @@ public partial class MaterialsPopup : Popup {
         }
         material.Name = name + count;
         // add the material to the list
-        MaterialManager.Materials.Add(material);
+        MaterialManager.AddMaterial(material);
         // select the material
         ListMaterials = new MaterialsList();
         ListMaterials.SelectMaterial(material);
-        // update the list
-        Update();
-        ReOpenMaterialPopup(material);
     }
     
     /**
@@ -149,20 +146,14 @@ public partial class MaterialsPopup : Popup {
             "No");
 
         if (confirm) {
-            MaterialManager.Materials.Remove(_currentSelectedMaterial);
+            MaterialManager.RemoveMaterial(_currentSelectedMaterial);
+            MaterialManager.MaterialsView.Remove(_currentSelectedMaterial);
             _currentSelectedMaterial = null;
+
+            if (MaterialManager.GetMaterials().Count > 0)
+                ListMaterials.SelectMaterial(MaterialManager.GetMaterials()[0]);
             ListMaterials.Update();
-
-            if (MaterialManager.Materials.Count > 0)
-                ListMaterials.SelectMaterial(MaterialManager.Materials[0]);
-
-            Update();
         }
-
-        if (MaterialManager.Materials.Count == 0)
-            ReOpenMaterialPopup(null);
-        else
-            ReOpenMaterialPopup(MaterialManager.Materials[0]);
     }
 
 

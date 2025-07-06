@@ -1,4 +1,5 @@
-﻿using ThedyxEngine.Engine.Objects;
+﻿using System.Collections.ObjectModel;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Engine.Managers {
     /** 
@@ -9,8 +10,10 @@ namespace ThedyxEngine.Engine.Managers {
      */
     internal class MaterialManager {
 
-        public static List<Material> Materials = []; /// List of materials
-
+        private static List<Material> _materials = []; /// List of materials
+        
+        public static ObservableCollection<Material> MaterialsView { get; }
+            = new ObservableCollection<Material>();
         /**
          * Initialize the materials
          */
@@ -51,7 +54,8 @@ namespace ThedyxEngine.Engine.Managers {
                 LiquidConvectiveHeatTransferCoefficient = 3000,
                 MaterialColor = Colors.Gray
             };
-            Materials.Add(m1);
+            AddMaterial(m1);
+ 
             var m2 = new Material {
                 Name = "Solid White Plastic",
                 SolidSpecificHeatCapacity = 1300,
@@ -60,7 +64,7 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidThermalConductivity = 0.33,
                 MaterialColor = Colors.LightGray
             };
-            Materials.Add(m2);
+            AddMaterial(m2);
             
             var m3 = new Material {
                 Name = "Glass",
@@ -69,7 +73,7 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidEmissivity = 0.92,
                 MaterialColor = Colors.LightBlue
             };
-            Materials.Add(m3);
+            AddMaterial(m3);
             
             var m4 = new Material {
                 Name = "Copper: oxidized",
@@ -79,7 +83,7 @@ namespace ThedyxEngine.Engine.Managers {
                 SolidThermalConductivity = 401,
                 MaterialColor = Colors.Coral
             };
-            Materials.Add(m4);
+            AddMaterial(m4);
 
             var m5 = new Material {
                 Name = "Water",
@@ -103,17 +107,41 @@ namespace ThedyxEngine.Engine.Managers {
                 LiquidConvectiveHeatTransferCoefficient = 1500,
                 MaterialColor = Colors.DodgerBlue
             };
-            Materials.Add(m5);
+            AddMaterial(m5);
         }
-
+        
+        /**
+         * Add material to both list and observable collection
+         * \param material - Material to be added
+         */
+        public static void AddMaterial(Material material) {
+            MaterialsView.Add(material);
+            _materials.Add(material);
+        }
+        
+        /**
+         * Removes material from both list and observable collection
+         * \param material - Material to be removed
+         */
+        public static void RemoveMaterial(Material material) {
+            if (MaterialsView.Contains(material))
+                MaterialsView.Remove(material);
+        }
+        
+        /**
+         * Clear list of materials
+         */
+        public static void ClearMaterials() {
+            MaterialsView.Clear();
+        }
 
         /**
          * Get the base material
          * \return The base material
          */
         public static Material GetBaseMaterial() {
-            if(Materials.Count == 0) throw new Exception("Materials are not initialized");
-            return Materials[0];
+            if(_materials.Count == 0) throw new Exception("Materials are not initialized");
+            return _materials[0];
         }
 
         /** 
@@ -122,7 +150,7 @@ namespace ThedyxEngine.Engine.Managers {
          * \return The material
          */
         public static Material GetMaterialByName(string name) {
-            return Materials.Find(x => x.Name == name);
+            return _materials.Find(x => x.Name == name);
         }
 
         /** 
@@ -130,7 +158,7 @@ namespace ThedyxEngine.Engine.Managers {
          * \return List<Material> of the materials
          */
         public static List<Material> GetMaterials() {
-           return Materials;
+           return _materials;
         }
         
         
@@ -139,7 +167,7 @@ namespace ThedyxEngine.Engine.Managers {
          * \param name Name of the material
          */
         public static bool IsNameAvailable(string name) {
-            return Materials.Find(x => x.Name == name) == null;
+            return _materials.Find(x => x.Name == name) == null;
         }
 
         

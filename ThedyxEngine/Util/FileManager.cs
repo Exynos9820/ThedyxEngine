@@ -63,7 +63,7 @@ namespace ThedyxEngine.Util
                     MinTemperatureColor = GlobalVariables.MinTemperatureColor,
                     MaxTemperatureColor = GlobalVariables.MaxTemperatureColor
                 },
-                Materials = MaterialManager.Materials
+                Materials = MaterialManager.GetMaterials()
                     .Select(material => JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(material)))
                     .ToList(),
 
@@ -93,7 +93,7 @@ namespace ThedyxEngine.Util
          */
         public static void LoadFromContent(string inputString) {
             Engine.Engine.ClearSimulation();
-            MaterialManager.Materials.Clear();
+            MaterialManager.ClearMaterials();
             Log.Info("Info: Starting reading.");
 
             try {
@@ -121,7 +121,7 @@ namespace ThedyxEngine.Util
 
                 // Load Materials
                 foreach (var material in simulationData.Materials) {
-                    MaterialManager.Materials.Add(JsonConvert.DeserializeObject<Material>(JsonConvert.SerializeObject(material)));
+                    MaterialManager.AddMaterial(JsonConvert.DeserializeObject<Material>(JsonConvert.SerializeObject(material)));
                 }
 
                 // Load Objects

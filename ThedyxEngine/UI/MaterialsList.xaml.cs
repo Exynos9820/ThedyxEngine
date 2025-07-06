@@ -18,7 +18,7 @@ public partial class MaterialsList : ContentView {
      */
     public MaterialsList() {
         InitializeComponent();
-        MatCollectionView.ItemsSource  = MaterialManager.Materials;
+        MatCollectionView.ItemsSource  = MaterialManager.MaterialsView;
     }
     
     /**
@@ -35,10 +35,7 @@ public partial class MaterialsList : ContentView {
      * If the currently selected material is not in the list, it is set to null.
      */
     public void Update() {
-        MatCollectionView.ItemsSource = null;
-        if (_currentSelectedMaterial != null && !MaterialManager.Materials.Contains(_currentSelectedMaterial)) {
-            _currentSelectedMaterial = null;
-        }
+        MatCollectionView.ItemsSource = MaterialManager.MaterialsView;
     }
 
     /**
