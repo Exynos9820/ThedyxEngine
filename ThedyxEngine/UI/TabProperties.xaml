@@ -4,19 +4,19 @@
              x:Class="ThedyxEngine.UI.TabProperties" BackgroundColor="Beige">
     <Grid RowSpacing="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="25"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="45"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="45"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Padding="5,0,0,0">
+        <Grid Grid.Row="0" Padding="5,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="75"/>
                 <ColumnDefinition Width="120"/>
