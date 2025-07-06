@@ -249,7 +249,10 @@ public class EngineStateRectangle : EngineObject {
     public override bool IsIntersecting(EngineObject obj) {
         return false;
     }
-
+    
+    /**
+     * Getter for external squares
+     */
     public override List<GrainSquare> GetExternalSquares() {
         return new List<GrainSquare>(_externalSquares);
     }

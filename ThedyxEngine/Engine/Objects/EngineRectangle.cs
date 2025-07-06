@@ -14,7 +14,14 @@ namespace ThedyxEngine.Engine.Objects {
      * \see CanvasManager
      */
     public class EngineRectangle : EngineObject {
+        /**
+         * Grain squares that are used in simulation
+         */
         private List<GrainSquare> _grainSquares;
+        
+        /**
+         * External squares that can be neighbours of other EngineObjects
+         */
         private List<GrainSquare> _externalSquares;
         /**
          * \brief Initializes a new instance of the EngineRectangle class.

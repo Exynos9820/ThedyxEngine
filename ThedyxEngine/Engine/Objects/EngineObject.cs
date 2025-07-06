@@ -87,7 +87,9 @@ namespace ThedyxEngine.Engine.Objects {
             return Name;
         }
 
-        /// Gets or sets the position of the object.
+        /**
+         * Gets or sets the position of the object.
+         */
         public virtual Point Position {
             get => _position;
             set {
@@ -96,7 +98,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
 
-        /// Gets or sets the material of the object.
+        /**
+         * Gets or sets the material of the object.
+         */
         public Material Material {
             get => _material;
             set {
@@ -105,7 +109,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
         
-        /// Gets or sets the fixed temperature of the object.
+        /**
+         * Gets or sets the fixed temperature of the object.
+         */
         public bool IsTemperatureFixed {
             get => _isTemperatureFixed;
             set {
@@ -114,7 +120,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
         
-        /// Sets the material properties of the object.
+        /**
+         * Sets the material properties of the object.
+         */
         protected abstract void SetMaterialProperties();
 
         /// Gets or sets the current temperature.
@@ -130,7 +138,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
 
-        /// Gets or sets the simulation temperature.
+        /**
+         * Gets or sets the simulation temperature.
+         */
         public double SimulationTemperature {
             get => _simulationTemperature;
             set {
@@ -143,7 +153,9 @@ namespace ThedyxEngine.Engine.Objects {
         }
 
 
-        /// Gets or sets the name of the object.
+        /**
+         * Gets or sets the name of the object.
+         */
         public string? Name {
             get => _name;
             set {
@@ -154,7 +166,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
 
-        /// Gets or sets the size of the object.
+        /**
+         * Gets or sets the size of the object.
+         */
         public Point Size {
             get => _size;
             set
@@ -164,7 +178,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
 
-        /// Gets or sets whether the object is selected.
+        /**
+         * Gets or sets whether the object is selected.
+         */
         public bool IsSelected {
             get => _isSelected;
             set {
@@ -175,7 +191,9 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
         
-        /// Gets or sets whether the object is allowed to be in gas state.
+        /**
+         * Gets or sets whether the object is allowed to be in gas state.
+         */
         public bool IsGasStateAllowed {
             get => _isGasStateAllowed;
             set {
@@ -184,41 +202,71 @@ namespace ThedyxEngine.Engine.Objects {
             }
         }
 
-        /// Called to notify observers of property changes.
+        /**
+         * Called to notify observers of property changes.
+         */
         protected virtual void OnPropertyChanged(string propertyName) {
             if (Engine.Mode != Engine.EngineMode.Running) {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
-        /// Returns polygons representing the object's shape. Must be implemented by subclasses.
+        /**
+         * Returns polygons representing the object's shape. Must be implemented by subclasses.
+         * \param canvasManager - canvas manager to get coordinates
+         * \param rects our list of rects to draw
+         * \param temperatures - out list of temperatures to display
+         * \param opacities - out list of opacities for differents states of matter
+         */
         abstract public void GetPolygons(CanvasManager canvasManager, out List<RectF> rects, out List<double> temperatures, out List<float> opacities);
 
-        /// Returns the object's squares. Must be implemented by subclasses.
+        /**
+         * Returns the object's squares. Must be implemented by subclasses.
+         */
         abstract public List<GrainSquare> GetSquares();
 
-        /// Determines if the object is visible on the given canvas. Must be implemented by subclasses.
+        /**
+         * Determines if the object is visible on the given canvas. Must be implemented by subclasses.
+         * \param canvasManager to determine if object is visible
+         */
         abstract public bool IsVisible(CanvasManager canvasManager);
 
-        /// Gets the visible area of the object. Must be implemented by subclasses.
+        /**
+         * Gets the visible area of the object. Must be implemented by subclasses.
+         * \param topLeft - top left corner
+         * \param bottomRight - bottom right corner
+         */
         abstract public void GetObjectVisibleArea(out Vector2 topLeft, out Vector2 bottomRight);
 
-        /// Sets the starting temperature for the simulation. Must be implemented by subclasses.
+        /**
+         * Sets the starting temperature for the simulation. Must be implemented by subclasses.
+         */
         abstract public void SetStartTemperature();
 
-        /// Gets the type of the object as an ObjectType enum. Must be implemented by subclasses.
+        /**
+         * Gets the type of the object as an ObjectType enum. Must be implemented by subclasses.
+         */
         abstract public ObjectType GetObjectType();
 
-        /// Gets a JSON string representing the object's state. Must be implemented by subclasses.
+        /**
+         * Gets a JSON string representing the object's state. Must be implemented by subclasses.
+         */
         abstract public string GetJsonRepresentation();
 
-        /// Determines if the object is intersecting with another object. Must be implemented by subclasses.
+        /**
+         * Determines if the object is intersecting with another object. Must be implemented by subclasses.
+         * \param obj - EngineObject ot check intersection with
+         */
         abstract public bool IsIntersecting(EngineObject obj);
 
-        /// Gets all external GrainSquare’s of an object, that can tranfer heat with other external GrainSquare’s of other objects
+        /**
+         * Gets all external GrainSquare’s of an object, that can tranfer heat with other external GrainSquare’s of other objects
+         */
         abstract public List<GrainSquare> GetExternalSquares();
         
-        /// Applies the energy delta to the object.
+        /**
+         * Applies the energy delta to the object.
+         */
         abstract public void ApplyEnergyDelta();
     }
 }

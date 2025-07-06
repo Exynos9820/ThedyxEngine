@@ -19,13 +19,34 @@ namespace ThedyxEngine.Engine.Objects {
      * \see CanvasManager
      */
     public class GrainSquare : EngineObject {
-        protected double EnergyDelta = 0; // current energy delta
-        public event PropertyChangedEventHandler? PositionChanged; // event triggered when position changes
-        private List<GrainSquare> _adjacentSquares = []; // list of adjacent squares
+        /**
+         * Current energy delta
+         */
+        protected double EnergyDelta = 0;
+        
+        /**
+         * event triggered when position changes
+         */
+        public event PropertyChangedEventHandler? PositionChanged;
+        
+        /**
+         * List of neighboring squares to exchanges heat created by @ref ThedyxEngine.Engine.Managers.NeighboursOptimizer "NeighboursOptimizer"
+         */
+        private List<GrainSquare> _adjacentSquares = [];
+        
+        /**
+         * List of neighboring squares to exchange radiation created by @ref ThedyxEngine.Engine.Managers.RadiationOptimizer "RadiationOptimizer"
+         */
         private HashSet<GrainSquare> _radiationExchangeSquares = [];
-        // lock for applying energy delta
+            
+        /**
+         * lock for applying energy delta
+         */
         protected readonly object EnergyLock = new();
-
+        
+        /**
+         * Logger
+         */
         private static readonly ILog log = LogManager.GetLogger(typeof(GrainSquare));
 
         /**
