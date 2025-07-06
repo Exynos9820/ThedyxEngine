@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.Engine.Objects;
@@ -117,7 +118,7 @@ namespace ThedyxEngine.UI {
          * \param text The text to display in the message box.
          */
         private async void ShowErrorMessageBox(string text) {
-            await Application.Current.MainPage.DisplayAlert("Error", text, "OK");
+            await Shell.Current.DisplayAlert("Error", text, "OK");
         }
 
         
@@ -128,6 +129,7 @@ namespace ThedyxEngine.UI {
          */
         private void OnNameCompleted(object sender, EventArgs e) {
             if (_selectedObject == null) return;
+            Debug.Assert(Engine.Engine.EngineObjectsManager != null, "Engine.Engine.EngineObjectsManager != null");
             if (_selectedObject.Name != tbName.Text && !Engine.Engine.EngineObjectsManager.IsNameAvailable(tbName.Text)) {
                 ShowErrorMessageBox("Name is not available");
                 tbName.BackgroundColor = Colors.Red;

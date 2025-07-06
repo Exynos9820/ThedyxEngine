@@ -25,7 +25,7 @@ public static class JsonConverters {
 
         var jObject = JsonConvert.DeserializeObject<dynamic>(json, settings);
 
-        string type = jObject?.Type;
+        string type = jObject.Type;
         if (type != ObjectType.GrainSquare.ToString())
             throw new InvalidOperationException("JSON is not of type Grainsquare.");
         Point position = Util.Parsers.ParsePoint(jObject.Position.ToString());

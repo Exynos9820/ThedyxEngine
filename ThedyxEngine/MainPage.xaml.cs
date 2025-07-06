@@ -155,11 +155,13 @@ public partial class MainPage {
         // Implement the logic to handle the selection change
         EngineGraphicsView.Invalidate();
         TabProperties.SetObject(obj);
+        Debug.Assert(Engine.Engine.EngineObjectsManager != null, "Engine.Engine.EngineObjectsManager != null");
 
-        if(obj == null) {  ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects()); return; }
+        if(obj == null) {
+            ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects()); return; }
 
         obj.PropertyChanged += (_, _) => {
-            ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects());
+            ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
             TabProperties.Update();
             EngineGraphicsView.Invalidate();
             Engine.Engine.EngineObjectsManager?.UpdateSmallestAndBiggestTemperature();

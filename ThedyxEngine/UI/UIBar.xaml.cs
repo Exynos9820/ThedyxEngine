@@ -153,7 +153,10 @@ namespace ThedyxEngine.UI {
                     }
                 }
                 catch (Exception ex) {
-                    await Application.Current.MainPage.DisplayAlert("Error", $"Failed to read the file: {ex.Message}", "OK");
+                    await Shell.Current.DisplayAlert(
+                        "Error",
+                        $"Failed to read the file: {ex.Message}",
+                        "OK");
                 }
             }
             Engine.Engine.ResetSimulation();
@@ -165,12 +168,18 @@ namespace ThedyxEngine.UI {
          * \param e The event arguments.
          */
         private async void OnClearButtonClicked(object sender, EventArgs e) {
-            bool result = await Application.Current.MainPage.DisplayAlert("Confirm Clear", "Are you sure you want to clear all data?", "Yes", "No");
-            if (result) {
+            bool confirm = await Shell.Current.DisplayAlert(
+                "Confirm Clear",
+                "Are you sure you want to clear all data?",
+                "Yes",
+                "No");
+
+            if (confirm) {
                 Engine.Engine.ClearSimulation();
                 DeleteSelected?.Invoke(null);
             }
         }
+
 
         /**
          * OnAddButtonClicked is called when the user clicks the add button.
@@ -178,7 +187,10 @@ namespace ThedyxEngine.UI {
          * \param e The event arguments.
          */
         private async void OnAddButtonClicked(object sender, EventArgs e) {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Add Item", "Cancel", null, "Grain Object", "Solid Object", "State Object");
+            string action = await Shell.Current.DisplayActionSheet(
+                "Add Item", "Cancel", null,
+                "Grain Object", "Solid Object", "State Object");
+
             switch (action) {
                 case "Grain Object":
                     AddObject(ObjectType.GrainSquare);
@@ -191,6 +203,7 @@ namespace ThedyxEngine.UI {
                     break;
             }
         }
+
 
         /**
          * AddObject opens a popup to add an object to the simulation.
