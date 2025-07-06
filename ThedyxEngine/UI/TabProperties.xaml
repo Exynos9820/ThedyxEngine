@@ -10,7 +10,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="60"/>
@@ -68,7 +68,7 @@
             <Entry x:Name="tbHeight" Grid.Column="3" Height="30" TextColor="Black" BackgroundColor="Transparent" Completed="OnHeightCompleted"/>
         </Grid>
 
-        <Grid Grid.Row="5" Padding="5,0,0,0">
+        <Grid Grid.Row="5" Padding="5,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="75"/>
                 <ColumnDefinition Width="160"/>
