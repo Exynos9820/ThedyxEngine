@@ -15,12 +15,15 @@ public partial class MaterialsPopup : Popup {
     private Material? _currentSelectedMaterial;
     /** Callback to reopen the material popup, because MAUI is awful */
     public Action<Material> ReopenMaterialPopup;
+    /** Main page to update */
+    private MainPage _mainPage;
     
     /**
      * Constructor for the MaterialsPopup class.
      */
-    public MaterialsPopup() {
+    public MaterialsPopup(MainPage mainPage) {
         InitializeComponent();
+        _mainPage = mainPage;
         // we need to update the list of materials
         ListMaterials.OnSelectedMaterialChanged += OnSelectedMaterialChanged;
         // select the first material if there is any
@@ -146,13 +149,22 @@ public partial class MaterialsPopup : Popup {
             "No");
 
         if (confirm) {
-            MaterialManager.RemoveMaterial(_currentSelectedMaterial);
-            MaterialManager.MaterialsView.Remove(_currentSelectedMaterial);
-            _currentSelectedMaterial = null;
+            if (MaterialManager.GetMaterials().Count > 1) {
+                MaterialManager.RemoveMaterial(_currentSelectedMaterial);
+                MaterialManager.MaterialsView.Remove(_currentSelectedMaterial);
+                _currentSelectedMaterial = null;
 
-            if (MaterialManager.GetMaterials().Count > 0)
-                ListMaterials.SelectMaterial(MaterialManager.GetMaterials()[0]);
-            ListMaterials.Update();
+                if (MaterialManager.GetMaterials().Count > 0)
+                    ListMaterials.SelectMaterial(MaterialManager.GetMaterials()[0]);
+                ListMaterials.Update();
+                _mainPage.UpdateAll();
+            }
+            else {
+                if (Application.Current is { Windows.Count: > 0 }) {
+                    var mainPage = Application.Current.Windows[0].Page;
+                    mainPage?.DisplayAlert("Error", "Cannot delete the last material", "Ok");
+                }
+            }
         }
     }
 

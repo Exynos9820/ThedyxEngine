@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Diagnostics;
+using System.Timers;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Objects;
 using ThedyxEngine.UI;
@@ -171,7 +172,9 @@ public partial class MainPage {
     }
 
     public void UpdateAll() {
-        ObjectsList.Update(Engine.Engine.EngineObjectsManager?.GetObjects());
+        Debug.Assert(Engine.Engine.EngineObjectsManager != null, "Engine.Engine.EngineObjectsManager != null");
+        Engine.Engine.EngineObjectsManager.UpdateMaterials();
+        ObjectsList.Update(Engine.Engine.EngineObjectsManager.GetObjects());
         TabProperties.Update();
         EngineGraphicsView.Invalidate();
         ControlPanel.Update();

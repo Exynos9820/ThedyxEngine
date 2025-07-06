@@ -124,8 +124,10 @@ namespace ThedyxEngine.Engine.Managers {
          * \param material - Material to be removed
          */
         public static void RemoveMaterial(Material material) {
-            if (MaterialsView.Contains(material))
+            if (MaterialsView.Contains(material)) {
                 MaterialsView.Remove(material);
+                _materials.Remove(material);
+            }
         }
         
         /**
@@ -133,6 +135,7 @@ namespace ThedyxEngine.Engine.Managers {
          */
         public static void ClearMaterials() {
             MaterialsView.Clear();
+            _materials.Clear();
         }
 
         /**

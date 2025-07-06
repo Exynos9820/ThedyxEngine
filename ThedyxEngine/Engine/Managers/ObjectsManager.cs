@@ -48,6 +48,22 @@ namespace ThedyxEngine.Engine.Managers{
                 }
             } 
         }
+        
+        /**
+         * Check after deletion that we are using existing materials
+         */
+        public void UpdateMaterials() {
+            foreach (var o in _objects) {
+                if (!MaterialManager.GetMaterials().Contains(o.Material)) {
+                    o.Material = MaterialManager.GetMaterials()[0];
+                }
+                foreach(var sq in o.GetSquares()) {
+                    if (!MaterialManager.GetMaterials().Contains(sq.Material)) {
+                        sq.Material = MaterialManager.GetMaterials()[0];
+                    }
+                }
+            }
+        }
 
 
         /** 

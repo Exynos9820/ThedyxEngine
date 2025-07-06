@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Util;
 using CommunityToolkit.Maui.Views;
@@ -267,7 +268,8 @@ namespace ThedyxEngine.UI {
          * \param e The event arguments.
          */
         private void OnMaterialsButtonClicked(object sender, EventArgs e) {
-            var materialsPopup = new MaterialsPopup();
+            Debug.Assert(MainPage != null, nameof(MainPage) + " != null");
+            var materialsPopup = new MaterialsPopup(MainPage);
             this.MainPage?.ShowPopup(materialsPopup);
             // use action to reopen the popup
             materialsPopup.ReopenMaterialPopup = OnMaterialsButtonClicked;
@@ -282,7 +284,8 @@ namespace ThedyxEngine.UI {
          * \param e The event arguments.
          */
         private void OnMaterialsButtonClicked(Material obj) {
-            var materialsPopup = new MaterialsPopup();
+            Debug.Assert(MainPage != null, nameof(MainPage) + " != null");
+            var materialsPopup = new MaterialsPopup(MainPage);
             this.MainPage?.ShowPopup(materialsPopup);
             materialsPopup.SelectMaterial(obj);
             // use action to reopen the popup
