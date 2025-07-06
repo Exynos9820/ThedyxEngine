@@ -2,6 +2,9 @@
  * \namespace ThedyxEngine.Engine.Managers
  * \brief Contains managers for energy transfers and optimization
  */
+
+using ThedyxEngine.Engine.Objects;
+
 namespace ThedyxEngine.Engine.Managers;
 
 /**

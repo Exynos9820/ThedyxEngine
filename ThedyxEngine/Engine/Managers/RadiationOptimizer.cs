@@ -1,10 +1,11 @@
+using ThedyxEngine.Engine.Objects;
 using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine.Managers;
 
 /**
  * \class RadiationOptimizer
- * \brief Builds a visibility map for RadiationTransferManager
+ * \brief Implements IOptimizer. Builds a visibility map for RadiationTransferManager.
  */
 public class RadiationOptimizer : IOptimizer{
     // List of all possible directions for line of sight

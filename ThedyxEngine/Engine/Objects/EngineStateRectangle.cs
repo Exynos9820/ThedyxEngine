@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine;
+namespace ThedyxEngine.Engine.Objects;
 
 /**
  * \class EngineStateRectangle

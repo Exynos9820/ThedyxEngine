@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using System.Numerics;
+﻿using System.Numerics;
+using Newtonsoft.Json;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine {
+namespace ThedyxEngine.Engine.Objects {
     /**
      * \class EngineRectangle
-     * \brief Object of the engine that represents rectangle from made from GrainSquare
+     * \brief Object of the engine that represents rectangle from made from @ref GrainSquare "GrainSquares"
      * 
      * 
      * Manages itself and makes it easier to calculate transfers

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Text;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.Util
 {

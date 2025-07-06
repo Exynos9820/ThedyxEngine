@@ -3,7 +3,7 @@
 namespace ThedyxEngine.Engine.Managers {
     /**
     * \class ColorManager
-    * \brief Manager to create brushes
+    * \brief Manager to create Colors for @ref ThedyxEngine.UI.Canvas "Canvas".
     */
     public static class ColorManager {
         /**

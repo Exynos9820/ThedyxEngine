@@ -3,6 +3,7 @@ using System.Numerics;
 using log4net;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
+using ThedyxEngine.Engine.Objects;
 
 /**
  * \namespace ThedyxEngine.UI

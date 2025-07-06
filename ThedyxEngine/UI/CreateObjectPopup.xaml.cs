@@ -2,6 +2,7 @@ using System.Diagnostics;
 using CommunityToolkit.Maui.Views;
 using ThedyxEngine.Engine;
 using ThedyxEngine.Engine.Managers;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.UI;
 

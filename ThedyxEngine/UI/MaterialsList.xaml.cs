@@ -5,7 +5,7 @@ namespace ThedyxEngine.UI;
 
 /**
  * \class MaterialsList
- * \brief A list of materials that the user can select from.
+ * \brief A list of @ref ThedyxEngine.Engine.Material "Materials" that the user can select from.
  */
 public partial class MaterialsList : ContentView {
     /** The currently selected material. */

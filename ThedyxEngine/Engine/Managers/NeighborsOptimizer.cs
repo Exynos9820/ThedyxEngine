@@ -1,9 +1,11 @@
+using ThedyxEngine.Engine.Objects;
+
 namespace ThedyxEngine.Engine.Managers;
 
 
 /**
  * \class NeighborsOptimizer
- * \brief Builds a map of neighbors for objects for ConvectionTransferManager and ConductionTransferManager
+ * \brief Implements IOptimizer. Builds a map of neighbors for objects for ConvectionTransferManager and ConductionTransferManager
  */
 public class NeighborsOptimizer : IOptimizer {
     

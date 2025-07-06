@@ -1,3 +1,5 @@
+using ThedyxEngine.Engine.Objects;
+
 namespace ThedyxEngine.Engine.Managers;
 
 /**

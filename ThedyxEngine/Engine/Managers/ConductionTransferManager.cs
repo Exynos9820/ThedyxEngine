@@ -1,10 +1,11 @@
-﻿using ThedyxEngine.Util;
+﻿using ThedyxEngine.Engine.Objects;
+using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine.Managers {
 
     /**
      * \class ConductionTransferManager
-     * \brief Manages the transfer of conduction heat between objects in the simulation.
+     * \brief Implements IHeatTransferManager. Manages the transfer of conduction heat between  @ref ThedyxEngine.Engine.Objects.EngineObject "EngineObjects".
      *
      * The ConductionTransferManager class provides methods for calculating and transferring
      * conduction heat between objects in the simulation. 

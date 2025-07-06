@@ -3,7 +3,7 @@ using System.Numerics;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 
-namespace ThedyxEngine.Engine {
+namespace ThedyxEngine.Engine.Objects {
     
     /**
      * \enum ObjectType

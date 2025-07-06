@@ -1,3 +1,4 @@
+using ThedyxEngine.Engine.Objects;
 using ThedyxEngine.Util;
 
 namespace ThedyxEngine.Engine.Managers;
@@ -5,7 +6,7 @@ namespace ThedyxEngine.Engine.Managers;
 
 /**
 * \class ConvectionTransferManager
-* \brief Manages the transfer of convection heat between objects in the simulation.
+* \brief Implements IHeatTransferManager. Manages the transfer of convection heat between @ref ThedyxEngine.Engine.Objects.EngineObject "EngineObjects".
 *
 * The ConvectionTransferManager class provides methods for calculating and transferring
 * convection heat between objects in the simulation. 

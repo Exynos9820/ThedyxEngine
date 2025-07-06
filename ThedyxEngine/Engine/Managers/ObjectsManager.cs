@@ -1,4 +1,5 @@
-﻿using ThedyxEngine.UI;
+﻿using ThedyxEngine.Engine.Objects;
+using ThedyxEngine.UI;
 
 namespace ThedyxEngine.Engine.Managers{
     /** 

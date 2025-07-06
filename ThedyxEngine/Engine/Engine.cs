@@ -4,6 +4,7 @@ using ThedyxEngine.Util;
 using ThedyxEngine.Engine.Managers;
 using System.Diagnostics;
 using ThedyxEngine.Engine.Dev;
+using ThedyxEngine.Engine.Objects;
 
 /**
  * \namespace ThedyxEngine.Engine

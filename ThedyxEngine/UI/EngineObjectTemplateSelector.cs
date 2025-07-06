@@ -1,10 +1,11 @@
 using ThedyxEngine.Engine;
+using ThedyxEngine.Engine.Objects;
 
 namespace ThedyxEngine.UI;
 
 /**
  * \class EngineObjectTemplateSelector
- * \brief Template to display list of the objects used by ObjectsList
+ * \brief Template to display list of the @ref ThedyxEngine.Engine.Objects.EngineObject "EngineObjects" used by ObjectsList
  */
 public class EngineObjectTemplateSelector : DataTemplateSelector {
     public DataTemplate? ObjectTemplate { get; set; }

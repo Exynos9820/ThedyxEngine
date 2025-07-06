@@ -1,12 +1,12 @@
-﻿using log4net;
-using Newtonsoft.Json;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Numerics;
+using log4net;
+using Newtonsoft.Json;
 using ThedyxEngine.Engine.Managers;
 using ThedyxEngine.UI;
 using ThedyxEngine.Util;
 
-namespace ThedyxEngine.Engine {
+namespace ThedyxEngine.Engine.Objects {
     /**
      * \class GrainSquare
      * \brief Represents a square grain object within the simulation engine.

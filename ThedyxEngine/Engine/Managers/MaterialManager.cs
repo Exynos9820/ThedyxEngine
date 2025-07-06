@@ -1,4 +1,6 @@
-﻿namespace ThedyxEngine.Engine.Managers {
+﻿using ThedyxEngine.Engine.Objects;
+
+namespace ThedyxEngine.Engine.Managers {
     /** 
      * \class MaterialManager
      * \brief Manages the materials in the simulation.

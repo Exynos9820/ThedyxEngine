@@ -1,8 +1,10 @@
+using ThedyxEngine.Engine.Objects;
+
 namespace ThedyxEngine.Engine.Managers;
 
 /**
  * \class ClearingOptimizer
- * \brief Clears data before optimizations
+ * \brief Implements IOptimizer. Clears data before optimizations.
  */
 public class ClearingOptimizer : IOptimizer {
     /**
