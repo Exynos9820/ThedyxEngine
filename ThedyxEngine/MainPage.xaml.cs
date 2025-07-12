@@ -13,13 +13,24 @@ namespace ThedyxEngine;
  * \brief Main page of the app, that manages all ui components
  */
 public partial class MainPage {
+    /** Timer for updates */ 
     private readonly Timer _updateTimer;
+    /** Bool to check for updates in objects */
     private bool _objectsChanged;
+    /** Signal about the crash in the core */
+    private bool _engineCrashed;
+    /** canvas to draw */
     private readonly Canvas _canvas;
-
+    /** Buffer to display the current error */
     private string _currentError = "";
+    /** Last touch point for drawing */
     private PointF _lastTouchPoint = new PointF(-1, -1);
+    /** Signal that user is drawing something*/
     public bool IsDrawing { get; set; }
+    
+    /**
+     * Constructor for MainPage
+     */
     public MainPage() {
         InitializeComponent();
         log4net.Config.XmlConfigurator.Configure();
@@ -80,6 +91,9 @@ public partial class MainPage {
         EngineGraphicsView.StartInteraction += OnStartInteraction;
     }
     
+    /**
+     * \brief Allow user to draw objects
+     */
     void OnStartInteraction(object? sender, TouchEventArgs evt) {
         // if not drawing, return
         if (!IsDrawing) return;
@@ -130,16 +144,25 @@ public partial class MainPage {
     }
 
 
-    
+    /**
+     * \brief Update timer on main page
+     */
     private void UpdateTimer_Elapsed(object? sender, ElapsedEventArgs e) {
         // Dispatch to the main thread for UI updates
         MainThread.BeginInvokeOnMainThread(Update);
     }
-
+    
+    /**
+     * \brief Zooming to the selected object
+     * \param obj - selected object
+     */
     private void ZoomToObject(EngineObject obj) {
         _canvas.ZoomToObject(obj);
     }
-
+    
+    /**
+     * \brief Enables or disables tab and ui bar
+     */
     private void EngineModeChanged() {
         if(Engine.Engine.Mode != Engine.Engine.EngineMode.Stopped) {
             ObjectsList.Enable(false);
@@ -150,7 +173,10 @@ public partial class MainPage {
         }
     }
     
-
+    /**
+     * \brief Updated main page when selected object is changed
+     * \param obj - selected object
+     */
     private void SelectedObjectChanged(EngineObject? obj) {
         // Implement the logic to handle the selection change
         EngineGraphicsView.Invalidate();
@@ -168,11 +194,17 @@ public partial class MainPage {
         };
     }
 
+    /**
+     * \brief Update window user changes object properties
+     */
     private void UpdateAllAfterChangeProperties() {
         TabProperties.SetObject(null);
         UpdateAll();
     }
-
+    
+    /**
+     * \brief Updates all UI elements
+     */
     public void UpdateAll() {
         Debug.Assert(Engine.Engine.EngineObjectsManager != null, "Engine.Engine.EngineObjectsManager != null");
         Engine.Engine.EngineObjectsManager.UpdateMaterials();
@@ -182,11 +214,23 @@ public partial class MainPage {
         ControlPanel.Update();
     }
     
-
+    /**
+     * \brief Some objects have been modified
+     */
     private void ObjectsChanged() {
         _objectsChanged = true;
     }
 
+    /**
+     * \brief Engine crashed with wrong parameters
+     */
+    public void EngineCrashed() {
+        _engineCrashed = true;
+    }
+    
+    /**
+     * \brief Update main page
+     */
     public void Update() {
         if(_currentError != "") {
             Engine.Engine.Stop();
@@ -194,7 +238,11 @@ public partial class MainPage {
             DisplayAlert("Error", _currentError, "OK");
             _currentError = "";
         }
-        
+
+        if (_engineCrashed) {
+            _engineCrashed = false;
+            EngineModeChanged();
+        }
         if (!Engine.Engine.IsRunning() && !_objectsChanged) return;
         if(_objectsChanged) _objectsChanged = false;
 

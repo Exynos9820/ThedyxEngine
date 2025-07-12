@@ -45,6 +45,7 @@ public class EngineStateRectangle : EngineObject {
                 square.CurrentTemperature = _simulationTemperature;
                 square.SimulationTemperature = _simulationTemperature;
                 square.Material = _material;
+                square.SetStateFromTemperature();
                 _grainSquares.Add(square);
                 if (i == 0 || j == 0 || i == Size.X - 1 || j == Size.Y - 1) {
                     _externalSquares.Add(square);
@@ -106,6 +107,10 @@ public class EngineStateRectangle : EngineObject {
         if (propertyName == "Position") SetSquaresForShape();
         
         if (propertyName == "SimulationTemperature") SetTemperatureForAllSquares();
+        
+        if (propertyName == "IsGasStateAllowed") SetTemperatureForAllSquares();
+        
+        if (propertyName == "CurrentTemperature") SetTemperatureForAllSquares();
         
         if (propertyName == "IsTemperatureFixed") SetFixedTemperature();
         

@@ -199,6 +199,8 @@ namespace ThedyxEngine.Engine{
                 }
                 catch (Exception e) {
                     ShowErrorMessage?.Invoke($"Engine failed to run with {e.Message}. Check the parameters of the materials and objects");
+                    Stop();
+                    MainWindow?.EngineCrashed();
                     break;
                 }
 
