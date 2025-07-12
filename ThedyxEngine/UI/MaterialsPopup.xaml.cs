@@ -69,7 +69,7 @@ public partial class MaterialsPopup : Popup {
      * Or when we add a new material
      */
     private void Update() {
-        //ListMaterials.Update();
+        ListMaterials.Update();
     }
     
     /**
@@ -129,7 +129,6 @@ public partial class MaterialsPopup : Popup {
         } else {
             _currentSelectedMaterial.Name = Name.Text;
         }
-        Update();
     }
     
     /**
@@ -453,6 +452,8 @@ public partial class MaterialsPopup : Popup {
             _currentSelectedMaterial.MaterialColor.GetByteGreen(),
             _currentSelectedMaterial.MaterialColor.GetByteBlue(),
             _currentSelectedMaterial.MaterialColor.GetByteAlpha());
+        _currentSelectedMaterial.MaterialColor = color;
+        _mainPage.UpdateAll();
     }
     
     /**
@@ -474,6 +475,8 @@ public partial class MaterialsPopup : Popup {
             value,
             _currentSelectedMaterial.MaterialColor.GetByteBlue(),
             _currentSelectedMaterial.MaterialColor.GetByteAlpha());
+        _currentSelectedMaterial.MaterialColor = color;
+        _mainPage.UpdateAll();
     }
     
     /**
@@ -494,6 +497,8 @@ public partial class MaterialsPopup : Popup {
         Color color = new Color(_currentSelectedMaterial.MaterialColor.GetByteRed(),
             _currentSelectedMaterial.MaterialColor.GetByteGreen(), value,
             _currentSelectedMaterial.MaterialColor.GetByteAlpha());
+        _currentSelectedMaterial.MaterialColor = color;
+        _mainPage.UpdateAll();
     }
     
     /**
@@ -515,6 +520,8 @@ public partial class MaterialsPopup : Popup {
             _currentSelectedMaterial.MaterialColor.GetByteGreen(), 
             _currentSelectedMaterial.MaterialColor.GetByteBlue(),
             value);
+        _currentSelectedMaterial.MaterialColor = color;
+        _mainPage.UpdateAll();
     }
     
     /**
