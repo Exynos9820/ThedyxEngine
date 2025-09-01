@@ -6,7 +6,7 @@ ThedyxEngine has rather simple than complex UI, but it allows you to control eve
 3. **Right Tab**: This is where you can see the properties of the selected object, and you can edit them or delete object.
 4. **Central canvas**: This is where you can see the simulation and the objects in the scene.
 
-![img.png](imgs/window.png)
+![img.png](ThedyxEngine/imgs/window.png)
 
 ## Adding Objects
 You can add objects in two ways:
@@ -22,7 +22,7 @@ You can add objects in two ways:
 2. Click first time on the canvas to set the start point of the object
 3. Click second time on the canvas to set the end point of the object
 
-![img.png](imgs/createMenu.png)
+![img.png](ThedyxEngine/imgs/createMenu.png)
 
 
 ## Loading and Saving
@@ -67,7 +67,7 @@ Each object has a material assigned to it with a physical properties that is nee
 
 Materials and its properties are parts of the scene, so they are saved with a scene. You can manage materials in the Material menu, which can be opened by clicking on the **M** button in the top bar on the left.
 
-![img.png](imgs/materialMenu.png)
+![img.png](ThedyxEngine/imgs/materialMenu.png)
 
 
 ## Controlling simulation
@@ -102,4 +102,4 @@ There is a settings menu that can be opened by clicking on the **Settings** butt
 7) UI updates per second - how often the UI is updated. The default value is 120 updates per second.
 8) Save as human readable - if this property is checked, the simulation file will be saved in a human readable format. This property is useful for debugging and testing purposes.
 
-![img.png](imgs/settingMenu.png)
+![img.png](ThedyxEngine/imgs/settingMenu.png)
